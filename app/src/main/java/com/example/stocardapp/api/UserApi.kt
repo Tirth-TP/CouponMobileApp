@@ -182,6 +182,14 @@ interface UserApi {
                 @PartMap map: Map<String, RequestBody>,
         ): Call<FilterResponse>
 
+        @Multipart
+        @POST("{url}")
+        fun storeUpdate(
+                @Header("Authorization") AUTH: String,
+                @Path(value = "url", encoded = true) url: String?,
+                @PartMap map: Map<String, RequestBody>,
+        ): Call<StoreUpdateResponse>
+
 }
 
 object ApiUtils {

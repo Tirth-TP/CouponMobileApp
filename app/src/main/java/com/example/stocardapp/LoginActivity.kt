@@ -14,10 +14,13 @@ import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.example.stocardapp.R.*
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
@@ -25,6 +28,8 @@ import com.example.stocardapp.models.LoginResponse
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_pin_authentication.*
+import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -179,7 +184,8 @@ class LoginActivity : AppCompatActivity() {
 //                setTitle(title)
 //                setTheme(R.style.Theme_StocardApp)
 //                setPositiveButton("Send"){ dialog, which ->
-                if(e.isNotEmpty()) {
+                if(e.isNotEmpty())
+                {
                     val map: MutableMap<String, RequestBody> = HashMap()
                     val e = email.text.toString().trim()
                     map["email"] = toPart(e) as RequestBody
@@ -192,27 +198,42 @@ class LoginActivity : AppCompatActivity() {
                             try {
                                 if (response.body()?.success == true) {
                                     Toast.makeText(this@LoginActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                                    var dialog = Dialog(this@LoginActivity)
-                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                    dialog.setCancelable(false)
-                                    dialog.setContentView(R.layout.otpdlg)
-                                    val otp = dialog.findViewById(R.id.votp) as EditText
-                                    val yesBtn = dialog.findViewById(R.id.cotp) as Button
 
-                                    yesBtn.setOnClickListener {
-                                        val e = email.text.toString().trim()
+
+                                    val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this@LoginActivity)
+
+                                    val inflater: LayoutInflater = this@LoginActivity.layoutInflater
+                                    val dialogView: View = inflater.inflate(
+                                        R.layout.fragment_pin_authentication,
+                                        null
+                                    )
+
+
+                                    dialogBuilder.setView(dialogView)
+                                    val e = email.text.toString().trim()
+                                    val alertDialog: AlertDialog = dialogBuilder.create()
+
+                                    alertDialog.show()
+
+                                    dialogView.pin_code_et.setOnPinEnteredListener {
+
+                                        val otp=it.toString()
+                                        Log.e("PINNNNN",otp)
+                                        Log.e("PINNNNN",e)
+
+                                        val map: MutableMap<String, RequestBody> = HashMap()
                                         map["email"] = toPart(e) as RequestBody
-                                        map["otp"] = toPart(otp.text.toString())
-
-                                        //start
+                                        map["otp"] = toPart(otp)
+//
+//                                        //start
                                         mAPIService.changePas(token!!, "OTP_Verify", map).enqueue(object :
                                             Callback<ChangePasswordResponse> {
                                             override fun onResponse(
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-                                                Log.d("oppppp",response.body()?.status.toString())
-                                                if(response.body()?.status == true) {
+
+                                                    alertDialog.dismiss()
                                                     var i = (Intent(
                                                         this@LoginActivity,
                                                         SetNewPasswordActivity::class.java
@@ -221,16 +242,16 @@ class LoginActivity : AppCompatActivity() {
                                                     i.flags =
                                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                     startActivity(i)
-                                                }
+
                                             }
                                             override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                                                 Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_LONG).show()
                                             }
                                         })
                                         //end
-                                        dialog.dismiss()
+                                       //alertDialog.dismiss()
                                     }
-                                    dialog.show()
+                                   // alertDialog.dismiss()
 
                                 } else
                                 {
