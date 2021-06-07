@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "696367015267",
+    "project_id": "stocard-app",
+    "storage_bucket": "stocard-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696367015267:android:3902d2ca00dbc41dfc9f56",
+        "android_client_info": {
+          "package_name": "com.example.stocardapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696367015267-lmrdrhlme8ko5ak6uqppn7lv4lgv9fe6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCeaSbOYdzZL4lod4LYs2zgC642YNitwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696367015267-lmrdrhlme8ko5ak6uqppn7lv4lgv9fe6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
