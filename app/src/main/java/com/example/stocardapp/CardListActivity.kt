@@ -53,6 +53,7 @@ class CardListActivity : AppCompatActivity() {
         var addCd = findViewById<Button>(R.id.btn_addCard)
         var del_st = findViewById<Button>(R.id.btnSdel)
         var cRv = findViewById<RecyclerView>(R.id.cdRv)
+        var update_st = findViewById<Button>(R.id.btnSUpdate)
 
        // var hdBtn = findViewById<ImageView>(R.id.hide)
 
@@ -68,6 +69,8 @@ class CardListActivity : AppCompatActivity() {
             intent.putExtra("storeId", sid)
             startActivity(intent)
         }
+
+
 
       //  cRv.isInvisible = true
 
@@ -99,6 +102,8 @@ class CardListActivity : AppCompatActivity() {
 
         val s = intent.getStringExtra("s_id")
 
+
+        //card list
         Log.d("msg", sid.toString())
         mAPIService.cardList(token!!, "CardDetail", map).enqueue(object :
                 Callback<CardDetailResponse> {
@@ -134,6 +139,29 @@ class CardListActivity : AppCompatActivity() {
             }
         })
 
+        //store update
+
+        update_st.setOnClickListener {
+            map["id"] = toPart(sid.toString()) as RequestBody
+            map["contact"] = toPart(getCn.text.toString())
+            map["location"] = toPart(getLc.text.toString())
+            mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
+                Callback<StoreUpdateResponse> {
+                override fun onResponse(
+                    call: Call<StoreUpdateResponse>,
+                    response: retrofit2.Response<StoreUpdateResponse>
+                ) {
+                    Toast.makeText(this@CardListActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                    val i = (Intent(applicationContext, HomeActivity::class.java))
+                    startActivity(i)
+                }
+                override fun onFailure(call: Call<StoreUpdateResponse>, t: Throwable) {
+                    Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        }
+
+        //store delete
           del_st.setOnClickListener {
             map["id"] = toPart(sid.toString()) as RequestBody
             mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :

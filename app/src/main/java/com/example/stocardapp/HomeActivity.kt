@@ -91,6 +91,10 @@ class HomeActivity : AppCompatActivity() {
                         MyProfile()
                     )
                 }
+                R.id.nav_fav->
+                {
+                    movetoFragment(Favorites())
+                }
                 R.id.nav_contact->
                 {
                     movetoFragment(
