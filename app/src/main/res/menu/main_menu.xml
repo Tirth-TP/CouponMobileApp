@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Home"
+            />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="My Profile" />
+<!--        <item-->
+<!--            android:id="@+id/nav_find"-->
+<!--            android:icon="@drawable/ic_baseline_location_searching_24"-->
+<!--            android:title="Find Store" />-->
+        <item
+            android:id="@+id/nav_card"
+            android:icon="@drawable/ic_baseline_card_giftcard_24"
+            android:title="Get Card" />
+        <item
+            android:id="@+id/nav_pin"
+            android:icon="@drawable/ic_baseline_lock_24"
+            android:title="Security PIN" />
+        <item
+            android:id="@+id/nav_invite"
+            android:icon="@drawable/ic_baseline_supervised_user_circle_24"
+            android:title="Invite Friends"/>
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/ic_baseline_contact_page_24"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_baseline_work_24"
+            android:title="About Us" />
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_baseline_star_rate_24"
+            android:title="Rate Us" />
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_cancel_24"
+            android:title="Logout" />
+    </group>
+</menu>
