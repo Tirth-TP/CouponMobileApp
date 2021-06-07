@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.Filter
 import com.example.stocardapp.models.FilterResponse
@@ -31,10 +30,6 @@ class FilterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.header_black)
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Apply Filters")

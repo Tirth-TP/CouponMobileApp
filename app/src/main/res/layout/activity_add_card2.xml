@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <include layout="@layout/header_black" />-->
+        <include layout="@layout/header_black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
-                                android:hint="Coupon Name"
+                                android:hint="Card Name"
                                 app:helperTextEnabled="true"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_marginRight="@dimen/_20sdp">
@@ -96,7 +96,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
-                                android:hint="Coupon Number"
+                                android:hint="Card Number"
                                 app:helperTextEnabled="true"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_marginRight="@dimen/_20sdp">
@@ -159,7 +159,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_20sdp"
                                     android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Coupon Details"
+                                    android:hint="Card Details"
                                android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginRight="@dimen/_20sdp">
 
@@ -222,7 +222,7 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:background="@drawable/btn_background"
-                            android:text="Add Coupon"
+                            android:text="Add Card"
                             android:textColor="@color/white"
                             android:layout_marginStart="@dimen/_20sdp"
                             android:layout_marginLeft="@dimen/_20sdp"

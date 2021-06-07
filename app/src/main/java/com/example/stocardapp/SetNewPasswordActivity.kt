@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -20,10 +19,6 @@ class SetNewPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_new_password)
-
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.header_black)
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Set New  Password")

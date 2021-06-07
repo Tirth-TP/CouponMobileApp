@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <include layout="@layout/header_black" />-->
+        <include layout="@layout/header_black" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -90,6 +90,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
+                                    android:enabled="false"
                                     android:inputType="text"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -118,29 +119,12 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
+                                    android:enabled="false"
                                     android:inputType="text"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-
-                            <Button
-                                android:id="@+id/btnSUpdate"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:text="Update store"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                android:background="#342ea9"
-                                android:textColor="@color/white"
-
-                                />
                         <Button
                             android:id="@+id/btnSdel"
                             android:layout_width="@dimen/_100sdp"
@@ -151,10 +135,8 @@
                             app:layout_constraintStart_toStartOf="parent"
                             android:background="#342ea9"
                             android:textColor="@color/white"
-                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_weight="1"
                             />
-
-                        </LinearLayout>
 
 </LinearLayout>
                     <androidx.recyclerview.widget.RecyclerView
@@ -195,7 +177,7 @@
         android:layout_marginBottom="22dp"
         android:contentDescription="Add Card"
         android:fontFamily="@font/catamaran"
-        android:text="Add Coupon"
+        android:text="Add Card"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:backgroundTint="#342ea9"

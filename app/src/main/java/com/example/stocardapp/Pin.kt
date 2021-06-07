@@ -1,6 +1,5 @@
 package com.example.stocardapp
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -15,10 +14,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
-import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -57,11 +54,8 @@ class Pin : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        (context as AppCompatActivity).supportActionBar!!.title = "Change Pin"
-
-//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
-//        txtTit.setText("Change PIN")
+        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+        txtTit.setText("Change PIN")
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -120,32 +114,15 @@ class Pin : Fragment() {
                     response: retrofit2.Response<ForgotPsResponse>
                 ) {
                     Toast.makeText(context,response.body()?.message,Toast.LENGTH_LONG).show()
-                    Log.d("HELLLLLLLLLLLLLLLLLL",response.body()?.message.toString())
+                    var dialog = Dialog(requireContext())
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.otpdlg)
+                    val otp = dialog.findViewById(R.id.votp) as EditText
+                    val yesBtn = dialog.findViewById(R.id.cotp) as Button
 
-//                    var dialog = Dialog(requireContext())
-//                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//                    dialog.setCancelable(false)
-//                    dialog.setContentView(R.layout.otpdlg)
-//                    val otp = dialog.findViewById(R.id.votp) as EditText
-//                    val yesBtn = dialog.findViewById(R.id.cotp) as Button
-                    val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
-
-                    val inflater: LayoutInflater = this@Pin.layoutInflater
-                    val dialogView: View = inflater.inflate(
-                        R.layout.fragment_pin_authentication,
-                        null
-                    )
-
-
-                    dialogBuilder.setView(dialogView)
-
-                    val alertDialog: AlertDialog = dialogBuilder.create()
-
-                    alertDialog.show()
-
-                    dialogView.pin_code_et.setOnPinEnteredListener {
-                        val otp=it.toString()
-                        map["pin_otp"] = toPart(otp) as RequestBody
+                    yesBtn.setOnClickListener {
+                        map["pin_otp"] = toPart(otp.text.toString()) as RequestBody
                         //start
                         mAPIService.changePas(token!!, "OTP_Verify", map).enqueue(object :
                                 Callback<ChangePasswordResponse> {
@@ -153,7 +130,7 @@ class Pin : Fragment() {
                                     call: Call<ChangePasswordResponse>,
                                     response: retrofit2.Response<ChangePasswordResponse>
                             ) {
-                                alertDialog.dismiss()
+
                                 var i = (Intent(context, ResetActivity::class.java))
 
                                 i.flags =
@@ -166,9 +143,9 @@ class Pin : Fragment() {
                             }
                         })
                         //end
-                       // dialog.dismiss()
+                        dialog.dismiss()
                     }
-                   // dialog.show()
+                    dialog.show()
                 }
                 override fun onFailure(call: Call<ForgotPsResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()

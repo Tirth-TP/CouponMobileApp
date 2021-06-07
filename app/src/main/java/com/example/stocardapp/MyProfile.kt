@@ -16,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import coil.api.load
@@ -76,16 +75,13 @@ class MyProfile : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+        txtTit.setText("My profile")
 
-        (context as AppCompatActivity).supportActionBar!!.title = "My Profile"
-
-//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
-//        txtTit.setText("My profile")
-
-//        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
-//        ibk.setOnClickListener {
-//            startActivity(Intent(context, HomeActivity::class.java))
-//        }
+        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
+        ibk.setOnClickListener {
+            startActivity(Intent(context, HomeActivity::class.java))
+        }
 
 
         val phn = requireView().findViewById(R.id.getMb) as EditText

@@ -19,7 +19,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
@@ -53,9 +52,6 @@ class AddCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_card2)
 
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.header_black)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasWritePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -78,8 +74,9 @@ class AddCardActivity : AppCompatActivity() {
             }
         }
 
+
         val txtTit = findViewById<TextView>(R.id.txtTitle)
-        txtTit.setText("Add Coupon")
+        txtTit.setText("Add Card")
         val ibk = findViewById<ImageView>(R.id.imgBack)
         ibk.setOnClickListener {
             startActivity(Intent(this,CardListActivity::class.java))

@@ -35,9 +35,10 @@
         android:id="@+id/storeRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_35sdp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2" />
+        app:spanCount="2"
+        android:layout_marginTop="@dimen/_35sdp"
+        />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_addStore"

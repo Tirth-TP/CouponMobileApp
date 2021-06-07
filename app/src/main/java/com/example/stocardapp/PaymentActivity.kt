@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.CardDetail
 import com.example.stocardapp.models.ChangePasswordResponse
@@ -28,10 +27,6 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
-
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.header_black)
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Make Payment")

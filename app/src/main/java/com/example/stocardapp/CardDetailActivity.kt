@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import coil.api.load
 import com.example.stocardapp.models.DeleteResponse
@@ -27,13 +26,8 @@ class CardDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail2)
 
-        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.header_black)
-
-//        supportActionBar?.hide()
         val txtTit = findViewById<TextView>(R.id.txtTitle)
-        txtTit.setText("Coupon Details")
+        txtTit.setText("Card Details")
         val ibk = findViewById<ImageView>(R.id.imgBack)
         val btn_del = findViewById<Button>(R.id.btnCdel)
         var addPay = findViewById<Button>(R.id.btn_pay)

@@ -46,7 +46,6 @@ class StoreAdapter(var ctx: Context, var arr: ArrayList<StoreDetail>,var lisener
                 i.putExtra("storeNm", snm)
                 i.putExtra("storeCon", scon)
                 i.putExtra("storeLoc", sloc)
-                SharedPrefManager.getInstance(v.context).saveStore(sid!!,snm!!, sloc!!, scon!!)
                 v.context.startActivity(i)
             }
 
