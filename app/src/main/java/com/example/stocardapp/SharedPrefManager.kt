@@ -3,6 +3,8 @@ package com.example.stocardapp
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.stocardapp.models.CardDetail
+import com.example.stocardapp.models.Store
 import com.example.stocardapp.models.User
 
 class SharedPrefManager private constructor(private val mCtx:Context){
@@ -37,6 +39,16 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.putString("pin", user.pin)
         editor.putString("phone", user.phone)
         editor.putString("Image",user.Image)
+        editor.apply()
+    }
+
+    fun saveStore(sid: Int, stname: String, stlocation: String, contact: String,) {
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("sid",sid)
+        editor.putString("stname",stname)
+        editor.putString("stlocation",stlocation)
+        editor.putString("contact",contact)
         editor.apply()
     }
 

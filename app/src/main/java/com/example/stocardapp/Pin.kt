@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -54,8 +55,11 @@ class Pin : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
-        txtTit.setText("Change PIN")
+
+        (context as AppCompatActivity).supportActionBar!!.title = "Change Pin"
+
+//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+//        txtTit.setText("Change PIN")
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService

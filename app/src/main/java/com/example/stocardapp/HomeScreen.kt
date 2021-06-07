@@ -17,6 +17,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -83,7 +84,8 @@ class HomeScreen : Fragment() {
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
         val btnflt = requireView().findViewById<ImageView>(R.id.btnFilter)
 
-      //  var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
+        (context as AppCompatActivity).supportActionBar!!.title = "Stocard App"
+        //  var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
      //   var itemsLayout:  = requireView().findViewById(R.id.nav)
         spinAnim = AnimationUtils.loadAnimation(context, R.anim.spin_animation)
         btANim = AnimationUtils.loadAnimation(context, R.anim.bottom_animation)

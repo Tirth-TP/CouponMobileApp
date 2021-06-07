@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,12 +43,15 @@ class About : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
-        txtTit.setText("About US")
-        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
-        ibk.setOnClickListener {
-            startActivity(Intent(context,HomeActivity::class.java))
-        }
+
+        (context as AppCompatActivity).supportActionBar!!.title = "About Us"
+
+//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+//        txtTit.setText("About US")
+//        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
+//        ibk.setOnClickListener {
+//            startActivity(Intent(context,HomeActivity::class.java))
+//        }
     }
 
     companion object {
