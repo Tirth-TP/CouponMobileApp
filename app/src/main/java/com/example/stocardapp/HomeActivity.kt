@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -26,6 +27,7 @@ import com.example.stocardapp.models.ForgotPsResponse
 import com.example.stocardapp.models.ShareCardResponse
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.android.synthetic.main.dialogue_card_detail.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -90,6 +92,10 @@ class HomeActivity : AppCompatActivity() {
                     movetoFragment(
                         MyProfile()
                     )
+                }
+                R.id.nav_fav->
+                {
+                    movetoFragment(Favorites())
                 }
                 R.id.nav_contact->
                 {
@@ -164,7 +170,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun getCard() {
         val SHARED_PREF_NAME = "my_shared_preff"
-        val sharedPreference =  getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -172,45 +178,86 @@ class HomeActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.get_card, null)
         var cd = view.findViewById<TextInputEditText>(R.id.getCd)
         cd.setHint("Enter Code")
-        var alertDialog: AlertDialog? =null
+        // var alertDialog: AlertDialog? =null
+        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
 
-        with(builder)
-        {
-            val title = SpannableString("Get Card")
-            title.setSpan(
-                    ForegroundColorSpan(Color.parseColor("#342ea9")),
-                    0,
-                    title.length,
-                    0
-            )
-            setTitle(title)
-            setTheme(R.style.Theme_StocardApp)
-            setPositiveButton("Add"){ dialog, which ->
-                val map: MutableMap<String, RequestBody> = HashMap()
-                map["share_code"] = toPart(cd.text.toString()) as RequestBody
+        val inflater: LayoutInflater = this.layoutInflater
+        val dialogView: View = inflater.inflate(
+            R.layout.dialogue_card_detail,
+            null
+        )
+        //dialogView.etCardName.setText()
 
-            Log.d("tpp",token)
-                mAPIService.shareCard(token!!, "AddShareCard", map).enqueue(object :
-                        Callback<ShareCardResponse> {
-                    override fun onResponse(
-                            call: Call<ShareCardResponse>,
-                            response: retrofit2.Response<ShareCardResponse>
-                    ) {
-                        Log.d("resshh1",response.toString())
-                       // Log.d("resshh1",response.body()!!.message)
-                                Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                    }
-                    override fun onFailure(call: Call<ShareCardResponse>, t: Throwable) {
-                        Toast.makeText(this@HomeActivity, t.message, Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-            setNegativeButton("Cancel"){ dialog, which->
-                dialog.dismiss()
-            }
-            setView(view)
-            show()
+        dialogBuilder.setView(dialogView)
+
+        val alertDialog: AlertDialog = dialogBuilder.create()
+        alertDialog.show()
+        var getCode = dialogView.etCardName.text
+        dialogView.btnCardCancel.setOnClickListener {
+            alertDialog.dismiss()
         }
+        dialogView.btnCoopanAdd.setOnClickListener {
+
+            alertDialog.dismiss()
+            val map: MutableMap<String, RequestBody> = HashMap()
+            map["share_code"] = toPart(getCode.toString()) as RequestBody
+
+            Log.d("tpp", token)
+            mAPIService.shareCard(token!!, "AddShareCard", map).enqueue(object :
+                Callback<ShareCardResponse> {
+                override fun onResponse(
+                    call: Call<ShareCardResponse>,
+                    response: retrofit2.Response<ShareCardResponse>
+                ) {
+                    Log.d("resshh1", response.toString())
+                    // Log.d("resshh1",response.body()!!.message)
+                    Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                override fun onFailure(call: Call<ShareCardResponse>, t: Throwable) {
+                    Toast.makeText(this@HomeActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+
+
+        }
+//        with(builder)
+//        {
+//            val title = SpannableString("Get Card")
+//            title.setSpan(
+//                    ForegroundColorSpan(Color.parseColor("#342ea9")),
+//                    0,
+//                    title.length,
+//                    0
+//            )
+//            setTitle(title)
+//            setTheme(R.style.Theme_StocardApp)
+//            setPositiveButton("Add"){ dialog, which ->
+//
+//
+//            Log.d("tpp",token)
+//                mAPIService.shareCard(token!!, "AddShareCard", map).enqueue(object :
+//                        Callback<ShareCardResponse> {
+//                    override fun onResponse(
+//                            call: Call<ShareCardResponse>,
+//                            response: retrofit2.Response<ShareCardResponse>
+//                    ) {
+//                        Log.d("resshh1",response.toString())
+//                       // Log.d("resshh1",response.body()!!.message)
+//                                Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+//                    }
+//                    override fun onFailure(call: Call<ShareCardResponse>, t: Throwable) {
+//                        Toast.makeText(this@HomeActivity, t.message, Toast.LENGTH_LONG).show()
+//                    }
+//                })
+//            }
+//            setNegativeButton("Cancel"){ dialog, which->
+//                dialog.dismiss()
+//            }
+//            setView(view)
+//            show()
+//        }
     }
     private fun movetoFragment(fragment: Fragment){
         val fragmrntTrans=supportFragmentManager.beginTransaction()

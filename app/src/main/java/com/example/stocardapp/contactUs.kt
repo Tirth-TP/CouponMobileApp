@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -46,12 +47,14 @@ class contactUs : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
-        txtTit.setText("Contact Us")
-        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
-        ibk.setOnClickListener {
-            startActivity(Intent(context,HomeActivity::class.java))
-        }
+        (context as AppCompatActivity).supportActionBar!!.title = "Contact Us"
+
+//        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
+//        txtTit.setText("Contact Us")
+//        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
+//        ibk.setOnClickListener {
+//            startActivity(Intent(context,HomeActivity::class.java))
+//        }
         val btnCn = requireView().findViewById<Button>(R.id.btn_cnt)
         val tnm = requireView().findViewById<EditText>(R.id.txtCNm)
         val tem = requireView().findViewById<EditText>(R.id.txtCem)

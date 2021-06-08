@@ -12,10 +12,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/header_black" />
-
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"

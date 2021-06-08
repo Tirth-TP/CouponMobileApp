@@ -3,14 +3,14 @@ package com.example.stocardapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,16 +45,17 @@ class RateUs : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
-        txtTit.setText("Give Rating")
-        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
-        ibk.setOnClickListener {
-            startActivity(Intent(context,HomeActivity::class.java))
-        }
+        (context as AppCompatActivity).supportActionBar!!.title = "Rate Us"
+//        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
+//        txtTit.setText("Give Rating")
+//        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
+//        ibk.setOnClickListener {
+//            startActivity(Intent(context,HomeActivity::class.java))
+//        }
         val btnRt = requireView().findViewById<Button>(R.id.btn_rate)
         btnRt.setOnClickListener {
             var playstoreuri1: Uri = Uri.parse("market://details?id=com.example.stocardapp")
-            Toast.makeText(context,"Thank You For Rating",Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Thank You For Rating", Toast.LENGTH_LONG).show()
 //            val intent = Intent(this@RateUs.context, HomeActivity::class.java)
 //            startActivity(intent)
             var playstoreIntent1: Intent = Intent(Intent.ACTION_VIEW, playstoreuri1)

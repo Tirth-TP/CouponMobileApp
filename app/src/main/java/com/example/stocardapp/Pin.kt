@@ -1,5 +1,6 @@
 package com.example.stocardapp
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -14,8 +15,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
+import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -54,32 +57,36 @@ class Pin : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
-        txtTit.setText("Change PIN")
+
+        (context as AppCompatActivity).supportActionBar!!.title = "Change Pin"
+
+//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+//        txtTit.setText("Change PIN")
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
 
         val top = requireView().findViewById(R.id.opin) as EditText
         val tnp = requireView().findViewById(R.id.npin) as EditText
-        val tcp = requireView().findViewById(R.id.cpin)as EditText
+        val tcp = requireView().findViewById(R.id.cpin) as EditText
         val txtChange = requireView().findViewById(R.id.txtForPin) as TextView
         val btn = requireView().findViewById(R.id.btnFrg) as Button
 
         val SHARED_PREF_NAME = "my_shared_preff"
         //val sharedPreferences = context?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        val sharedPreference = this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        val token ="Bearer " + (sharedPreference?.getString("token", "defaultName"))
+        val sharedPreference =
+            this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
         val map: MutableMap<String, RequestBody> = HashMap()
 
 
         btn.setOnClickListener {
 
-           var op = top.text.toString()
-           var np = tnp.text.toString()
-           var cp = tcp.text.toString()
+            var op = top.text.toString()
+            var np = tnp.text.toString()
+            var cp = tcp.text.toString()
 
-            if(np.equals(cp)) {
+            if (np.equals(cp)) {
                 //Log.d("pinnnnn","yesss")
                 map["old_pin"] = toPart(op) as RequestBody
                 map["new_pin"] = toPart(np)
@@ -92,13 +99,12 @@ class Pin : Fragment() {
                     ) {
                         Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
                     }
+
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                         Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                     }
                 })
-            }
-            else
-            {
+            } else {
                 //Log.d("pinnnnn","upss")
                 tcp.setError("PIN does not match!")
             }
@@ -113,45 +119,72 @@ class Pin : Fragment() {
                     call: Call<ForgotPsResponse>,
                     response: retrofit2.Response<ForgotPsResponse>
                 ) {
-                    Toast.makeText(context,response.body()?.message,Toast.LENGTH_LONG).show()
-                    var dialog = Dialog(requireContext())
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    dialog.setCancelable(false)
-                    dialog.setContentView(R.layout.otpdlg)
-                    val otp = dialog.findViewById(R.id.votp) as EditText
-                    val yesBtn = dialog.findViewById(R.id.cotp) as Button
+                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                    Log.d("HELLLLLLLLLLLLLLLLLL", response.body()?.message.toString())
 
-                    yesBtn.setOnClickListener {
-                        map["pin_otp"] = toPart(otp.text.toString()) as RequestBody
+//                    var dialog = Dialog(requireContext())
+//                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                    dialog.setCancelable(false)
+//                    dialog.setContentView(R.layout.otpdlg)
+//                    val otp = dialog.findViewById(R.id.votp) as EditText
+//                    val yesBtn = dialog.findViewById(R.id.cotp) as Button
+                    val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+                    val inflater: LayoutInflater = this@Pin.layoutInflater
+                    val dialogView: View = inflater.inflate(
+                        R.layout.fragment_pin_authentication,
+                        null
+                    )
+
+
+                    dialogBuilder.setView(dialogView)
+
+                    val alertDialog: AlertDialog = dialogBuilder.create()
+
+                    alertDialog.show()
+
+                    dialogView.pin_code_et.setOnPinEnteredListener {
+                        val otp = it.toString()
+                        map["pin_otp"] = toPart(otp) as RequestBody
                         //start
                         mAPIService.changePas(token!!, "OTP_Verify", map).enqueue(object :
-                                Callback<ChangePasswordResponse> {
+                            Callback<ChangePasswordResponse> {
                             override fun onResponse(
-                                    call: Call<ChangePasswordResponse>,
-                                    response: retrofit2.Response<ChangePasswordResponse>
+                                call: Call<ChangePasswordResponse>,
+                                response: retrofit2.Response<ChangePasswordResponse>
                             ) {
+                                alertDialog.dismiss()
+                                if (response.body()?.status == true) {
+                                    var i = (Intent(context, ResetActivity::class.java))
 
-                                var i = (Intent(context, ResetActivity::class.java))
-
-                                i.flags =
+                                    i.flags =
                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(i)
+                                    startActivity(i)
+                                }
+                                else{
+                                    Toast.makeText(context,"Wrong OTP Try Again",Toast.LENGTH_SHORT).show()
+                                }
 
                             }
-                            override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
+
+                            override fun onFailure(
+                                call: Call<ChangePasswordResponse>,
+                                t: Throwable
+                            ) {
                                 Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                             }
                         })
                         //end
-                        dialog.dismiss()
+                        // dialog.dismiss()
                     }
-                    dialog.show()
+                    // dialog.show()
                 }
+
                 override fun onFailure(call: Call<ForgotPsResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                 }
             })
-          //  Log.d("htytyt",flag.toString())
+            //  Log.d("htytyt",flag.toString())
 
 //            if(flag==true)
 //            {
@@ -197,6 +230,7 @@ class Pin : Fragment() {
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
+
     companion object {
         /**
          * Use this factory method to create a new instance of
