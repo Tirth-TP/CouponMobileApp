@@ -82,4 +82,5 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //chips
     implementation 'com.google.android:flexbox:1.1.0'
+    implementation 'com.alimuzaffar.lib:pinentryedittext:1.3.1'
 }
