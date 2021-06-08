@@ -137,10 +137,14 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener:On
         {
             holder.stcv.isEnabled = false
             holder.stcv.setBackgroundColor(Color.LTGRAY)
+            holder.Simg.visibility = View.INVISIBLE
+            holder.Ctit.setText("Coupen Expired")
         }
         if(arr.get(position).isActive == "false")
         {
             holder.stcv.isEnabled = false
+            holder.Simg.visibility = View.INVISIBLE
+            holder.Ctit.setText("Coupen Expired")
             holder.stcv.setBackgroundColor(Color.LTGRAY)
             holder.hdBtn.visibility = View.INVISIBLE
         }

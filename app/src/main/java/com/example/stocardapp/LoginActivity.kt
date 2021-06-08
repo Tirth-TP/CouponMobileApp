@@ -19,7 +19,9 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.example.stocardapp.R.*
 import com.example.stocardapp.models.ChangePasswordResponse
@@ -30,6 +32,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
+import kotlinx.android.synthetic.main.header_black.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -112,6 +115,9 @@ class LoginActivity : AppCompatActivity() {
         var a = 0
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Log In")
+        txtTit.setTextColor(R.color.black)
+        val ibk = findViewById<ImageView>(R.id.imgBack)
+        ibk.isVisible = false
         val txtFr = findViewById<TextView>(R.id.txtForgot)
        /* var pass = findViewById<EditText>(R.id.txtPass)
         pass.setOnTouchListener(View.OnTouchListener { v, event ->
