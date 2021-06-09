@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
@@ -224,6 +225,12 @@ class Pin : Fragment() {
 //            }
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
 

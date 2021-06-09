@@ -1,12 +1,14 @@
 package com.example.stocardapp
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -109,6 +111,13 @@ class Favorites : Fragment() {
                 Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
             }
         })
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
 
     }
 

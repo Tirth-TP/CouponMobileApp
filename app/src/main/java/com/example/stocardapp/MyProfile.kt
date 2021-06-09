@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -217,6 +218,12 @@ class MyProfile : Fragment() {
             startActivity(intent)
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
   /*  private fun launchCustomAlertDialog() {
         val ops = requireView().findViewById(R.id.chold) as EditText
