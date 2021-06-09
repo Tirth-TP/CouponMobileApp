@@ -11,15 +11,7 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="Filter Off"
-        android:textColor="@color/black"
-        android:theme="@style/FilterSwitchTheme"
-       />
+
 
     <ImageView
         android:id="@+id/btnFilter"
@@ -48,6 +40,7 @@
         android:contentDescription="Add Store"
         android:fontFamily="@font/catamaran"
         android:text="Add Store"
+        android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:backgroundTint="#342ea9"

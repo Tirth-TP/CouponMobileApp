@@ -111,12 +111,12 @@ class HomeScreen : Fragment() {
                 this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
 
-        switch1.isClickable = false
+//        switch1.isClickable = false
 
         if(f=="all")
         {
-            switch1.isClickable = true
-            switch1.isChecked = true
+//            switch1.isClickable = true
+//            switch1.isChecked = true
             map["filter_id"] = toPart(s!!) as RequestBody
 
             mAPIService!!.storeDetails(token!!, "Filter", map).enqueue(object :
@@ -201,13 +201,13 @@ class HomeScreen : Fragment() {
             startActivity(intent)
         }
 
-        switch1.setOnCheckedChangeListener({ _ , isChecked ->
-            if(isChecked) "Switch1:ON" else {
-                //allstore()
-               requireContext().startActivity(Intent(context,HomeActivity::class.java))
-                switch1.isClickable = false
-            }
-        })
+//        switch1.setOnCheckedChangeListener({ _ , isChecked ->
+//            if(isChecked) "Switch1:ON" else {
+//                //allstore()
+//               requireContext().startActivity(Intent(context,HomeActivity::class.java))
+//                switch1.isClickable = false
+//            }
+//        })
     }
 
     private fun allstore() {

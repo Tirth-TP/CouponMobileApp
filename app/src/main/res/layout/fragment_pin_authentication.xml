@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        android:src="@drawable/safe2"/>
+        android:src="@drawable/safe_otp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"

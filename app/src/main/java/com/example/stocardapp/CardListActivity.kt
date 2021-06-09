@@ -203,6 +203,7 @@ class CardListActivity : AppCompatActivity() {
             if (item != null) {
                 var sec: androidx.appcompat.widget.SearchView =
                         item.actionView as androidx.appcompat.widget.SearchView
+
                 sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                         androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {

@@ -28,7 +28,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val nps = findViewById(R.id.chNew) as EditText
         val cps = findViewById(R.id.chCon) as EditText
         val btn_sv = findViewById(R.id.btn_yes) as Button
-        val btnCl = findViewById(R.id.btn_cl) as Button
+        //val btnCl = findViewById(R.id.btn_cl) as Button
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -37,11 +37,11 @@ class ChangePasswordActivity : AppCompatActivity() {
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
 
-        btnCl.setOnClickListener {
-            var i = (Intent(this@ChangePasswordActivity,HomeActivity::class.java))
-            i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
-        }
+//        btnCl.setOnClickListener {
+//            var i = (Intent(this@ChangePasswordActivity,HomeActivity::class.java))
+//            i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(i)
+//        }
 
         btn_sv.setOnClickListener {
             val op = ops.text.toString().trim()

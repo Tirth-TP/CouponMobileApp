@@ -22,11 +22,11 @@
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:fontFamily="@font/catamaran"
-        android:paddingTop="@dimen/_3sdp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="80dp"
         android:textColor="#ffffff"
-        android:textSize="@dimen/_20sdp"
+        android:textSize="17dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

@@ -50,6 +50,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Store Category"
+                                android:textSize="15sp"
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp">
 
@@ -58,6 +59,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:clickable="true"
+                                    android:textSize="15sp"
+                                    android:layout_marginBottom="7dp"
                                     tools:ignore="KeyboardInaccessibleWidget" />
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,6 +79,7 @@
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
                                 android:hint="Store Name"
+                                android:textSize="15sp"
                                 app:helperTextEnabled="true"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_marginRight="@dimen/_20sdp">
@@ -86,7 +90,9 @@
                                     android:layout_height="@dimen/_40sdp"
                                     android:imeOptions="actionNext"
                                     android:inputType="text"
+                                    android:textSize="15sp"
                                     android:paddingLeft="@dimen/_10sdp"
+                                    android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
                                     android:maxLines="1">
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
 
@@ -108,6 +114,7 @@
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
                                 android:hint="Store Contact"
+                                android:textSize="15sp"
                                 app:helperTextEnabled="true"
                                 android:layout_marginLeft="@dimen/_20sdp"
                                 android:layout_marginRight="@dimen/_20sdp">
@@ -115,10 +122,12 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/storePn"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="@dimen/_40sdp"
+                                    android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
                                     android:imeOptions="actionNext"
                                     android:inputType="phone"
-                                    android:maxLines="1" />
+                                    android:maxLines="1"
+                                    android:textSize="15sp" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
@@ -142,12 +151,12 @@
 
                                 <ImageView
                                     android:id="@+id/storeImg"
-                                    android:layout_width="@dimen/_200sdp"
-                                    android:layout_height="@dimen/_120sdp"
-                                    android:layout_gravity="center|center_vertical"
-                                    android:layout_marginLeft="@dimen/_30sdp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="100dp"
+                                    android:layout_gravity="center"
                                     android:background="@color/white"
-                                    android:src="@drawable/onlinestore"
+                                    android:src="@drawable/store"
                                     app:tint="@color/dark_blue">
 
                                 </ImageView>
@@ -180,16 +189,18 @@
                                     android:layout_marginStart="@dimen/_20sdp"
                                     android:layout_marginEnd="@dimen/_20sdp"
                                     android:hint="Store Location"
+                                    android:textSize="15sp"
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginRight="@dimen/_20sdp">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/storeLoc"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="@dimen/_40sdp"
                                         android:imeOptions="actionNext"
                                         android:inputType="text"
-
+                                        android:textSize="15sp"
+                                        android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
@@ -201,7 +212,7 @@
                             android:id="@+id/btn_store"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginTop="7dp"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:background="@drawable/btn_background"
                             android:text="Add Store"
@@ -210,7 +221,6 @@
                             android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_20sdp"/>
                     </LinearLayout>
-
 
                 </LinearLayout>
             </ScrollView>
