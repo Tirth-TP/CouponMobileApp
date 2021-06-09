@@ -93,7 +93,7 @@
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
@@ -172,7 +172,7 @@
                                         android:editable="true"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
 

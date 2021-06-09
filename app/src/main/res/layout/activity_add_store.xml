@@ -85,7 +85,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="@dimen/_40sdp"
                                     android:imeOptions="actionNext"
-                                    android:inputType="text"
+                                    android:inputType="textCapWords"
                                     android:paddingLeft="@dimen/_10sdp"
                                     android:maxLines="1">
                                 </com.google.android.material.textfield.MaterialAutoCompleteTextView>
@@ -99,7 +99,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:orientation="horizontal">
-
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/txtInpEmail"
@@ -188,8 +187,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
-
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>

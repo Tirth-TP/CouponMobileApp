@@ -4,18 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
+import coil.transform.BlurTransformation
 import com.example.stocardapp.models.CardDetail
 import com.example.stocardapp.models.DeleteResponse
 import com.example.stocardapp.models.HideCard
@@ -121,6 +124,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener:On
         return arr.size
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.Ctit.text=arr[position].cardname
         holder.cid = arr[position].id
@@ -136,16 +140,24 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener:On
         if(holder.iu == "true")
         {
             holder.stcv.isEnabled = false
-            holder.stcv.setBackgroundColor(Color.LTGRAY)
-            holder.Simg.visibility = View.INVISIBLE
-            holder.Ctit.setText("Coupen Expired")
+           // holder.stcv.setBackgroundColor(Color.LTGRAY)
+           // holder.Simg.visibility = View.INVISIBLE
+            holder.Ctit.setText("Coupon Expired")
+            holder.Ctit.setTextColor(Color.RED)
+
         }
         if(arr.get(position).isActive == "false")
         {
             holder.stcv.isEnabled = false
-            holder.Simg.visibility = View.INVISIBLE
-            holder.Ctit.setText("Coupen Expired")
-            holder.stcv.setBackgroundColor(Color.LTGRAY)
+           // holder.Simg.visibility = View.INVISIBLE
+            holder.Ctit.setText("Coupon Expired")
+            holder.Ctit.setTextColor(Color.RED)
+            holder.Ctit.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
+            holder.stcv.setBackgroundResource(R.drawable.btn_blank_corners)
+            val layoutParams = holder.Ctit.layoutParams as LinearLayout.LayoutParams
+            layoutParams.topMargin = 32
+            holder.Simg.setColorFilter(Color.parseColor("#66000000"))
+            holder.Ctit.layoutParams = layoutParams
             holder.hdBtn.visibility = View.INVISIBLE
         }
         if(holder.st == "hide")

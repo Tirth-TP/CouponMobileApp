@@ -153,7 +153,6 @@
                             android:textColor="@color/white"
                             android:layout_marginLeft="@dimen/_10sdp"
                             />
-
                         </LinearLayout>
 
 </LinearLayout>
@@ -161,23 +160,17 @@
                         android:id="@+id/cdRv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_20sdp"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"/>
                 </LinearLayout>
             </ScrollView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:background="@drawable/shadow_header" />
+
         </RelativeLayout>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_bottom"/>
+
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_addCard"

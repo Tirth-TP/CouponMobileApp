@@ -238,8 +238,8 @@ class LoginActivity : AppCompatActivity() {
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-
                                                     alertDialog.dismiss()
+                                                if(response.body()?.status==true) {
                                                     var i = (Intent(
                                                         this@LoginActivity,
                                                         SetNewPasswordActivity::class.java
@@ -248,7 +248,7 @@ class LoginActivity : AppCompatActivity() {
                                                     i.flags =
                                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                     startActivity(i)
-
+                                                }
                                             }
                                             override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                                                 Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_LONG).show()

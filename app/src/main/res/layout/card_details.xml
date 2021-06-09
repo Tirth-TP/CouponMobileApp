@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -17,30 +16,31 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/storeCv"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_125sdp"
             android:layout_height="match_parent"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_margin="@dimen/_10sdp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.099">
+           >
 
             <ImageView
                 android:id="@+id/hide"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_hide_source_24"
-                android:layout_marginStart="@dimen/_120sdp"
-                tools:ignore="VectorDrawableCompat" />
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_24sdp"
+                app:srcCompat="@drawable/ic_baseline_lock_24"
+                android:layout_marginStart="@dimen/_100sdp"
+                tools:ignore="VectorDrawableCompat"
+                app:tint="@color/gray" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_margin="16dp"
                 android:orientation="vertical">
@@ -54,8 +54,8 @@
 
                 <TextView
                     android:id="@+id/storeImtit"
-                    android:layout_width="153dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:fontFamily="@font/catamaran"
                     android:textAlignment="center"

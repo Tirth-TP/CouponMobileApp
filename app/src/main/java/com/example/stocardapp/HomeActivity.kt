@@ -103,12 +103,11 @@ class HomeActivity : AppCompatActivity() {
                          contactUs()
                     )
                 }
-
                 R.id.nav_rate->
                 {
-                    movetoFragment(
-                        RateUs()
-                    )
+                    var playstoreuri1: Uri = Uri.parse("market://details?id=com.example.stocardapp")
+                    var playstoreIntent1: Intent = Intent(Intent.ACTION_VIEW, playstoreuri1)
+                    startActivity(playstoreIntent1)
                 }
                 R.id.nav_card->
                 {

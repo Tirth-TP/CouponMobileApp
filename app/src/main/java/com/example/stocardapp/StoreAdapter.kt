@@ -19,6 +19,7 @@ import com.example.stocardapp.models.HideCardResponse
 import com.example.stocardapp.models.StoreDetail
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.internal.notifyAll
 import retrofit2.Call
 import retrofit2.Callback
 import java.util.*
@@ -70,7 +71,6 @@ class StoreAdapter(var ctx: Context, var arr: ArrayList<StoreDetail>,var lisener
                            Log.d("resshh",response.toString())
                            //     Log.d("iddd",cid.toString())
                            Toast.makeText(ctx,response.body()?.message,Toast.LENGTH_LONG).show()
-                           ctx.startActivity(Intent(ctx,HomeActivity::class.java))
 
                        }
                        override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
@@ -90,7 +90,8 @@ class StoreAdapter(var ctx: Context, var arr: ArrayList<StoreDetail>,var lisener
                            Log.d("resshh",response.toString())
                            //     Log.d("iddd",cid.toString())
                            Toast.makeText(ctx,response.body()?.message,Toast.LENGTH_LONG).show()
-                           ctx.startActivity(Intent(ctx,HomeActivity::class.java))
+//                           ctx.startActivity(Intent(ctx,HomeActivity::class.java))
+
 
                        }
                        override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {

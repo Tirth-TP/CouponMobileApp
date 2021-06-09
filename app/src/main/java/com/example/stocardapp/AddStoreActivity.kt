@@ -108,7 +108,7 @@ class AddStoreActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(spn.length()>11)
+                if(spn.length()>10)
                 {
                     spn.setError("Invalid Phone Number")
                 }
