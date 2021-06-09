@@ -7,4 +7,11 @@
         app:showAsAction="always|collapseActionView"
         android:iconTint="@color/white"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item android:id="@+id/btnFilter"
+        android:title="filter"
+        android:icon="@drawable/ic_baseline_filter_alt_24"
+        app:showAsAction="always|collapseActionView"
+        android:iconTint="@color/white" />
+
 </menu>

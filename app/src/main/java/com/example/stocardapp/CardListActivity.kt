@@ -3,14 +3,16 @@ package com.example.stocardapp
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stocardapp.models.*
@@ -108,10 +110,10 @@ class CardListActivity : AppCompatActivity() {
         //card list
         Log.d("msg", sid.toString())
         mAPIService.cardList(token!!, "CardDetail", map).enqueue(object :
-                Callback<CardDetailResponse> {
+            Callback<CardDetailResponse> {
             override fun onResponse(
-                    call: Call<CardDetailResponse>,
-                    response: retrofit2.Response<CardDetailResponse>
+                call: Call<CardDetailResponse>,
+                response: retrofit2.Response<CardDetailResponse>
             ) {
                 //var ad = CardAdapter(this@CardListActivity, stList)
                 var dt = response.body()?.data
@@ -123,7 +125,10 @@ class CardListActivity : AppCompatActivity() {
                     // cRv.adapter = ad
                     dispLst.addAll(stList)
                     var adapter =
-                            CardAdapter(this@CardListActivity, dispLst, object : OnStartDragListener {
+                        CardAdapter(
+                            this@CardListActivity,
+                            dispLst,
+                            object : OnStartDragListener {
                                 override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
                                     itemTouchHelper?.startDrag(viewHolder!!)
                                 }
@@ -152,12 +157,16 @@ class CardListActivity : AppCompatActivity() {
                 map["contact"] = toPart(getCn.text.toString())
                 map["location"] = toPart(getLc.text.toString())
                 mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
-                        Callback<StoreUpdateResponse> {
+                    Callback<StoreUpdateResponse> {
                     override fun onResponse(
-                            call: Call<StoreUpdateResponse>,
-                            response: retrofit2.Response<StoreUpdateResponse>
+                        call: Call<StoreUpdateResponse>,
+                        response: retrofit2.Response<StoreUpdateResponse>
                     ) {
-                        Toast.makeText(this@CardListActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@CardListActivity,
+                            response.body()?.message,
+                            Toast.LENGTH_LONG
+                        ).show()
                         val i = (Intent(applicationContext, HomeActivity::class.java))
                         startActivity(i)
                     }
@@ -173,15 +182,15 @@ class CardListActivity : AppCompatActivity() {
 
                 map["id"] = toPart(sid.toString()) as RequestBody
                 mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :
-                        Callback<DeleteResponse> {
+                    Callback<DeleteResponse> {
                     override fun onResponse(
-                            call: Call<DeleteResponse>,
-                            response: retrofit2.Response<DeleteResponse>
+                        call: Call<DeleteResponse>,
+                        response: retrofit2.Response<DeleteResponse>
                     ) {
                         Toast.makeText(
-                                this@CardListActivity,
-                                response.body()?.message,
-                                Toast.LENGTH_LONG
+                            this@CardListActivity,
+                            response.body()?.message,
+                            Toast.LENGTH_LONG
                         ).show()
                         val i = (Intent(applicationContext, HomeActivity::class.java))
                         startActivity(i)
@@ -195,44 +204,50 @@ class CardListActivity : AppCompatActivity() {
         }
     }
 
-        override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            menuInflater.inflate(R.menu.menu_ser, menu)
-            var item: MenuItem = menu!!.findItem(R.id.ser)
-            var cRv = findViewById<RecyclerView>(R.id.cdRv)
+    @SuppressLint("ResourceAsColor")
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_ser, menu)
+        var item: MenuItem = menu!!.findItem(R.id.ser)
+        var cRv = findViewById<RecyclerView>(R.id.cdRv)
+        var sec: androidx.appcompat.widget.SearchView =
+            item.actionView as androidx.appcompat.widget.SearchView
+        val searchEditText: EditText =
+            sec.findViewById(androidx.appcompat.R.id.search_src_text)
+        searchEditText.setTextColor(resources.getColor(R.color.white))
+        searchEditText.setHintTextColor(resources.getColor(R.color.white))
 
-            if (item != null) {
-                var sec: androidx.appcompat.widget.SearchView =
-                        item.actionView as androidx.appcompat.widget.SearchView
-                sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        return true
-                    }
+        if (item != null) {
+            sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
 
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        if (newText!!.isNotEmpty()) {
-                            dispLst.clear()
-                            val se = newText.toLowerCase(Locale.getDefault())
-                            stList.forEach {
-                                if (it.cardname.toLowerCase(Locale.getDefault()).contains(se)) {
-                                    dispLst.add(it)
-                                }
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if (newText!!.isNotEmpty()) {
+                        dispLst.clear()
+                        val se = newText.toLowerCase(Locale.getDefault())
+                        stList.forEach {
+                            if (it.cardname.toLowerCase(Locale.getDefault()).contains(se)) {
+                                dispLst.add(it)
                             }
-                            cRv.adapter!!.notifyDataSetChanged()
-                        } else {
-                            dispLst.clear()
-                            dispLst.addAll(stList)
-                            cRv.adapter!!.notifyDataSetChanged()
                         }
-                        return true
+                        cRv.adapter!!.notifyDataSetChanged()
+                    } else {
+                        dispLst.clear()
+                        dispLst.addAll(stList)
+                        cRv.adapter!!.notifyDataSetChanged()
                     }
-                })
-            }
-            return super.onCreateOptionsMenu(menu)
+                    return true
+                }
+            })
         }
-
-        fun toPart(data: String): RequestBody {
-            return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
-        }
-
+        return super.onCreateOptionsMenu(menu)
     }
+
+    fun toPart(data: String): RequestBody {
+        return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
+    }
+
+}

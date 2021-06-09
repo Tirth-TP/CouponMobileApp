@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeScreen">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:text="Filter Off"
-        android:textColor="@color/black"
-        android:theme="@style/FilterSwitchTheme"
-       />
+<!--    <com.google.android.material.appbar.AppBarLayout-->
 
-    <ImageView
-        android:id="@+id/btnFilter"
-        android:layout_width="@dimen/_30sdp"
-        android:layout_height="@dimen/_50sdp"
-        android:src="@drawable/ic_baseline_filter_alt_24"
-        android:layout_gravity="end"
-        android:layout_marginTop="@dimen/_5sdp"
-        app:tint="#342ea9"
-        />
+<!--        android:id="@+id/appBarLayout"-->
+<!--        style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fitsSystemWindows="true">-->
+
+<!--        <com.google.android.material.appbar.MaterialToolbar-->
+<!--            android:id="@+id/topAppBar"-->
+<!--            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="?attr/actionBarSize"-->
+<!--            android:background="@android:color/transparent"-->
+<!--            android:elevation="0dp"-->
+<!--            app:title="@string/app_name" />-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/btnFilter"-->
+<!--        android:layout_width="@dimen/_30sdp"-->
+<!--        android:layout_height="@dimen/_50sdp"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:src="@drawable/ic_baseline_filter_alt_24"-->
+<!--        app:tint="#342ea9" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/storeRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_35sdp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2" />
 

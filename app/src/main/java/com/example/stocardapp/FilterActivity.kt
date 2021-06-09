@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -38,6 +39,12 @@ class FilterActivity : AppCompatActivity() {
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Apply Filters")
+        val imgback = findViewById<ImageView>(R.id.imgBack)
+        imgback.setOnClickListener {
+            var i = Intent(this,HomeActivity::class.java)
+            i.putExtra("filter","all")
+            finish()
+        }
 
         var stList = ArrayList<Filter>()
 
@@ -87,6 +94,7 @@ class FilterActivity : AppCompatActivity() {
             Log.d("ffffiiidd",s!!)
             var i = Intent(this,HomeActivity::class.java)
             i.putExtra("filter","all")
+            i.putExtra("isfilter","filtered")
             startActivity(i)
         }
     }

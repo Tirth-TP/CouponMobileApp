@@ -5,10 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.ActionBar
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -21,9 +19,19 @@ class ChangePasswordActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
 
+        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.header_black)
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Change Password")
+        var imgBack = findViewById<ImageView>(R.id.imgBack)
+        imgBack.setOnClickListener {
+            var i = Intent(this,MyProfile::class.java)
+            i.putExtra("filter","all")
+            finish()
+        }
+
         val ops = findViewById(R.id.chold) as EditText
         val nps = findViewById(R.id.chNew) as EditText
         val cps = findViewById(R.id.chCon) as EditText

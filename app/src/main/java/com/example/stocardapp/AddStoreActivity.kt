@@ -209,7 +209,7 @@ class AddStoreActivity : AppCompatActivity() {
             }
 //            Log.d("fffiiff",fi)
 
-            val sn = snm.text.toString().trim()
+                 val sn = snm.text.toString().trim()
                 val sl = sloc.text.toString().trim()
                 val sp = spn.text.toString().trim()
 

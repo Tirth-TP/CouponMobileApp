@@ -17,6 +17,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -50,6 +51,7 @@ private const val ARG_PARAM2 = "param2"
 class HomeScreen : Fragment() {
     lateinit var spinAnim: Animation;
     lateinit var btANim: Animation;
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -58,8 +60,9 @@ class HomeScreen : Fragment() {
     var dispLst = ArrayList<StoreDetail>()
     var stList = ArrayList<StoreDetail>()
     var temp = ArrayList<String>()
-    var itemTouchHelper:ItemTouchHelper?=null
+    var itemTouchHelper: ItemTouchHelper? = null
     val map: MutableMap<String, RequestBody> = HashMap()
+    lateinit var f: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +73,8 @@ class HomeScreen : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
@@ -82,26 +85,25 @@ class HomeScreen : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val btnAdd = requireView().findViewById(R.id.btn_addStore) as Button
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
-        val btnflt = requireView().findViewById<ImageView>(R.id.btnFilter)
 
         (context as AppCompatActivity).supportActionBar!!.title = "Stocard App"
         //  var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
-     //   var itemsLayout:  = requireView().findViewById(R.id.nav)
+        //   var itemsLayout:  = requireView().findViewById(R.id.nav)
         spinAnim = AnimationUtils.loadAnimation(context, R.anim.spin_animation)
         btANim = AnimationUtils.loadAnimation(context, R.anim.bottom_animation)
 
-       var f =  requireActivity().intent.getStringExtra("filter")
+        f = requireActivity().intent.getStringExtra("filter").toString()
         val SHARED_PREF_NAME1 = "my_shared_preff"
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME1,Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE)
         var s = sharedPreferences.getString("filterid", "defaultName")
-        Log.d("fiiff",s!!)
+        Log.d("fiiff", s!!)
 
         //filter selection
-        btnflt.setOnClickListener {
-//            startActivity(Intent(context?.applicationContext,AddStoreActivity::class.java))
-            val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
-            startActivity(intent)
-        }
+//        btnflt.setOnClickListener {
+////            startActivity(Intent(context?.applicationContext,AddStoreActivity::class.java))
+//            val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
+//            startActivity(intent)
+//        }
 
         //checkNetwork()
         mAPIService = ApiUtils.apiService
@@ -111,12 +113,11 @@ class HomeScreen : Fragment() {
                 this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
 
-        switch1.isClickable = false
+//        switch1.isClickable = false
 
-        if(f=="all")
-        {
-            switch1.isClickable = true
-            switch1.isChecked = true
+        if (f == "all") {
+//            switch1.isClickable = true
+//            switch1.isChecked = true
             map["filter_id"] = toPart(s!!) as RequestBody
 
             mAPIService!!.storeDetails(token!!, "Filter", map).enqueue(object :
@@ -190,8 +191,7 @@ class HomeScreen : Fragment() {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                 }
             })
-        }
-        else {
+        } else {
             allstore()
         }
         //add store activity
@@ -201,13 +201,13 @@ class HomeScreen : Fragment() {
             startActivity(intent)
         }
 
-        switch1.setOnCheckedChangeListener({ _ , isChecked ->
-            if(isChecked) "Switch1:ON" else {
-                //allstore()
-               requireContext().startActivity(Intent(context,HomeActivity::class.java))
-                switch1.isClickable = false
-            }
-        })
+//        switch1.setOnCheckedChangeListener({ _ , isChecked ->
+//            if(isChecked) "Switch1:ON" else {
+//                //allstore()
+//               requireContext().startActivity(Intent(context,HomeActivity::class.java))
+//                switch1.isClickable = false
+//            }
+//        })
     }
 
     private fun allstore() {
@@ -294,13 +294,11 @@ class HomeScreen : Fragment() {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-    fun checkNetwork()
-    {
+    fun checkNetwork() {
         //Check Network
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
         var cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
@@ -310,30 +308,30 @@ class HomeScreen : Fragment() {
                     super.onLost(network)
                     var fr = view?.findViewById<FrameLayout>(R.id.frame)
 
-                  activity?.runOnUiThread(Runnable {
+                    activity?.runOnUiThread(Runnable {
                         // Stuff that updates the UI
-                      stRc?.isVisible = false
-                      Toast.makeText(requireContext(), "hhhhhh", Toast.LENGTH_LONG).show()
-                      var img: ImageView? = ImageView(context)
-                      var msg: TextView? = TextView(context)
-                      img?.load(R.drawable.net)
-                      val title = SpannableString("Network Connection Lost.")
-                      title.setSpan(
-                          ForegroundColorSpan(Color.parseColor("#342ea9")),
-                          0,
-                          title.length,
-                          0
-                      )
-                      msg?.setText(title)
-                      msg?.setX(300.00F)
-                      msg?.setY(500.00F)
-                      msg?.textSize = 28F
-                      img?.maxHeight = 80
-                      img?.maxWidth = 80
-                      img?.minimumHeight = 80
-                      img?.minimumWidth = 80
-                      fr?.layoutParams = fr?.getLayoutParams()
-                      fr?.addView(img)
+                        stRc?.isVisible = false
+                        Toast.makeText(requireContext(), "hhhhhh", Toast.LENGTH_LONG).show()
+                        var img: ImageView? = ImageView(context)
+                        var msg: TextView? = TextView(context)
+                        img?.load(R.drawable.net)
+                        val title = SpannableString("Network Connection Lost.")
+                        title.setSpan(
+                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                0,
+                                title.length,
+                                0
+                        )
+                        msg?.setText(title)
+                        msg?.setX(300.00F)
+                        msg?.setY(500.00F)
+                        msg?.textSize = 28F
+                        img?.maxHeight = 80
+                        img?.maxWidth = 80
+                        img?.minimumHeight = 80
+                        img?.minimumWidth = 80
+                        fr?.layoutParams = fr?.getLayoutParams()
+                        fr?.addView(img)
                     })
                 }
             }
@@ -342,41 +340,62 @@ class HomeScreen : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-       requireActivity().menuInflater.inflate(R.menu.menu_ser, menu)
-        var item:MenuItem = menu!!.findItem(R.id.ser)
-        val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
+        requireActivity().menuInflater.inflate(R.menu.menu_filterser, menu)
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
 
-        if(item != null)
-        {
-            var sec:androidx.appcompat.widget.SearchView = item.actionView as androidx.appcompat.widget.SearchView
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.ser -> {
+                val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
+                var sec: androidx.appcompat.widget.SearchView = item.actionView as androidx.appcompat.widget.SearchView
+                val searchEditText: EditText =
+                        sec.findViewById(androidx.appcompat.R.id.search_src_text)
+                searchEditText.setTextColor(resources.getColor(R.color.white))
 
-            sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText!!.isNotEmpty()) {
-                        dispLst.clear()
-                        val se = newText.toLowerCase(Locale.getDefault())
-                        stList.forEach {
-                            if (it.stname.toLowerCase(Locale.getDefault()).contains(se)) {
-                                dispLst.add(it)
-                            }
+                if (item != null) {
+                    sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            return true
                         }
 
-                        stRc?.adapter!!.notifyDataSetChanged()
-                    } else {
-                        dispLst.clear()
-                        dispLst.addAll(stList)
-                        stRc?.adapter!!.notifyDataSetChanged()
-                    }
-                    return true
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            if (newText!!.isNotEmpty()) {
+                                dispLst.clear()
+                                val se = newText.toLowerCase(Locale.getDefault())
+                                stList.forEach {
+                                    if (it.stname.toLowerCase(Locale.getDefault()).contains(se)) {
+                                        dispLst.add(it)
+                                    }
+                                }
+
+                                stRc?.adapter!!.notifyDataSetChanged()
+                            } else {
+                                dispLst.clear()
+                                dispLst.addAll(stList)
+                                stRc?.adapter!!.notifyDataSetChanged()
+                            }
+                            return true
+                        }
+                    })
                 }
-            })
-      }
-        return super.onCreateOptionsMenu(menu, inflater)
+                true
+            }
+            R.id.btnFilter -> {
+                if (f != "all") {
+                    f = "filtered"
+                    Toast.makeText(context,"" + item.title,Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
+                    startActivity(intent)
+                }
+                else{
+                    startActivity(Intent(this@HomeScreen.context, HomeActivity::class.java))
+                }
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {

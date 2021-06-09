@@ -13,7 +13,24 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-<!--        <include layout="@layout/header_black" />-->
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+
+<!--            android:id="@+id/appBarLayout"-->
+<!--            style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fitsSystemWindows="true">-->
+
+<!--            <com.google.android.material.appbar.MaterialToolbar-->
+<!--                android:id="@+id/topAppBar"-->
+<!--                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="?attr/actionBarSize"-->
+<!--                android:background="@android:color/transparent"-->
+<!--                android:elevation="0dp"-->
+<!--                app:title="@string/app_name" />-->
+
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,7 +41,6 @@
                 android:layout_height="match_parent"
                 android:fillViewport="true"
                 android:scrollbarThumbVertical="@android:color/transparent">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
