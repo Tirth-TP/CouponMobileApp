@@ -29,6 +29,12 @@ class SharedPrefManager private constructor(private val mCtx:Context){
             )
         }
 
+
+
+
+
+
+
     fun saveUser(user: User) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
