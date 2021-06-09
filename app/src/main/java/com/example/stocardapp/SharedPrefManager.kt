@@ -25,7 +25,7 @@ class SharedPrefManager private constructor(private val mCtx:Context){
                     sharedPreferences.getString("email", null).toString(),
                     sharedPreferences.getString("pin", null).toString(),
                     sharedPreferences.getString("phone", null).toString(),
-                    sharedPreferences.getString("Image", null).toString(),
+                    sharedPreferences.getString("Image", null).toString()
             )
         }
 
@@ -48,7 +48,7 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.apply()
     }
 
-    fun saveStore(sid: Int, stname: String, stlocation: String, contact: String,) {
+    fun saveStore(sid: Int, stname: String, stlocation: String, contact: String) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("sid",sid)
