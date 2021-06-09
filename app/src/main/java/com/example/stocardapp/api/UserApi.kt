@@ -23,10 +23,6 @@ interface UserApi {
 //        @Field("pin") pin:Int,
 //):Call<com.example.stocardapp.models.Response>
 
-
-
-
-
         @Multipart
         @POST("{url}")
         fun createUser(
