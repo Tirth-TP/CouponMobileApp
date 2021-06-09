@@ -94,7 +94,7 @@
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
@@ -173,7 +173,7 @@
                                         android:editable="true"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -235,19 +235,20 @@
                                 android:textColor="@color/white"
                                 app:layout_constraintStart_toStartOf="parent"
                                  />
-<!--                            <Button-->
-<!--                                android:id="@+id/btn_cnt"-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginStart="@dimen/_20sdp"-->
-<!--                                android:layout_marginLeft="@dimen/_20sdp"-->
-<!--                                android:layout_marginTop="@dimen/_15sdp"-->
-<!--                                android:layout_marginEnd="@dimen/_20sdp"-->
-<!--                                android:layout_marginBottom="@dimen/_5sdp"-->
-<!--                                android:background="@drawable/btn_background"-->
-<!--                                android:fontFamily="@font/catamaran"-->
-<!--                                android:text="Send"-->
-<!--                                android:textColor="@color/white" />-->
+
+<!--                         <Button-->
+<!--                             android:id="@+id/btnCnt"-->
+<!--                             android:layout_width="match_parent"-->
+<!--                             android:layout_height="wrap_content"-->
+<!--                             android:layout_marginStart="@dimen/_20sdp"-->
+<!--                             android:layout_marginLeft="@dimen/_20sdp"-->
+<!--                             android:layout_marginTop="@dimen/_15sdp"-->
+<!--                             android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                             android:fontFamily="@font/catamaran"-->
+<!--                             android:text="Send"-->
+<!--                             android:background="@drawable/btn_background"-->
+<!--                             android:textColor="@color/white"-->
+<!--                             />-->
 
                         </LinearLayout>
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
 // TODO: Rename parameter arguments, choose names that match
@@ -45,7 +46,12 @@ class About : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         (context as AppCompatActivity).supportActionBar!!.title = "About Us"
-
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
 //        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
 //        txtTit.setText("About US")
 //        val ibk = requireView().findViewById(R.id.imgBack) as ImageView

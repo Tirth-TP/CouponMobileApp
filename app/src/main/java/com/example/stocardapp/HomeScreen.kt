@@ -179,6 +179,8 @@ class HomeScreen : Fragment() {
                             itemTouchHelper = ItemTouchHelper(callBack)
                             itemTouchHelper?.attachToRecyclerView(stRc)
                             stRc?.isVisible = true
+                            adapter.notifyDataSetChanged()
+                            stRc.adapter = adapter
                             var i = response.body()?.data
                         }
                         // stRc.layoutManager= GridLayoutManager(context, 2)

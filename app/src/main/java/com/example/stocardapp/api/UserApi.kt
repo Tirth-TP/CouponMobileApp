@@ -179,7 +179,7 @@ interface UserApi {
         fun getCategory(
                 @Header("Authorization") AUTH: String,
                 @Path(value = "url", encoded = true) url: String?,
-                @PartMap map: Map<String, RequestBody>,
+                @PartMap map: Map<String, RequestBody>
         ): Call<FilterResponse>
 
         @Multipart
@@ -187,7 +187,7 @@ interface UserApi {
         fun storeUpdate(
                 @Header("Authorization") AUTH: String,
                 @Path(value = "url", encoded = true) url: String?,
-                @PartMap map: Map<String, RequestBody>,
+                @PartMap map: Map<String, RequestBody>
         ): Call<StoreUpdateResponse>
 
 }

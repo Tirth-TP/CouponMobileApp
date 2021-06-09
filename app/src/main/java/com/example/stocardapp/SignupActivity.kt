@@ -1,6 +1,7 @@
 package com.example.stocardapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
@@ -19,13 +20,16 @@ import android.view.Gravity
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import com.example.stocardapp.models.Response
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.iid.FirebaseInstanceId
+import kotlinx.android.synthetic.main.header_black.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -45,6 +49,7 @@ class SignupActivity : AppCompatActivity() {
     val SELECT_PICTURE = 2
     var uri: Uri?=null
     private val REQUEST_PERMISSION = 0
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -78,6 +83,9 @@ class SignupActivity : AppCompatActivity() {
         val value:Int = phn.length()
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Sign Up")
+        txtTit.setTextColor(R.color.black)
+        val ibk = findViewById<ImageView>(R.id.imgBack)
+        ibk.isVisible = false
         val btnsin = findViewById<Button>(R.id.btn_reg)
         val txtLg = findViewById<TextView>(R.id.txtLogin)
         val st = findViewById<ImageView>(R.id.imgSPro)
@@ -141,9 +149,23 @@ class SignupActivity : AppCompatActivity() {
 
         })
 
+        phn.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(phn.length()>10)
+                {
+                    phn.setError("Invalid Phone Number")
+                }
+            }
 
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
         st.setOnClickListener {
 
             var alertDialog: AlertDialog? =null

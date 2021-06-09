@@ -259,7 +259,6 @@
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
                                     android:inputType="phone"
-                                    android:letterSpacing="0.5"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
