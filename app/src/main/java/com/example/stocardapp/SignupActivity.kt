@@ -30,7 +30,6 @@ import androidx.core.view.isVisible
 import com.example.stocardapp.models.Response
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.header_black.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -292,7 +291,6 @@ class SignupActivity : AppCompatActivity() {
             val file: File = File(URIPathHelper.getPath(this@SignupActivity, uri!!))
             val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
 
-            val tkn = FirebaseInstanceId.getInstance().token
             val requestFile = RequestBody.create(
                     contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
                     file
@@ -304,7 +302,7 @@ class SignupActivity : AppCompatActivity() {
             map["password"] = toPart(ups)
             map["phone"] = toPart(uph)
             map["pin"] = toPart(upin)
-            map["device_id"] = toPart(tkn.toString())
+            map["device_id"] = toPart(sharedPreference.getString("device_token", "")!!)
 
           RetrofitClient.instance.createUser("", body, "register", map).enqueue(object :
                   Callback<Response> {

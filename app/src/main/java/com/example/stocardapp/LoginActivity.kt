@@ -30,7 +30,6 @@ import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import com.example.stocardapp.models.LoginResponse
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
@@ -66,8 +65,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val tkn = FirebaseInstanceId.getInstance().token
-        Log.d("tkkkk", tkn.toString())
+
 
         val passsword = findViewById<EditText>(R.id.txtPass)
         val email = findViewById<EditText>(R.id.txtEm)
