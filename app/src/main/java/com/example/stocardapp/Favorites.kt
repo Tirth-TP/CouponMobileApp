@@ -1,12 +1,15 @@
 package com.example.stocardapp
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +57,7 @@ class Favorites : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         var dispLst = ArrayList<StoreDetail>()
         var stList = ArrayList<StoreDetail>()
         var itemTouchHelper:ItemTouchHelper?=null
@@ -79,29 +82,35 @@ class Favorites : Fragment() {
                 response: retrofit2.Response<StoreDetailResponse>
             ) {
 
-                var dt = response.body()?.data
-                if (dt != null) {
-                    for (d in dt) {
-                        var v = d
-                        stList.add(v)
-                    }
-                    // cRv.adapter = ad
-                    dispLst.addAll(stList)
+                if(response.body()?.success == true) {
+                    var dt = response.body()?.data
+                    if (dt != null) {
+                        for (d in dt) {
+                            var v = d
+                            stList.add(v)
+                        }
+                        // cRv.adapter = ad
+                        dispLst.addAll(stList)
 
-                    var adapter = StoreAdapter(
-                        requireContext(),
-                        dispLst,
-                        object : OnStartDragListener {
-                            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                itemTouchHelper?.startDrag(viewHolder!!)
-                            }
-                        })
-                    stRc.adapter = adapter
-                    val callBack = MyItemTouchHelperCallBack(adapter)
-                    itemTouchHelper = ItemTouchHelper(callBack)
-                    itemTouchHelper?.attachToRecyclerView(stRc)
-                    stRc?.isVisible = true
-                    var i = response.body()?.data
+                        var adapter = StoreAdapter(
+                                requireContext(),
+                                dispLst,
+                                object : OnStartDragListener {
+                                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                        itemTouchHelper?.startDrag(viewHolder!!)
+                                    }
+                                })
+                        stRc.adapter = adapter
+                        val callBack = MyItemTouchHelperCallBack(adapter)
+                        itemTouchHelper = ItemTouchHelper(callBack)
+                        itemTouchHelper?.attachToRecyclerView(stRc)
+                        stRc?.isVisible = true
+                        var i = response.body()?.data
+                    }
+                }
+                else
+                {
+                    Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -110,29 +119,18 @@ class Favorites : Fragment() {
             }
         })
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+
     }
 
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Favorites.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Favorites().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+
 }

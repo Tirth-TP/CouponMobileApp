@@ -22,7 +22,9 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import com.example.stocardapp.models.Response
@@ -49,11 +51,13 @@ class SignupActivity : AppCompatActivity() {
     val SELECT_PICTURE = 2
     var uri: Uri?=null
     private val REQUEST_PERMISSION = 0
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
+        window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasWritePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             val hasReadPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -83,9 +87,6 @@ class SignupActivity : AppCompatActivity() {
         val value:Int = phn.length()
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Sign Up")
-        txtTit.setTextColor(R.color.black)
-        val ibk = findViewById<ImageView>(R.id.imgBack)
-        ibk.isVisible = false
         val btnsin = findViewById<Button>(R.id.btn_reg)
         val txtLg = findViewById<TextView>(R.id.txtLogin)
         val st = findViewById<ImageView>(R.id.imgSPro)
@@ -149,9 +150,23 @@ class SignupActivity : AppCompatActivity() {
 
         })
 
+        phn.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(phn.length()<10)
+                {
+                    phn.setError("Invalid Phone Number")
+                }
+            }
 
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
         st.setOnClickListener {
 
             var alertDialog: AlertDialog? =null
@@ -297,10 +312,18 @@ class SignupActivity : AppCompatActivity() {
                       call: Call<Response>,
                       response: retrofit2.Response<Response>
               ) {
-                  Toast.makeText(this@SignupActivity, response.toString(), Toast.LENGTH_LONG).show()
-                  val i = (Intent(applicationContext, LoginActivity::class.java))
-                  i.putExtra("Username", response.body()?.data!!.name)
-                  startActivity(i)
+                  if(response.body()?.success == true) {
+                      Toast.makeText(this@SignupActivity, response.toString(), Toast.LENGTH_LONG).show()
+                      val i = (Intent(applicationContext, LoginActivity::class.java))
+                      i.putExtra("Username", response.body()?.data!!.name)
+                      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                      startActivity(i)
+                      finish()
+                  }
+                  else
+                  {
+                      Toast.makeText(this@SignupActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                  }
               }
 
               override fun onFailure(call: Call<Response>, t: Throwable) {
@@ -312,6 +335,7 @@ class SignupActivity : AppCompatActivity() {
          //   Toast.makeText(this@SignupActivity, "success", Toast.LENGTH_LONG).show()
             val i = (Intent(applicationContext, LoginActivity::class.java))
             startActivity(i)
+            finish()
         }
     }
     fun toPart(data: String): RequestBody {

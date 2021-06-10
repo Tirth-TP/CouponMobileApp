@@ -15,8 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import coil.api.load
@@ -76,7 +78,7 @@ class MyProfile : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "My Profile"
 
 //        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
@@ -167,38 +169,48 @@ class MyProfile : Fragment() {
             map["phone"] = toPart(p!!)
 
 
-            val file: File = File(URIPathHelper.getPath(requireContext(), uri!!))
-            Log.d("imageabcd", file.toString())
+            var file:File = File(URIPathHelper.getPath(requireContext(), uri!!))
 
-            val requestFile = RequestBody.create(
-                requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                    file
-            )
-            val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
+                Log.d("imageabcd", file.toString())
+
+                val requestFile = RequestBody.create(
+                        requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+                        file
+                )
+                val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
+
             mAPIService.editProfile(token!!, body, "ChangeProfile", map).enqueue(object :
                     Callback<UpdateResponse> {
                 override fun onResponse(
                         call: Call<UpdateResponse>,
                         response: Response<UpdateResponse>
                 ) {
-                    var nurl = response.body()?.data!!.Image
-                    Log.d("newurl", nurl.toString())
 
-                    editor?.putString("name", n)
-                    editor?.putString("phone", p)
-                   // editor?.putString("pin", i)
-                    editor?.putString("Image", nurl.toString())
-                    editor?.commit()
+                        var nurl = response.body()?.data!!.Image
+                        Log.d("newurl", nurl.toString())
 
-                    Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
-                    //img_pro.load(u.toString())
-                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        editor?.putString("name", n)
+                        editor?.putString("phone", p)
+                        // editor?.putString("pin", i)
+                        editor?.putString("Image", nurl.toString())
+                        editor?.commit()
+
+                        Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
+                        //img_pro.load(u.toString())
+
+                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
 //                    val fr = fragmentManager!!.beginTransaction()
 //                    fr.replace(R.id.container, HomeScreen())
-                    startActivity(Intent(context,HomeActivity::class.java))
-                    getActivity()?.getFragmentManager()?.popBackStack()
+                        startActivity(Intent(context, HomeActivity::class.java))
+                        getActivity()?.getFragmentManager()?.popBackStack()
 //                    getActivity()?.getSupportFragmentManager()?.beginTransaction()?.remove(this@MyProfile)?.commit()
-                    Log.d("imageabc", file.name)
+                        Log.d("imageabc", file.name)
+
+//                    else
+//                    {
+//                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+//
+//                    }
                 }
 
                 override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
@@ -217,6 +229,12 @@ class MyProfile : Fragment() {
             startActivity(intent)
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
   /*  private fun launchCustomAlertDialog() {
         val ops = requireView().findViewById(R.id.chold) as EditText

@@ -15,7 +15,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
@@ -57,7 +59,7 @@ class Pin : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "Change Pin"
 
 //        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
@@ -97,7 +99,12 @@ class Pin : Fragment() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
-                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        if (response.body()?.status == true) {
+                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
@@ -224,6 +231,12 @@ class Pin : Fragment() {
 //            }
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
 

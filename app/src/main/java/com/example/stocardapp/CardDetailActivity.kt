@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import coil.api.load
 import com.example.stocardapp.models.DeleteResponse
 import com.example.stocardapp.models.ShareResponse
@@ -26,7 +27,7 @@ class CardDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_detail2)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -89,9 +90,14 @@ class CardDetailActivity : AppCompatActivity() {
                         call: Call<DeleteResponse>,
                         response: retrofit2.Response<DeleteResponse>
                 ) {
-                    Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                    val i = (Intent(applicationContext, HomeActivity::class.java))
-                    startActivity(i)
+                    if(response.body()?.status == true) {
+                        Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                        val i = (Intent(applicationContext, CardListActivity::class.java))
+                        startActivity(i)
+                    }
+                    else{
+                        Toast.makeText(this@CardDetailActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
@@ -125,12 +131,18 @@ class CardDetailActivity : AppCompatActivity() {
                         response: retrofit2.Response<ShareResponse>
                 ) {
                     //Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                    var shareIntent = Intent().apply {
-                        this.action = Intent.ACTION_SEND
-                        this.putExtra(Intent.EXTRA_TEXT, response.body()?.data!!.share_code)
-                        this.type = "text/plain"
+                    if(response.body()?.success == true) {
+                        var shareIntent = Intent().apply {
+                            this.action = Intent.ACTION_SEND
+                            this.putExtra(Intent.EXTRA_TEXT, response.body()?.data!!.share_code)
+                            this.type = "text/plain"
+                        }
+                        startActivity(shareIntent)
                     }
-                    startActivity(shareIntent)
+                    else
+                    {
+                        Toast.makeText(this@CardDetailActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<ShareResponse>, t: Throwable) {

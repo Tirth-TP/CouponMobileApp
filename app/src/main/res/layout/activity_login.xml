@@ -10,7 +10,7 @@
     android:focusableInTouchMode="true"
     tools:context=".LoginActivity">
 
-    <include layout="@layout/header_black" />
+    <include layout="@layout/header_black_2" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
+<!--    android:layout_marginBottom="@dimen/_55sdp"
+-->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -34,7 +35,9 @@
                 android:id="@+id/fav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_120sdp"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_gravity="top|right"
                 app:srcCompat="@drawable/ic_baseline_favorite_24"
                 app:tint="@color/dark_blue"
                 tools:ignore="VectorDrawableCompat" />

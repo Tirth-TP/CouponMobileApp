@@ -53,6 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:gravity="center"
+                        android:layout_marginBottom="@dimen/Dimen_20dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -140,36 +141,38 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:gravity="center_horizontal"
+
                             >
 
                             <Button
                                 android:id="@+id/btnSUpdate"
-                                android:layout_width="@dimen/_100sdp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:text="Update store"
+                                android:padding="@dimen/Dimen_10dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                android:background="#342ea9"
+                                android:background="@drawable/btn_background"
                                 android:textColor="@color/white"
 
                                 />
                         <Button
                             android:id="@+id/btnSdel"
-                            android:layout_width="@dimen/_100sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:text="Delete store"
+                            android:padding="@dimen/Dimen_10dp"
+                            android:background="@drawable/btn_background"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:background="#342ea9"
                             android:textColor="@color/white"
-                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginStart="30dp"
                             />
-
                         </LinearLayout>
 
 </LinearLayout>
@@ -177,23 +180,17 @@
                         android:id="@+id/cdRv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_20sdp"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"/>
                 </LinearLayout>
             </ScrollView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:background="@drawable/shadow_header" />
+
         </RelativeLayout>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_bottom"/>
+
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btn_addCard"

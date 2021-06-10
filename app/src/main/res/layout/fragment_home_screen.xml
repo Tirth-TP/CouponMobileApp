@@ -54,6 +54,7 @@
         android:contentDescription="Add Store"
         android:fontFamily="@font/catamaran"
         android:text="Add Store"
+        android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:backgroundTint="#342ea9"

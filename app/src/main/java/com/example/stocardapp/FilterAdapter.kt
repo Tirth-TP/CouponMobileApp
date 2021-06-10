@@ -50,6 +50,7 @@ class FilterAdapter(var ctx: Context, var list:ArrayList<Filter>):RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.chip.text = list[position].name
+        Log.d("listsize","" + list.size)
         holder.fid = list[position].id
 //        if(holder.chip.isChecked)
 //        {

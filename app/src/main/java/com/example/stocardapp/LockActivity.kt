@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import coil.api.load
 import com.example.stocardapp.models.HideCardResponse
 import com.example.stocardapp.models.ShareCardResponse
@@ -24,7 +25,7 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lock)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
         var cid = intent.getIntExtra("cardId",0)
@@ -69,18 +70,25 @@ class LockActivity : AppCompatActivity() {
                             call: Call<ShowCardResponse>,
                             response: retrofit2.Response<ShowCardResponse>
                         ) {
-                            Toast.makeText(this@LockActivity,response.body()?.message,Toast.LENGTH_LONG).show()
-                            val i:Intent
-                            i=Intent(this@LockActivity,CardDetailActivity::class.java)
-                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            i.putExtra("cardNm",cnm)
-                            i.putExtra("cardNum",cnum)
-                            i.putExtra("cardRwd",crwd)
-                            i.putExtra("cardDetl",cdtl)
-                            i.putExtra("cardDt",cdt)
-                            i.putExtra("cardImg",im.toString())
-                            i.putExtra("status",st)
-                           startActivity(i)
+
+                            if(response.body()?.success == true) {
+                                Toast.makeText(this@LockActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                                val i: Intent
+                                i = Intent(this@LockActivity, CardDetailActivity::class.java)
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                i.putExtra("cardNm", cnm)
+                                i.putExtra("cardNum", cnum)
+                                i.putExtra("cardRwd", crwd)
+                                i.putExtra("cardDetl", cdtl)
+                                i.putExtra("cardDt", cdt)
+                                i.putExtra("cardImg", im.toString())
+                                i.putExtra("status", st)
+                                startActivity(i)
+                            }
+                            else
+                            {
+                                Toast.makeText(this@LockActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                            }
                         }
                         override fun onFailure(call: Call<ShowCardResponse>, t: Throwable) {
                             Toast.makeText(this@LockActivity, t.message, Toast.LENGTH_LONG).show()

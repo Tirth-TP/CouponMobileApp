@@ -19,6 +19,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -83,6 +84,7 @@ class HomeScreen : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val btnAdd = requireView().findViewById(R.id.btn_addStore) as Button
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
 
@@ -128,61 +130,69 @@ class HomeScreen : Fragment() {
                         response: Response<StoreDetailResponse>
                 ) {
 
-                    //  var ad = StoreAdapter(context!!.applicationContext, stList)
-                    var dt = response.body()?.data
-                    if (dt != null) {
-                        for (d in dt) {
-                            var v = d
-                            stList.add(v)
+                    if(response.body()?.success == true) {
+                        //  var ad = StoreAdapter(context!!.applicationContext, stList)
+                        var dt = response.body()?.data
+                        if (dt != null) {
+                            for (d in dt) {
+                                var v = d
+                                stList.add(v)
+                            }
+                            //Log.d("arrayleng1", stList.size.toString())
+                            if (stList.size == 0) {
+                                var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                                Log.d("visible", stRc?.visibility.toString())
+                                stRc?.isVisible = false
+                                Log.d("visiblea", stRc?.visibility.toString())
+                                var img: ImageView? = ImageView(context)
+                                var msg: TextView? = TextView(context)
+                                img?.load(R.drawable.empty)
+                                val title = SpannableString("Add Your First Store!!")
+                                title.setSpan(
+                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                        0,
+                                        title.length,
+                                        0
+                                )
+                                msg?.setText(title)
+                                msg?.setX(200.00F)
+                                msg?.setY(500.00F)
+                                msg?.textSize = 28F
+                                img?.maxHeight = 100
+                                img?.maxWidth = 100
+                                img?.minimumHeight = 100
+                                img?.minimumWidth = 100
+                                img?.animation = spinAnim
+                                fr?.layoutParams = fr?.getLayoutParams()
+                                fr?.addView(img)
+                                fr?.addView(msg)
+                            } else {
+                                // cRv.adapter = adapter
+                                checkNetwork()
+                                dispLst.addAll(stList)
+                                var adapter = StoreAdapter(
+                                        requireContext(),
+                                        dispLst,
+                                        object : OnStartDragListener {
+                                            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                                itemTouchHelper?.startDrag(viewHolder!!)
+                                            }
+                                        })
+                                stRc.adapter = adapter
+                                val callBack = MyItemTouchHelperCallBack(adapter)
+                                itemTouchHelper = ItemTouchHelper(callBack)
+                                itemTouchHelper?.attachToRecyclerView(stRc)
+                                stRc?.isVisible = true
+                                adapter.notifyDataSetChanged()
+                                stRc.adapter = adapter
+                                var i = response.body()?.data
+                            }
+                            // stRc.layoutManager= GridLayoutManager(context, 2)
                         }
-                        //Log.d("arrayleng1", stList.size.toString())
-                        if (stList.size == 0) {
-                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
-                            Log.d("visible", stRc?.visibility.toString())
-                            stRc?.isVisible = false
-                            Log.d("visiblea", stRc?.visibility.toString())
-                            var img: ImageView? = ImageView(context)
-                            var msg: TextView? = TextView(context)
-                            img?.load(R.drawable.empty)
-                            val title = SpannableString("Add Your First Store!!")
-                            title.setSpan(
-                                    ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                    0,
-                                    title.length,
-                                    0
-                            )
-                            msg?.setText(title)
-                            msg?.setX(200.00F)
-                            msg?.setY(500.00F)
-                            msg?.textSize = 28F
-                            img?.maxHeight = 100
-                            img?.maxWidth = 100
-                            img?.minimumHeight = 100
-                            img?.minimumWidth = 100
-                            img?.animation = spinAnim
-                            fr?.layoutParams = fr?.getLayoutParams()
-                            fr?.addView(img)
-                            fr?.addView(msg)
-                        } else {
-                            // cRv.adapter = adapter
-                            checkNetwork()
-                            dispLst.addAll(stList)
-                            var adapter = StoreAdapter(
-                                    requireContext(),
-                                    dispLst,
-                                    object : OnStartDragListener {
-                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                            itemTouchHelper?.startDrag(viewHolder!!)
-                                        }
-                                    })
-                            stRc.adapter = adapter
-                            val callBack = MyItemTouchHelperCallBack(adapter)
-                            itemTouchHelper = ItemTouchHelper(callBack)
-                            itemTouchHelper?.attachToRecyclerView(stRc)
-                            stRc?.isVisible = true
-                            var i = response.body()?.data
-                        }
-                        // stRc.layoutManager= GridLayoutManager(context, 2)
+                    }
+                    else
+                    {
+                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
                     }
                 }
 
@@ -226,60 +236,66 @@ class HomeScreen : Fragment() {
                     response: Response<StoreDetailResponse>
             ) {
                 //  var ad = StoreAdapter(context!!.applicationContext, stList)
-                var dt = response.body()?.data
-                if (dt != null) {
-                    for (d in dt) {
-                        var v = d
-                        stList.add(v)
+                if(response.body()?.success==true) {
+                    var dt = response.body()?.data
+                    if (dt != null) {
+                        for (d in dt) {
+                            var v = d
+                            stList.add(v)
+                        }
+                        //Log.d("arrayleng1", stList.size.toString())
+                        if (stList.size == 0) {
+                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                            Log.d("visible", stRc?.visibility.toString())
+                            stRc?.isVisible = false
+                            Log.d("visiblea", stRc?.visibility.toString())
+                            var img: ImageView? = ImageView(context)
+                            var msg: TextView? = TextView(context)
+                            img?.load(R.drawable.empty)
+                            val title = SpannableString("Add Your First Store!!")
+                            title.setSpan(
+                                    ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                    0,
+                                    title.length,
+                                    0
+                            )
+                            msg?.setText(title)
+                            msg?.setX(200.00F)
+                            msg?.setY(500.00F)
+                            msg?.textSize = 28F
+                            img?.maxHeight = 100
+                            img?.maxWidth = 100
+                            img?.minimumHeight = 100
+                            img?.minimumWidth = 100
+                            img?.animation = spinAnim
+                            fr?.layoutParams = fr?.getLayoutParams()
+                            fr?.addView(img)
+                            fr?.addView(msg)
+                        } else {
+                            // cRv.adapter = adapter
+                            //checkNetwork()
+                            dispLst.addAll(stList)
+                            var adapter = StoreAdapter(
+                                    requireContext(),
+                                    dispLst,
+                                    object : OnStartDragListener {
+                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                            itemTouchHelper?.startDrag(viewHolder!!)
+                                        }
+                                    })
+                            stRc.adapter = adapter
+                            val callBack = MyItemTouchHelperCallBack(adapter)
+                            itemTouchHelper = ItemTouchHelper(callBack)
+                            itemTouchHelper?.attachToRecyclerView(stRc)
+                            stRc?.isVisible = true
+                            var i = response.body()?.data
+                        }
+                        // stRc.layoutManager= GridLayoutManager(context, 2)
                     }
-                    //Log.d("arrayleng1", stList.size.toString())
-                    if (stList.size == 0) {
-                        var fr = view?.findViewById<FrameLayout>(R.id.frame)
-                        Log.d("visible", stRc?.visibility.toString())
-                        stRc?.isVisible = false
-                        Log.d("visiblea", stRc?.visibility.toString())
-                        var img: ImageView? = ImageView(context)
-                        var msg: TextView? = TextView(context)
-                        img?.load(R.drawable.empty)
-                        val title = SpannableString("Add Your First Store!!")
-                        title.setSpan(
-                                ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                0,
-                                title.length,
-                                0
-                        )
-                        msg?.setText(title)
-                        msg?.setX(200.00F)
-                        msg?.setY(500.00F)
-                        msg?.textSize = 28F
-                        img?.maxHeight = 100
-                        img?.maxWidth = 100
-                        img?.minimumHeight = 100
-                        img?.minimumWidth = 100
-                        img?.animation = spinAnim
-                        fr?.layoutParams = fr?.getLayoutParams()
-                        fr?.addView(img)
-                        fr?.addView(msg)
-                    } else {
-                        // cRv.adapter = adapter
-                        checkNetwork()
-                        dispLst.addAll(stList)
-                        var adapter = StoreAdapter(
-                                requireContext(),
-                                dispLst,
-                                object : OnStartDragListener {
-                                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                        itemTouchHelper?.startDrag(viewHolder!!)
-                                    }
-                                })
-                        stRc.adapter = adapter
-                        val callBack = MyItemTouchHelperCallBack(adapter)
-                        itemTouchHelper = ItemTouchHelper(callBack)
-                        itemTouchHelper?.attachToRecyclerView(stRc)
-                        stRc?.isVisible = true
-                        var i = response.body()?.data
-                    }
-                    // stRc.layoutManager= GridLayoutManager(context, 2)
+                }
+                else
+                {
+                    Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
                 }
             }
 

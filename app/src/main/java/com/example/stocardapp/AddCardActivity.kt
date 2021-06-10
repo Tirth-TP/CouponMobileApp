@@ -12,8 +12,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.os.FileUtils
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -21,11 +22,11 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.example.stocardapp.models.CardResponse
 import com.google.android.material.textfield.TextInputEditText
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,7 +37,6 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
-import kotlin.math.log
 
 
 class AddCardActivity : AppCompatActivity() {
@@ -47,12 +47,22 @@ class AddCardActivity : AppCompatActivity() {
     val SELECT_PICTURE = 2
     var uri:Uri?=null
     private val REQUEST_PERMISSION = 0
+    var datePicker: DatePickerDialog? = null
+    val calendar = Calendar.getInstance()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_card2)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH]
+
+        datePicker = DatePickerDialog(this);
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -73,17 +83,20 @@ class AddCardActivity : AppCompatActivity() {
             }
             if (!permissions.isEmpty()) {
 //              requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_SOME_FEATURES_PERMISSIONS);
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE),
-                    REQUEST_PERMISSION)
+                ActivityCompat.requestPermissions(
+                        this, arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE
+                ),
+                        REQUEST_PERMISSION
+                )
             }
         }
 
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Add Coupon")
-        val ibk = findViewById<ImageView>(R.id.imgBack)
-        ibk.setOnClickListener {
-            startActivity(Intent(this,CardListActivity::class.java))
-        }
+     
+
         val cname = findViewById<EditText>(R.id.cardNm)
         val crwd = findViewById<EditText>(R.id.cardRwd)
         val cdtl = findViewById<EditText>(R.id.cardDtl)
@@ -92,6 +105,39 @@ class AddCardActivity : AppCompatActivity() {
         val cdt = findViewById<TextInputEditText>(R.id.cardDate)
         val txtinpt = findViewById<LinearLayout>(R.id.lindat)
         val icrd = findViewById<ImageView>(R.id.imgCr)
+
+
+        crwd.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(crwd.text.toString().toInt() > 100)
+                    {
+                        crwd.setError("Percentage should not be grater than 100")
+                    }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+
+
+
+        cdt.setOnClickListener{
+            datePicker =DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                val ans=""+dayOfMonth + "/" + month + "/" + year
+                cdt.setText(ans)
+
+            }, year, month, day)
+
+            datePicker!!.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+            datePicker!!.show();
+        }
+
 
         icrd.setOnClickListener {
             var alertDialog: AlertDialog? =null
@@ -146,11 +192,12 @@ class AddCardActivity : AppCompatActivity() {
         addCard.setOnClickListener {
 
             var sid = intent.getIntExtra("storeId", 0)
-            Toast.makeText(applicationContext, sid.toString(), Toast.LENGTH_LONG).show()
+
             val cn = cname.text.toString().trim()
             val cnm = cnum.text.toString().trim()
             val cd = cdtl.text.toString().trim()
             val crd = crwd.text.toString().trim()
+
             val map: MutableMap<String, RequestBody> = HashMap()
             map["cardname"] = toPart(cn) as RequestBody
             map["carddetail"] = toPart(cd)
@@ -162,24 +209,31 @@ class AddCardActivity : AppCompatActivity() {
             val file: File = File(URIPathHelper.getPath(this@AddCardActivity, uri!!))
 
             val requestFile = RequestBody.create(
-                contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                file
+                    contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+                    file
             )
             val body = MultipartBody.Part.createFormData("card_img", file.name, requestFile)
             //  map["user_id"] = token?.let { it1 -> toPart(it1) }!!
             Log.d("token", token!!)
-            mAPIService.addCard(token!!, "StoreCard",body, map).enqueue(object :
+            mAPIService.addCard(token!!, "StoreCard", body, map).enqueue(object :
                     Callback<CardResponse> {
                 override fun onResponse(
                         call: Call<CardResponse>,
                         response: retrofit2.Response<CardResponse>
                 ) {
-                    Toast.makeText(applicationContext, response.body()?.message, Toast.LENGTH_LONG)
-                            .show()
-                    val i = (Intent(applicationContext, HomeActivity::class.java))
-                    // i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    //   i.putExtra("s_id",sid)
-                    startActivity(i)
+                    if(response.body()?.success == true) {
+                        Toast.makeText(applicationContext, response.body()?.message, Toast.LENGTH_LONG)
+                                .show()
+                        val i = (Intent(applicationContext, CardListActivity::class.java))
+                        // i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        //   i.putExtra("s_id",sid)
+                        startActivity(i)
+                    }
+                    else
+                    {
+                        Toast.makeText(this@AddCardActivity,"Something Went Wrong!",Toast.LENGTH_LONG).show()
+                    }
+
                 }
 
                 override fun onFailure(call: Call<CardResponse>, t: Throwable) {
@@ -227,7 +281,11 @@ class AddCardActivity : AppCompatActivity() {
             }
             if(photoFile != null)
             {
-                var photoUrl = FileProvider.getUriForFile(this, "com.example.stocardapp.fileprovider", photoFile)
+                var photoUrl = FileProvider.getUriForFile(
+                        this,
+                        "com.example.stocardapp.fileprovider",
+                        photoFile
+                )
                 i.putExtra(MediaStore.EXTRA_OUTPUT, photoUrl)
                 startActivityForResult(i, TAKE_PICTURE)
             }

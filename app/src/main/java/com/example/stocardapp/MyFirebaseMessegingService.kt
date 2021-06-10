@@ -63,10 +63,8 @@ class MyFirebaseMessegingService : FirebaseMessagingService() {
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         Log.e("Token","New Token")
-
-        val p0 = FirebaseInstanceId.getInstance().token
-        val SHARED_PREF_NAME = "my_shared_preff"
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE)
+        val SHARED_PREF_NAME2 = "my_shared_preff"
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME2,Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor =  sharedPreferences.edit()
         editor.putString("device_token",p0)
         editor.apply()

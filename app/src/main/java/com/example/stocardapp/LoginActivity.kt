@@ -21,6 +21,8 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.example.stocardapp.R.*
@@ -50,6 +52,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (intent.extras != null) {
             for (key in intent.extras!!.keySet()) {
                 if (key == "title") {
@@ -109,9 +114,8 @@ class LoginActivity : AppCompatActivity() {
         var a = 0
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Log In")
-        txtTit.setTextColor(R.color.black)
-        val ibk = findViewById<ImageView>(R.id.imgBack)
-        ibk.isVisible = false
+//        val ibk = findViewById<ImageView>(R.id.imgBack)
+//        ibk.isVisible = false
         val txtFr = findViewById<TextView>(R.id.txtForgot)
         /* var pass = findViewById<EditText>(R.id.txtPass)
          pass.setOnTouchListener(View.OnTouchListener { v, event ->
@@ -160,9 +164,7 @@ class LoginActivity : AppCompatActivity() {
         val SHARED_PREF_NAME = "my_shared_preff"
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
-        val dtoken = sharedPreference.getString("device_token", "defaultToken")
 
-        Log.d("detok", dtoken!!)
         txtFr.setOnClickListener {
 //            val builder = AlertDialog.Builder(this@LoginActivity)
 //            val view = layoutInflater.inflate(R.layout.forgot_ps, null)
@@ -237,17 +239,22 @@ class LoginActivity : AppCompatActivity() {
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-
-                                                alertDialog.dismiss()
-                                                var i = (Intent(
-                                                    this@LoginActivity,
-                                                    SetNewPasswordActivity::class.java
-                                                ))
-                                                i.putExtra("em", e)
-                                                i.flags =
-                                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                startActivity(i)
-
+                                                    alertDialog.dismiss()
+                                                if(response.body()?.status==true) {
+                                                    var i = (Intent(
+                                                        this@LoginActivity,
+                                                        SetNewPasswordActivity::class.java
+                                                    ))
+                                                    i.putExtra("em", e)
+                                                    i.flags =
+                                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                    startActivity(i)
+                                                    finish()
+                                                }
+                                                else
+                                                {
+                                                    Toast.makeText(this@LoginActivity,"Wrong OTP! Try Again",Toast.LENGTH_SHORT).show()
+                                                }
                                             }
 
                                             override fun onFailure(
@@ -302,6 +309,11 @@ class LoginActivity : AppCompatActivity() {
         var btn_Lg = findViewById(R.id.btnLg) as Button
         btn_Lg.setOnClickListener {
 
+            val SHARED_PREF_NAME2 = "my_shared_preff"
+            val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
+            val dtoken = sharedPreference1.getString("device_token", "defaultToken")
+            Log.d("detok", dtoken!!)
+
             val e = email.text.toString().trim()
             val p = passsword.text.toString().trim()
 
@@ -319,7 +331,7 @@ class LoginActivity : AppCompatActivity() {
             val map: MutableMap<String, RequestBody> = HashMap()
             map["email"] = toPart(e) as RequestBody
             map["password"] = toPart(p)
-            map["device_id"] = toPart(tkn.toString())
+            map["device_id"] = toPart(dtoken.toString())
             // val em = sharedPreference.getString("email","defaultName")
             RetrofitClient.instance.loginUser(token!!, "login", map).enqueue(object :
                 Callback<LoginResponse> {
@@ -341,6 +353,7 @@ class LoginActivity : AppCompatActivity() {
                             // Log.d("token",response.body()?.data!!.token)
 //                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)
+                            finish()
                         } else {
                             Toast.makeText(applicationContext, "Invalid User", Toast.LENGTH_LONG)
                                 .show()
@@ -368,5 +381,9 @@ class LoginActivity : AppCompatActivity() {
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

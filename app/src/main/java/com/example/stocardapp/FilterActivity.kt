@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.Filter
 import com.example.stocardapp.models.FilterResponse
 import com.google.android.flexbox.FlexDirection
@@ -32,7 +33,7 @@ class FilterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -69,18 +70,25 @@ class FilterActivity : AppCompatActivity() {
                 call: Call<FilterResponse>,
                 response: Response<FilterResponse>
             ) {
-                var dt = response.body()?.data
-                if (dt != null) {
-                    for (d in dt) {
-                        var v = d
-                        stList.add(v)
-                    }
+                if(response.body()?.success == true) {
+                    var dt = response.body()?.data
+                    if (dt != null) {
+                        for (d in dt) {
+                            var v = d
+                            stList.add(v)
+                        }
 //                    val layoutManager = FlexboxLayoutManager(applicationContext)
 //                    layoutManager.flexDirection = FlexDirection.COLUMN
 //                    layoutManager.justifyContent = JustifyContent.FLEX_END
 //                    filterRv.setLayoutManager(layoutManager)
-                    var adapter = FilterAdapter(this@FilterActivity, stList)
-                    filterRv.adapter = adapter
+                        var adapter = FilterAdapter(this@FilterActivity, stList)
+                        filterRv.adapter = adapter
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this@FilterActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
                 }
             }
 

@@ -44,13 +44,22 @@
                           android:gravity="center"
                           android:orientation="vertical">
 
-                          <ImageView
+                          <de.hdodenhof.circleimageview.CircleImageView
                               android:id="@+id/imgPro"
-                              android:layout_width="@dimen/_100sdp"
-                              android:layout_height="@dimen/_100sdp"
-                              android:layout_marginBottom="@dimen/_35sdp"
+                              android:layout_width="110dp"
+                              android:layout_height="110dp"
+                              android:clickable="true"
+                              android:src="@drawable/profile"
+                              android:focusable="true"
                               android:padding="@dimen/_4sdp"
-                              android:src="@drawable/profile" />
+                              android:layout_marginBottom="@dimen/_20sdp"/>
+<!--                          <ImageView-->
+<!--                              android:id="@+id/imgPro"-->
+<!--                              android:layout_width="@dimen/_100sdp"-->
+<!--                              android:layout_height="@dimen/_100sdp"-->
+<!--                              android:layout_marginBottom="@dimen/_35sdp"-->
+<!--                              android:padding="@dimen/_4sdp"-->
+<!--                              android:src="@drawable/profile" />-->
 
                           <LinearLayout
                               android:layout_width="match_parent"
@@ -94,7 +103,7 @@
                                       android:layout_height="wrap_content"
                                       android:fontFamily="@font/catamaran"
                                       android:imeOptions="actionNext"
-                                      android:inputType="text"
+                                      android:inputType="textCapWords"
                                       android:maxLines="1" />
                               </com.google.android.material.textfield.TextInputLayout>
                           </LinearLayout>

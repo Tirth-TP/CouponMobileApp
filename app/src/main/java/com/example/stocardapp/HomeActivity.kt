@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -16,8 +17,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -39,9 +43,12 @@ class HomeActivity : AppCompatActivity() {
     var img:ImageView?=null
     var tvItem:TextView?=null
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
 
    //    val un=  intent.getStringExtra("Username")
 
@@ -103,12 +110,11 @@ class HomeActivity : AppCompatActivity() {
                          contactUs()
                     )
                 }
-
                 R.id.nav_rate->
                 {
-                    movetoFragment(
-                        RateUs()
-                    )
+                    var playstoreuri1: Uri = Uri.parse("market://details?id=com.example.stocardapp")
+                    var playstoreIntent1: Intent = Intent(Intent.ACTION_VIEW, playstoreuri1)
+                    startActivity(playstoreIntent1)
                 }
                 R.id.nav_card->
                 {
@@ -209,10 +215,17 @@ class HomeActivity : AppCompatActivity() {
                     call: Call<ShareCardResponse>,
                     response: retrofit2.Response<ShareCardResponse>
                 ) {
-                    Log.d("resshh1", response.toString())
-                    // Log.d("resshh1",response.body()!!.message)
-                    Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG)
-                        .show()
+                    if(response.body()?.success == true) {
+                        Log.d("resshh1", response.toString())
+                        // Log.d("resshh1",response.body()!!.message)
+                        Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG)
+                                .show()
+                    }
+                    else
+                    {
+                        Toast.makeText(this@HomeActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                    }
                 }
 
                 override fun onFailure(call: Call<ShareCardResponse>, t: Throwable) {

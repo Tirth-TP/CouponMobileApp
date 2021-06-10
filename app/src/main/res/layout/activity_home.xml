@@ -5,6 +5,8 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".HomeActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,20 +15,22 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.AppBarLayout
-
             android:id="@+id/appBarLayout"
-            style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"
+            style="@style/Theme.StocardApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/dark_blue"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/topAppBar"
                 style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
                 android:layout_width="match_parent"
+                android:gravity="center_horizontal"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
+                android:background="@color/teal_200"
                 android:elevation="0dp"
+
                 app:title="@string/app_name" />
 
         </com.google.android.material.appbar.AppBarLayout>

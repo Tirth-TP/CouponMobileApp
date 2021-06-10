@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -20,7 +21,7 @@ class SetNewPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_new_password)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -66,11 +67,18 @@ class SetNewPasswordActivity : AppCompatActivity() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
-                        Toast.makeText(this@SetNewPasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                        if(response.body()?.status == true) {
+                            Toast.makeText(this@SetNewPasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
 
-                        var i = (Intent(this@SetNewPasswordActivity,LoginActivity::class.java))
-                        i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(i)
+                            var i = (Intent(this@SetNewPasswordActivity, LoginActivity::class.java))
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
+                        }
+                        else
+                        {
+                            Toast.makeText(this@SetNewPasswordActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                        }
                     }
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                         Toast.makeText(this@SetNewPasswordActivity, t.message, Toast.LENGTH_LONG).show()
