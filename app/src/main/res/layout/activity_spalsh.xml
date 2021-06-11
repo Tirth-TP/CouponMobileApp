@@ -10,9 +10,9 @@
 
     <ImageView
         android:id="@+id/spImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo2"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_170sdp"
+        app:srcCompat="@mipmap/final_logo"
         app:tint="#342ea9" />
 
     <TextView

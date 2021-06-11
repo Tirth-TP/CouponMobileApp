@@ -15,38 +15,42 @@ class MyFirebaseMessegingService : FirebaseMessagingService() {
 
     lateinit var title:String
     lateinit var message:String
+    lateinit var msg:String
     var CHANNEL_ID = "CHANNEL"
     lateinit var manager:NotificationManager
 
     override fun onMessageReceived(remotemessage: RemoteMessage) {
         super.onMessageReceived(remotemessage)
-        //title = remotemessage.notification!!.title!!
-        message = remotemessage.notification!!.body!!
+       // title = remotemessage.notification!!.title!!
+       // message = remotemessage.notification!!.body!!
+        msg = remotemessage.data.get("message")!!
+        Log.d("notification",msg)
         // message = Objects.requireNonNull(remotemessage.notification?.body)!!
         manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         sendNotification()
     }
 
     private fun sendNotification() {
-        var intent = Intent(applicationContext,HomeActivity::class.java)
-        intent.putExtra("title",title)
-        intent.putExtra("message",message)
+        var intent = Intent(applicationContext, HomeActivity::class.java)
+       // intent.putExtra("title", title)
+       // intent.putExtra("message", message)
+        intent.putExtra("data",msg)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
         {
-            var channel = NotificationChannel(CHANNEL_ID,"pushnotification",NotificationManager.IMPORTANCE_HIGH)
+            var channel = NotificationChannel(CHANNEL_ID, "pushnotification", NotificationManager.IMPORTANCE_HIGH)
            manager.createNotificationChannel(channel)
         }
-        var builder = NotificationCompat.Builder(this,CHANNEL_ID)
-            .setContentTitle(title)
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+          //  .setContentTitle(title)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setAutoCancel(true)
-            .setContentText(message)
-        var pedingintent = PendingIntent.getActivity(applicationContext,0,intent,PendingIntent.FLAG_ONE_SHOT)
+            .setContentText(msg)
+        var pedingintent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         builder.setContentIntent(pedingintent)
-        manager.notify(0,builder.build())
+        manager.notify(0, builder.build())
     }
 //    fun getManager():NotificationManager
 //    {
@@ -55,11 +59,11 @@ class MyFirebaseMessegingService : FirebaseMessagingService() {
 //    }
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-        Log.e("Token",p0)
+        Log.e("Token", p0)
         val SHARED_PREF_NAME = "my_shared_preff"
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-        editor.putString("device_token",p0)
+        editor.putString("device_token", p0)
         editor.apply()
         editor.commit()
 }

@@ -270,6 +270,8 @@ class HomeScreen : Fragment() {
                 }
                 else
                 {
+                    allstore()
+
                     Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
                 }
             }

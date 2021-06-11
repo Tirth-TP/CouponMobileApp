@@ -39,8 +39,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginTop="70dp"
-                            android:src="@drawable/logo2"
-
+                            android:src="@mipmap/final_logo"
                             app:tint="@color/dark_blue" />
 
                         <TextView
