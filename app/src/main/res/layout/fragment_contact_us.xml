@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+       >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,10 +36,11 @@
                         android:orientation="vertical">
                         <ImageView
                             android:id="@+id/imageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/_80sdp"
-
-                            android:src="@drawable/logo2"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="70dp"
+                            android:src="@drawable/ic_icon1"
 
                             app:tint="@color/dark_blue" />
 
@@ -52,7 +54,7 @@
                             android:textAlignment="center"
                             android:textAllCaps="false"
                             android:textColor="#342ea9"
-                            android:textSize="55sp"/>
+                            android:textSize="30sp"/>
 
                         <LinearLayout
                             android:id="@+id/layoutRoot"
@@ -71,21 +73,21 @@
                                     android:layout_width="@dimen/_25sdp"
                                     android:layout_height="@dimen/_25sdp"
                                     android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_14sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:src="@drawable/user"
-                                    android:layout_marginLeft="@dimen/_20sdp" />
+                                    android:src="@drawable/user" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_5sdp"
-                                    android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Name"
-                                    app:helperTextEnabled="true"
                                     android:layout_marginLeft="@dimen/_5sdp"
-                                    android:layout_marginRight="@dimen/_20sdp">
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp"
+                                    android:hint="Name"
+                                    app:helperTextEnabled="true">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/txtCNm"
@@ -93,7 +95,7 @@
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
@@ -108,21 +110,21 @@
                                     android:layout_width="@dimen/_25sdp"
                                     android:layout_height="@dimen/_25sdp"
                                     android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:src="@drawable/email"
-                                    android:layout_marginLeft="@dimen/_20sdp" />
+                                    android:src="@drawable/email" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpEmail"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_5sdp"
-                                    android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Email"
-                                    app:helperTextEnabled="true"
                                     android:layout_marginLeft="@dimen/_5sdp"
-                                    android:layout_marginRight="@dimen/_20sdp">
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp"
+                                    android:hint="Email"
+                                    app:helperTextEnabled="true">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/txtCem"
@@ -135,7 +137,7 @@
                                         android:inputType="textEmailAddress"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
-                                
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -148,21 +150,21 @@
                                     android:layout_width="@dimen/_25sdp"
                                     android:layout_height="@dimen/_25sdp"
                                     android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:src="@drawable/email"
-                                    android:layout_marginLeft="@dimen/_20sdp" />
+                                    android:src="@drawable/email" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpSub"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_5sdp"
-                                    android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Subject"
-                                    app:helperTextEnabled="true"
                                     android:layout_marginLeft="@dimen/_5sdp"
-                                    android:layout_marginRight="@dimen/_20sdp">
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp"
+                                    android:hint="Subject"
+                                    app:helperTextEnabled="true">
 
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/txtSub"
@@ -172,7 +174,7 @@
                                         android:editable="true"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
-                                        android:inputType="text"
+                                        android:inputType="textCapWords"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -193,20 +195,20 @@
                                         android:layout_width="@dimen/_25sdp"
                                         android:layout_height="@dimen/_25sdp"
                                         android:layout_marginStart="@dimen/_20sdp"
+                                        android:layout_marginLeft="@dimen/_20sdp"
                                         android:layout_marginTop="@dimen/_14sdp"
                                         android:padding="@dimen/_4sdp"
-                                        android:src="@drawable/ic_baseline_message_24"
-                                        android:layout_marginLeft="@dimen/_20sdp" />
+                                        android:src="@drawable/ic_baseline_message_24" />
 
                                     <com.google.android.material.textfield.TextInputLayout
                                         android:id="@+id/txtIanpPin"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="@dimen/_5sdp"
-                                        android:layout_marginEnd="@dimen/_20sdp"
-                                        android:hint="Description"
                                         android:layout_marginLeft="@dimen/_5sdp"
-                                        android:layout_marginRight="@dimen/_20sdp">
+                                        android:layout_marginEnd="@dimen/_20sdp"
+                                        android:layout_marginRight="@dimen/_20sdp"
+                                        android:hint="Description">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/txtMsg"
@@ -214,27 +216,40 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/catamaran"
                                             android:imeOptions="actionNext"
-                                            android:inputType="textMultiLine"
-                                            android:lines="3"
-                                            android:letterSpacing="0.5" />
+                                            android:gravity="top|left"
+                                            android:inputType="textMultiLine|textCapSentences"
+                                            android:lines="3" />
                                     </com.google.android.material.textfield.TextInputLayout>
                                 </LinearLayout>
 
                             </LinearLayout>
-
                             <Button
                                 android:id="@+id/btn_cnt"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
-                                android:layout_marginLeft="@dimen/_20sdp"
-                                android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
-                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:layout_marginTop="@dimen/_15sdp"
                                 android:background="@drawable/btn_background"
-                                android:fontFamily="@font/catamaran"
                                 android:text="Send"
-                                android:textColor="@color/white" />
+                                android:fontFamily="@font/catamaran"
+                                android:textColor="@color/white"
+                                app:layout_constraintStart_toStartOf="parent"
+                                 />
+
+<!--                         <Button-->
+<!--                             android:id="@+id/btnCnt"-->
+<!--                             android:layout_width="match_parent"-->
+<!--                             android:layout_height="wrap_content"-->
+<!--                             android:layout_marginStart="@dimen/_20sdp"-->
+<!--                             android:layout_marginLeft="@dimen/_20sdp"-->
+<!--                             android:layout_marginTop="@dimen/_15sdp"-->
+<!--                             android:layout_marginEnd="@dimen/_20sdp"-->
+<!--                             android:fontFamily="@font/catamaran"-->
+<!--                             android:text="Send"-->
+<!--                             android:background="@drawable/btn_background"-->
+<!--                             android:textColor="@color/white"-->
+<!--                             />-->
 
                         </LinearLayout>
 

@@ -8,7 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.fragment.findNavController
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -46,7 +49,7 @@ class contactUs : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "Contact Us"
 
 //        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
@@ -60,6 +63,8 @@ class contactUs : Fragment() {
         val tem = requireView().findViewById<EditText>(R.id.txtCem)
         val tsb = requireView().findViewById<EditText>(R.id.txtSub)
         val tmg = requireView().findViewById<EditText>(R.id.txtMsg)
+
+        //btnCn.setBackgroundResource(R.drawable.btn_background)
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -95,10 +100,18 @@ class contactUs : Fragment() {
                 }
             })
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
+
 
     companion object {
         /**

@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -20,7 +21,7 @@ class SetNewPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_new_password)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)

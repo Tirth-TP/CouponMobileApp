@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +37,7 @@ class CardListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_list)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -147,61 +148,63 @@ class CardListActivity : AppCompatActivity() {
             }
         })
 
+        update_st.setOnClickListener {
+            map["id"] = toPart(sid.toString()) as RequestBody
+            map["contact"] = toPart(getCn.text.toString())
+            map["location"] = toPart(getLc.text.toString())
+            mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
+                Callback<StoreUpdateResponse> {
+                override fun onResponse(
+                    call: Call<StoreUpdateResponse>,
+                    response: retrofit2.Response<StoreUpdateResponse>
+                ) {
+                    if (response.body()?.success == true) {
+                        Toast.makeText(
+                            this@CardListActivity,
+                            response.body()?.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val i = (Intent(applicationContext, HomeActivity::class.java))
+                        startActivity(i)
+                    } else {
+                        Toast.makeText(
+                            applicationContext,
+                            "" + response.body()?.message,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<StoreUpdateResponse>, t: Throwable) {
+                    Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
+        }
 
         del_st.setOnClickListener {
 
-            //store update
+            map["id"] = toPart(sid.toString()) as RequestBody
+            mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :
+                Callback<DeleteResponse> {
+                override fun onResponse(
+                    call: Call<DeleteResponse>,
+                    response: retrofit2.Response<DeleteResponse>
+                ) {
+                    Toast.makeText(
+                        this@CardListActivity,
+                        response.body()?.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                    val i = (Intent(applicationContext, HomeActivity::class.java))
+                    startActivity(i)
+                }
 
-            update_st.setOnClickListener {
-                map["id"] = toPart(sid.toString()) as RequestBody
-                map["contact"] = toPart(getCn.text.toString())
-                map["location"] = toPart(getLc.text.toString())
-                mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
-                    Callback<StoreUpdateResponse> {
-                    override fun onResponse(
-                        call: Call<StoreUpdateResponse>,
-                        response: retrofit2.Response<StoreUpdateResponse>
-                    ) {
-                        Toast.makeText(
-                            this@CardListActivity,
-                            response.body()?.message,
-                            Toast.LENGTH_LONG
-                        ).show()
-                        val i = (Intent(applicationContext, HomeActivity::class.java))
-                        startActivity(i)
-                    }
-
-                    override fun onFailure(call: Call<StoreUpdateResponse>, t: Throwable) {
-                        Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-
-            //store delete
-            del_st.setOnClickListener {
-
-                map["id"] = toPart(sid.toString()) as RequestBody
-                mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :
-                    Callback<DeleteResponse> {
-                    override fun onResponse(
-                        call: Call<DeleteResponse>,
-                        response: retrofit2.Response<DeleteResponse>
-                    ) {
-                        Toast.makeText(
-                            this@CardListActivity,
-                            response.body()?.message,
-                            Toast.LENGTH_LONG
-                        ).show()
-                        val i = (Intent(applicationContext, HomeActivity::class.java))
-                        startActivity(i)
-                    }
-
-                    override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
-                        Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
+                override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+                    Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
+                }
+            })
         }
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -216,8 +219,23 @@ class CardListActivity : AppCompatActivity() {
             sec.findViewById(androidx.appcompat.R.id.search_src_text)
         searchEditText.setTextColor(resources.getColor(R.color.white))
         searchEditText.setHintTextColor(resources.getColor(R.color.white))
+        val searchClose: ImageView =
+            sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+        searchClose.setColorFilter(R.color.white)
+        val searchBack: ImageView =
+            sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+        searchBack.setColorFilter(R.color.white)
 
+//        if (item != null) {
+//            sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+//                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    return true
+//                }
         if (item != null) {
+            var sec: androidx.appcompat.widget.SearchView =
+                item.actionView as androidx.appcompat.widget.SearchView
+
             sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {

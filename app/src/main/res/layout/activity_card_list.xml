@@ -36,15 +36,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbarThumbVertical="@android:color/transparent">
+<!--            <ScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:fillViewport="true"-->
+<!--                android:scrollbarThumbVertical="@android:color/transparent">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -53,6 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_20sdp"
                         android:gravity="center"
+                        android:layout_marginBottom="@dimen/Dimen_20dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -140,83 +141,92 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
+                            android:gravity="center_horizontal"
+
                             >
 
                             <Button
                                 android:id="@+id/btnSUpdate"
-                                android:layout_width="@dimen/_100sdp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="20dp"
                                 android:text="Update store"
+                                android:padding="@dimen/Dimen_10dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                android:background="#342ea9"
+                                android:background="@drawable/btn_background"
                                 android:textColor="@color/white"
 
                                 />
                         <Button
                             android:id="@+id/btnSdel"
-                            android:layout_width="@dimen/_100sdp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:text="Delete store"
+                            android:padding="@dimen/Dimen_10dp"
+                            android:background="@drawable/btn_background"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            android:background="#342ea9"
                             android:textColor="@color/white"
-                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginStart="60dp"
                             />
-
                         </LinearLayout>
 
 </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true"
+                        android:scrollbarThumbVertical="@android:color/transparent">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/rv_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/cdRv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:clipToPadding="false"
+                        android:paddingBottom="73dp"
+                        android:layout_marginLeft="@dimen/_8sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="2"/>
+                        app:spanCount="2" />
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </ScrollView>
                 </LinearLayout>
-            </ScrollView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:background="@drawable/shadow_header" />
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btn_addCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="@dimen/_10sdp"
+                android:fontFamily="@font/catamaran"
+                android:text="Add Coupon"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:backgroundTint="#342ea9"
+                app:icon="@drawable/ic_baseline_add_24"
+                app:iconTint="@color/white" />
         </RelativeLayout>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_bottom"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btn_addCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
-        android:layout_marginBottom="22dp"
-        android:contentDescription="Add Card"
-        android:fontFamily="@font/catamaran"
-        android:text="Add Coupon"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:backgroundTint="#342ea9"
-        app:icon="@drawable/ic_baseline_add_24"
-        app:iconTint="@color/white" />
+
+
 
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/header_black" />
+        <include layout="@layout/header_black_2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,7 +81,8 @@
                                 android:fontFamily="@font/catamaran"
                                 android:imeOptions="actionNext"
                                 android:inputType="text"
-                                android:maxLines="1" />
+                                android:maxLines="1"
+                                android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 
@@ -207,6 +208,7 @@
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
                                     android:inputType="textPassword"
+
                                     android:letterSpacing="0.5"
                                     android:maxLength="16"
                                     android:maxLines="1" />
@@ -258,6 +260,7 @@
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
                                     android:inputType="phone"
+                                    android:maxLength="10"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>

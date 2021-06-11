@@ -20,6 +20,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.example.stocardapp.models.FilterResponse
@@ -56,7 +57,7 @@ class AddStoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_store)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -101,6 +102,7 @@ class AddStoreActivity : AppCompatActivity() {
         val stImg = findViewById<ImageView>(R.id.storeImg)
         val ibk = findViewById<ImageView>(R.id.imgBack)
         val stCt = findViewById<AutoCompleteTextView>(R.id.spCategory)
+        var ci=""
 
         spn.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -108,7 +110,7 @@ class AddStoreActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(spn.length()>11)
+                if(spn.length()>10)
                 {
                     spn.setError("Invalid Phone Number")
                 }
@@ -155,7 +157,39 @@ class AddStoreActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
-        map[""] = toPart("") as RequestBody
+
+        stCt.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val sct = stCt.text.toString()
+
+                Log.d("fffiiff",sct)
+                //        var ci = ""
+        for (j in c.indices)
+        {
+//                Log.d("fffiiff", c[j]!!)
+            if(c[j] == sct)
+            {
+                Log.d("fffiiff", temp[j]!!)
+                ci = temp[j]!!
+                break
+            }
+        }
+        Log.d("fffiiff",ci)
+
+            }
+
+        })
+
+
+        map["category_id"] = toPart(ci) as RequestBody
         val listdata = ArrayList<String>()
         val imglist = ArrayList<String>()
 
@@ -195,7 +229,6 @@ class AddStoreActivity : AppCompatActivity() {
 
             val sct = stCt.text.toString().trim()
             var fi = ""
-
 
             for (j in c.indices)
             {

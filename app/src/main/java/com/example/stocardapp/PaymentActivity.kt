@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.CardDetail
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -28,6 +29,7 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)

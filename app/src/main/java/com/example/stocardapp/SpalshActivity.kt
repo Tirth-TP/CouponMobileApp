@@ -23,20 +23,22 @@ class SpalshActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spalsh)
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         topANim = AnimationUtils.loadAnimation(this,R.anim.top_animation)
         btANim = AnimationUtils.loadAnimation(this,R.anim.bottom_animation)
 
-        img = findViewById(R.id.spImg);
+        img = findViewById(R.id.spImg)
         title = findViewById(R.id.spTxt)
-        desc = findViewById(R.id.sptTxt);
+        desc = findViewById(R.id.sptTxt)
 
-        img.animation = topANim;
-        title.animation = btANim;
-        desc.animation = btANim;
+        img.animation = topANim
+        title.animation = btANim
+        desc.animation = btANim
         Handler().postDelayed({
             startActivity(Intent(this,LoginActivity::class.java))
+            Intent.FLAG_ACTIVITY_CLEAR_TOP
+            Intent.FLAG_ACTIVITY_NEW_TASK
             finish()
         },4000)
 

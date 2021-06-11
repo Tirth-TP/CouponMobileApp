@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.stocardapp.models.ChangePasswordResponse
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -18,7 +19,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
@@ -36,7 +37,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val nps = findViewById(R.id.chNew) as EditText
         val cps = findViewById(R.id.chCon) as EditText
         val btn_sv = findViewById(R.id.btn_yes) as Button
-        val btnCl = findViewById(R.id.btn_cl) as Button
+        //val btnCl = findViewById(R.id.btn_cl) as Button
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -45,11 +46,11 @@ class ChangePasswordActivity : AppCompatActivity() {
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
 
-        btnCl.setOnClickListener {
-            var i = (Intent(this@ChangePasswordActivity,HomeActivity::class.java))
-            i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
-        }
+//        btnCl.setOnClickListener {
+//            var i = (Intent(this@ChangePasswordActivity,HomeActivity::class.java))
+//            i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(i)
+//        }
 
         btn_sv.setOnClickListener {
             val op = ops.text.toString().trim()

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import coil.api.load
 import com.example.stocardapp.models.HideCardResponse
 import com.example.stocardapp.models.ShareCardResponse
@@ -24,7 +25,7 @@ class LockActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lock)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
         var cid = intent.getIntExtra("cardId",0)

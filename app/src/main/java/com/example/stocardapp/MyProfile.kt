@@ -15,8 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import coil.api.load
@@ -76,7 +78,7 @@ class MyProfile : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "My Profile"
 
 //        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
@@ -217,6 +219,12 @@ class MyProfile : Fragment() {
             startActivity(intent)
 
         }
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
   /*  private fun launchCustomAlertDialog() {
         val ops = requireView().findViewById(R.id.chold) as EditText

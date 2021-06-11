@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.stocardapp.models.ChangePasswordResponse
@@ -20,7 +21,7 @@ class ResetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset)
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val np = findViewById(R.id.npi1) as EditText
         val cp = findViewById(R.id.cpi1) as EditText
         val yesBtn = findViewById(R.id.okBtn1) as Button

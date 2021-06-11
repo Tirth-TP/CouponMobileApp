@@ -21,6 +21,8 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.alimuzaffar.lib.pin.PinEntryEditText
 import com.example.stocardapp.R.*
@@ -50,6 +52,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (intent.extras != null) {
             for (key in intent.extras!!.keySet()) {
                 if (key == "title") {
@@ -109,9 +114,8 @@ class LoginActivity : AppCompatActivity() {
         var a = 0
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Log In")
-        txtTit.setTextColor(R.color.black)
-        val ibk = findViewById<ImageView>(R.id.imgBack)
-        ibk.isVisible = false
+//        val ibk = findViewById<ImageView>(R.id.imgBack)
+//        ibk.isVisible = false
         val txtFr = findViewById<TextView>(R.id.txtForgot)
         /* var pass = findViewById<EditText>(R.id.txtPass)
          pass.setOnTouchListener(View.OnTouchListener { v, event ->
@@ -237,17 +241,22 @@ class LoginActivity : AppCompatActivity() {
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-
-                                                alertDialog.dismiss()
-                                                var i = (Intent(
-                                                    this@LoginActivity,
-                                                    SetNewPasswordActivity::class.java
-                                                ))
-                                                i.putExtra("em", e)
-                                                i.flags =
-                                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                                startActivity(i)
-
+                                                    alertDialog.dismiss()
+                                                if(response.body()?.status==true) {
+                                                    var i = (Intent(
+                                                        this@LoginActivity,
+                                                        SetNewPasswordActivity::class.java
+                                                    ))
+                                                    i.putExtra("em", e)
+                                                    i.flags =
+                                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                                    startActivity(i)
+                                                    finish()
+                                                }
+                                                else
+                                                {
+                                                    Toast.makeText(this@LoginActivity,"Wrong OTP! Try Again",Toast.LENGTH_SHORT).show()
+                                                }
                                             }
 
                                             override fun onFailure(
@@ -341,6 +350,7 @@ class LoginActivity : AppCompatActivity() {
                             // Log.d("token",response.body()?.data!!.token)
 //                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)
+                            finish()
                         } else {
                             Toast.makeText(applicationContext, "Invalid User", Toast.LENGTH_LONG)
                                 .show()
@@ -368,5 +378,9 @@ class LoginActivity : AppCompatActivity() {
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)
         }
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

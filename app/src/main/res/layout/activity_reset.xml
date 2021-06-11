@@ -105,28 +105,53 @@
 
     <Button
         android:id="@+id/okBtn1"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_100sdp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="52dp"
         android:background="@drawable/btn_background"
+        android:fontFamily="@font/catamaran"
         android:text="Save"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/cnBtn"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
-
+<!--    <Button-->
+<!--        android:id="@+id/okBtn1"-->
+<!--        android:layout_width="@dimen/_100sdp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="92dp"-->
+<!--        android:layout_marginTop="76dp"-->
+<!--        android:background="@drawable/btn_background"-->
+<!--        android:text="Save"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/cnBtn"-->
+<!--        app:layout_constraintHorizontal_bias="0.591"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />-->
     <Button
         android:id="@+id/cnBtn1"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/_100sdp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="92dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/btn_background"
+        android:fontFamily="@font/catamaran"
         android:text="Cancel"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
+<!--    <Button-->
+<!--        android:id="@+id/cnBtn1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="76dp"-->
+<!--        android:layout_marginEnd="92dp"-->
+<!--        android:background="@drawable/btn_background"-->
+<!--        android:text="Cancel"-->
+<!--        android:textColor="@color/white"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
