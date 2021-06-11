@@ -1,4 +1,4 @@
-package com.example.stocardapp
+ package com.example.stocardapp
 
 import android.content.Context
 import android.content.Intent
@@ -104,7 +104,6 @@ class StoreAdapter(
                         {
                             Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
                         }
-
                     }
                     override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                         Toast.makeText(ctx, t.message, Toast.LENGTH_LONG).show()

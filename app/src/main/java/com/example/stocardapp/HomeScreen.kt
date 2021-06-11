@@ -244,33 +244,8 @@ class HomeScreen : Fragment() {
                             stList.add(v)
                         }
                         //Log.d("arrayleng1", stList.size.toString())
-                        if (stList.size == 0) {
-                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
-                            Log.d("visible", stRc?.visibility.toString())
-                            stRc?.isVisible = false
-                            Log.d("visiblea", stRc?.visibility.toString())
-                            var img: ImageView? = ImageView(context)
-                            var msg: TextView? = TextView(context)
-                            img?.load(R.drawable.empty)
-                            val title = SpannableString("Add Your First Store!!")
-                            title.setSpan(
-                                    ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                    0,
-                                    title.length,
-                                    0
-                            )
-                            msg?.setText(title)
-                            msg?.setX(200.00F)
-                            msg?.setY(500.00F)
-                            msg?.textSize = 28F
-                            img?.maxHeight = 100
-                            img?.maxWidth = 100
-                            img?.minimumHeight = 100
-                            img?.minimumWidth = 100
-                            img?.animation = spinAnim
-                            fr?.layoutParams = fr?.getLayoutParams()
-                            fr?.addView(img)
-                            fr?.addView(msg)
+                        if (dt == null) {
+                          allstore()
                         } else {
                             // cRv.adapter = adapter
                             //checkNetwork()
@@ -401,7 +376,7 @@ class HomeScreen : Fragment() {
             R.id.btnFilter -> {
                 if (f != "all") {
                     f = "filtered"
-                    Toast.makeText(context,"" + item.title,Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context,"" + item.title,Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
                     startActivity(intent)
                 }

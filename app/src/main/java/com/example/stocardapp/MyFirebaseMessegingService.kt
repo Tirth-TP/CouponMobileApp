@@ -20,7 +20,7 @@ class MyFirebaseMessegingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remotemessage: RemoteMessage) {
         super.onMessageReceived(remotemessage)
-        title = remotemessage.notification!!.title!!
+        //title = remotemessage.notification!!.title!!
         message = remotemessage.notification!!.body!!
         // message = Objects.requireNonNull(remotemessage.notification?.body)!!
         manager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -56,13 +56,12 @@ class MyFirebaseMessegingService : FirebaseMessagingService() {
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         Log.e("Token",p0)
-        val SHARED_PREF_NAME2 = "my_shared_preff"
-        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME2,Context.MODE_PRIVATE)
+        val SHARED_PREF_NAME = "my_shared_preff"
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME,Context.MODE_PRIVATE)
         val editor:SharedPreferences.Editor =  sharedPreferences.edit()
         editor.putString("device_token",p0)
         editor.apply()
         editor.commit()
-
 }
 //    fun toPart(data: String): RequestBody {
 //        return RequestBody.create("text/plain".toMediaTypeOrNull(), data)

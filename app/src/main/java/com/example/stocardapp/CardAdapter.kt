@@ -38,20 +38,8 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener:On
         var Ctit = v.findViewById<TextView>(R.id.storeImtit)
         var stcv = v.findViewById<CardView>(R.id.storeCv)
         var hdBtn = v.findViewById<ImageView>(R.id.hide)
-//        var cid = 0
-//        var cnm = ""
-//        var cnum = ""
-//        var crd = ""
-//        var cdtl = ""
-//        var cdt = ""
-//        var st = ""
-//        var act = ""
         var u: Uri? = null
-//        var iu = ""
 
-        init {
-
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,23 +54,21 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener:On
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.Ctit.text=arr[position].cardname
-//        holder.cid = arr[position].id
-//        holder.cnm = arr[position].cardname
-//        holder.cnum = arr[position].cardno
-//        holder.crd = arr[position].rewardpercen
-//        holder.cdtl = arr[position].carddetail
-//        holder.cdt = arr[position].expdate
-//        holder.st = arr[position].status
-//        holder.act = arr[position].isActive
         holder.u = Uri.parse(arr[position].card_img)
-//        holder.iu = arr[position].is_Used
         if(arr[position].is_Used == "true")
         {
             holder.stcv.isEnabled = false
            // holder.stcv.setBackgroundColor(Color.LTGRAY)
            // holder.Simg.visibility = View.INVISIBLE
-            holder.Ctit.setText("Coupon Expired")
+            holder.Ctit.setText("Coupon Used")
             holder.Ctit.setTextColor(Color.RED)
+            holder.Ctit.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
+            holder.stcv.setBackgroundResource(R.drawable.btn_blank_corners)
+            val layoutParams = holder.Ctit.layoutParams as LinearLayout.LayoutParams
+            layoutParams.topMargin = 32
+            holder.Simg.setColorFilter(Color.parseColor("#66000000"))
+            holder.Ctit.layoutParams = layoutParams
+            holder.hdBtn.visibility = View.INVISIBLE
 
         }
         if(arr.get(position).isActive == "false")
