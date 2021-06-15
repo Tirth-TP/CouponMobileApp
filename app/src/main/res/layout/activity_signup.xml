@@ -80,9 +80,9 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/catamaran"
                                 android:imeOptions="actionNext"
-                                android:inputType="text"
+                                android:inputType="textCapWords"
                                 android:maxLines="1"
-                                android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"/>
+                                android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789, "/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
 

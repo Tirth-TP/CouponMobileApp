@@ -90,6 +90,9 @@ class CardDetailActivity : AppCompatActivity() {
                         call: Call<DeleteResponse>,
                         response: retrofit2.Response<DeleteResponse>
                 ) {
+                    Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                    val i = (Intent(applicationContext, CardListActivity::class.java))
+                    startActivity(i)
                     if(response.body()?.status == true) {
                         Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
                         val i = (Intent(applicationContext, CardListActivity::class.java))

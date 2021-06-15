@@ -111,13 +111,13 @@ class CardListActivity : AppCompatActivity() {
         //card list
         Log.d("msg", sid.toString())
         mAPIService.cardList(token!!, "CardDetail", map).enqueue(object :
-            Callback<CardDetailResponse> {
+                Callback<CardDetailResponse> {
             override fun onResponse(
-                call: Call<CardDetailResponse>,
-                response: retrofit2.Response<CardDetailResponse>
+                    call: Call<CardDetailResponse>,
+                    response: retrofit2.Response<CardDetailResponse>
             ) {
                 //var ad = CardAdapter(this@CardListActivity, stList)
-                if(response.body()?.success == true) {
+                if (response.body()?.success == true) {
                     var dt = response.body()?.data
                     if (dt != null) {
                         for (d in dt) {
@@ -142,9 +142,8 @@ class CardListActivity : AppCompatActivity() {
                         //  Toast.makeText(this@CardListActivity,response.body()?.message,Toast.LENGTH_LONG).show()
                         //  var i = response.body()?.data
                     }
-                }
-                else{
-                    Toast.makeText(this@CardListActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this@CardListActivity, "Something went wrong!", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -158,24 +157,24 @@ class CardListActivity : AppCompatActivity() {
             map["contact"] = toPart(getCn.text.toString())
             map["location"] = toPart(getLc.text.toString())
             mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
-                Callback<StoreUpdateResponse> {
+                    Callback<StoreUpdateResponse> {
                 override fun onResponse(
-                    call: Call<StoreUpdateResponse>,
-                    response: retrofit2.Response<StoreUpdateResponse>
+                        call: Call<StoreUpdateResponse>,
+                        response: retrofit2.Response<StoreUpdateResponse>
                 ) {
                     if (response.body()?.success == true) {
                         Toast.makeText(
-                            this@CardListActivity,
-                            response.body()?.message,
-                            Toast.LENGTH_SHORT
+                                this@CardListActivity,
+                                response.body()?.message,
+                                Toast.LENGTH_SHORT
                         ).show()
                         val i = (Intent(applicationContext, CardListActivity::class.java))
                         startActivity(i)
                     } else {
                         Toast.makeText(
-                            applicationContext,
-                            "" + response.body()?.message,
-                            Toast.LENGTH_SHORT
+                                applicationContext,
+                                "" + response.body()?.message,
+                                Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -188,54 +187,68 @@ class CardListActivity : AppCompatActivity() {
 
         del_st.setOnClickListener {
 
-            map["id"] = toPart(sid.toString()) as RequestBody
-            mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :
-                Callback<DeleteResponse> {
-                override fun onResponse(
-                    call: Call<DeleteResponse>,
-                    response: retrofit2.Response<DeleteResponse>
-                ) {
-                    if(response.body()?.status == true) {
-                        Toast.makeText(
-                                this@CardListActivity,
-                                response.body()?.message,
-                                Toast.LENGTH_LONG
-                        ).show()
-                        val i = (Intent(applicationContext, HomeActivity::class.java))
-                        startActivity(i)
+//            map["id"] = toPart(sid.toString()) as RequestBody
+//            mAPIService.delStore(token!!, "StoreDelete", map).enqueue(object :
+//                    Callback<DeleteResponse> {
+//                override fun onResponse(
+//                        call: Call<DeleteResponse>,
+//                        response: retrofit2.Response<DeleteResponse>
+//                ) {
+//                    Toast.makeText(
+//                            this@CardListActivity,
+//                            response.body()?.message,
+//                            Toast.LENGTH_LONG
+//                    ).show()
+//                    val i = (Intent(applicationContext, HomeActivity::class.java))
+//                    startActivity(i)
+//                }
+                map["id"] = toPart(sid.toString()) as RequestBody
+                mAPIService.delStore(token!!, "StoreDelete", map).enqueue(
+                object :
+                        Callback<DeleteResponse> {
+                    override fun onResponse(
+                            call: Call<DeleteResponse>,
+                            response: retrofit2.Response<DeleteResponse>
+                    ) {
+                        if (response.body()?.status == true) {
+                            Toast.makeText(
+                                    this@CardListActivity,
+                                    response.body()?.message,
+                                    Toast.LENGTH_LONG
+                            ).show()
+                            val i = (Intent(applicationContext, HomeActivity::class.java))
+                            startActivity(i)
+                        } else {
+                            Toast.makeText(this@CardListActivity, "Something went wrong!", Toast.LENGTH_LONG).show()
+                        }
                     }
-                    else
-                    {
-                        Toast.makeText(this@CardListActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
-                    }
-                }
 
-                override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
-                    Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
-                }
-            })
+                    override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+                        Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
+
         }
 
-    }
-
-    @SuppressLint("ResourceAsColor")
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_ser, menu)
-        var item: MenuItem = menu!!.findItem(R.id.ser)
-        var cRv = findViewById<RecyclerView>(R.id.cdRv)
-        var sec: androidx.appcompat.widget.SearchView =
-            item.actionView as androidx.appcompat.widget.SearchView
-        val searchEditText: EditText =
-            sec.findViewById(androidx.appcompat.R.id.search_src_text)
-        searchEditText.setTextColor(resources.getColor(R.color.white))
-        searchEditText.setHintTextColor(resources.getColor(R.color.white))
-        val searchClose: ImageView =
-            sec.findViewById(androidx.appcompat.R.id.search_close_btn)
-        searchClose.setColorFilter(R.color.white)
-        val searchBack: ImageView =
-            sec.findViewById(androidx.appcompat.R.id.search_close_btn)
-        searchBack.setColorFilter(R.color.white)
+        @SuppressLint("ResourceAsColor")
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+        override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+            menuInflater.inflate(R.menu.menu_ser, menu)
+            var item: MenuItem = menu!!.findItem(R.id.ser)
+            var cRv = findViewById<RecyclerView>(R.id.cdRv)
+            var sec: androidx.appcompat.widget.SearchView =
+                    item.actionView as androidx.appcompat.widget.SearchView
+            val searchEditText: EditText =
+                    sec.findViewById(androidx.appcompat.R.id.search_src_text)
+            searchEditText.setTextColor(resources.getColor(R.color.white))
+            searchEditText.setHintTextColor(resources.getColor(R.color.white))
+            val searchClose: ImageView =
+                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+            searchClose.setColorFilter(R.color.white)
+            val searchBack: ImageView =
+                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+            searchBack.setColorFilter(R.color.white)
 
 //        if (item != null) {
 //            sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
@@ -243,40 +256,40 @@ class CardListActivity : AppCompatActivity() {
 //                override fun onQueryTextSubmit(query: String?): Boolean {
 //                    return true
 //                }
-        if (item != null) {
-            var sec: androidx.appcompat.widget.SearchView =
-                item.actionView as androidx.appcompat.widget.SearchView
+            if (item != null) {
+                var sec: androidx.appcompat.widget.SearchView =
+                        item.actionView as androidx.appcompat.widget.SearchView
 
-            sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                androidx.appcompat.widget.SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    if (newText!!.isNotEmpty()) {
-                        dispLst.clear()
-                        val se = newText.toLowerCase(Locale.getDefault())
-                        stList.forEach {
-                            if (it.cardname.toLowerCase(Locale.getDefault()).contains(se)) {
-                                dispLst.add(it)
-                            }
-                        }
-                        cRv.adapter!!.notifyDataSetChanged()
-                    } else {
-                        dispLst.clear()
-                        dispLst.addAll(stList)
-                        cRv.adapter!!.notifyDataSetChanged()
+                sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return true
                     }
-                    return true
-                }
-            })
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (newText!!.isNotEmpty()) {
+                            dispLst.clear()
+                            val se = newText.toLowerCase(Locale.getDefault())
+                            stList.forEach {
+                                if (it.cardname.toLowerCase(Locale.getDefault()).contains(se)) {
+                                    dispLst.add(it)
+                                }
+                            }
+                            cRv.adapter!!.notifyDataSetChanged()
+                        } else {
+                            dispLst.clear()
+                            dispLst.addAll(stList)
+                            cRv.adapter!!.notifyDataSetChanged()
+                        }
+                        return true
+                    }
+                })
+            }
+            return super.onCreateOptionsMenu(menu)
         }
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    fun toPart(data: String): RequestBody {
-        return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
-    }
+        fun toPart(data: String): RequestBody {
+            return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
+        }
 
-}
+    }

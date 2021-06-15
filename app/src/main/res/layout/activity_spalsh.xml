@@ -10,6 +10,7 @@
 
     <ImageView
         android:id="@+id/spImg"
+        android:src="@drawable/ic_icon1"
         android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_170sdp"
         app:srcCompat="@mipmap/final_logo"

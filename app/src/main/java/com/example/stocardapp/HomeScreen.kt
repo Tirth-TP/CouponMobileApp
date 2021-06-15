@@ -1,6 +1,5 @@
 package com.example.stocardapp
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,9 +16,9 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -43,16 +42,11 @@ import kotlin.collections.set
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
 
-class HomeScreen : Fragment() {
+class HomeScreen : Fragment(){
     lateinit var spinAnim: Animation;
     lateinit var btANim: Animation;
-
+    lateinit var adapter:StoreAdapter
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -64,7 +58,7 @@ class HomeScreen : Fragment() {
     var itemTouchHelper: ItemTouchHelper? = null
     val map: MutableMap<String, RequestBody> = HashMap()
     lateinit var f: String
-
+    lateinit var img2:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -74,8 +68,8 @@ class HomeScreen : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
@@ -84,6 +78,7 @@ class HomeScreen : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val btnAdd = requireView().findViewById(R.id.btn_addStore) as Button
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
@@ -96,16 +91,14 @@ class HomeScreen : Fragment() {
 
         f = requireActivity().intent.getStringExtra("filter").toString()
         val SHARED_PREF_NAME1 = "my_shared_preff"
-        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(SHARED_PREF_NAME1, Context.MODE_PRIVATE)
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
+            SHARED_PREF_NAME1,
+            Context.MODE_PRIVATE
+        )
         var s = sharedPreferences.getString("filterid", "defaultName")
         Log.d("fiiff", s!!)
 
-        //filter selection
-//        btnflt.setOnClickListener {
-////            startActivity(Intent(context?.applicationContext,AddStoreActivity::class.java))
-//            val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
-//            startActivity(intent)
-//        }
+
 
         //checkNetwork()
         mAPIService = ApiUtils.apiService
@@ -115,69 +108,68 @@ class HomeScreen : Fragment() {
                 this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
 
-//        switch1.isClickable = false
+
 
         if (f == "all") {
-//            switch1.isClickable = true
-//            switch1.isChecked = true
+
             map["filter_id"] = toPart(s!!) as RequestBody
 
             mAPIService!!.storeDetails(token!!, "Filter", map).enqueue(object :
-                    Callback<StoreDetailResponse> {
+                Callback<StoreDetailResponse> {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onResponse(
-                        call: Call<StoreDetailResponse>,
-                        response: Response<StoreDetailResponse>
+                    call: Call<StoreDetailResponse>,
+                    response: Response<StoreDetailResponse>
                 ) {
-
-                    if(response.body()?.success == true) {
-                        //  var ad = StoreAdapter(context!!.applicationContext, stList)
+                    //  var ad = StoreAdapter(context!!.applicationContext, stList)
+                    if (response.body()?.success == true) {
                         var dt = response.body()?.data
                         if (dt != null) {
                             for (d in dt) {
                                 var v = d
                                 stList.add(v)
                             }
-                            //Log.d("arrayleng1", stList.size.toString())
-                            if (stList.size == 0) {
-                                var fr = view?.findViewById<FrameLayout>(R.id.frame)
-                                Log.d("visible", stRc?.visibility.toString())
-                                stRc?.isVisible = false
-                                Log.d("visiblea", stRc?.visibility.toString())
-                                var img: ImageView? = ImageView(context)
-                                var msg: TextView? = TextView(context)
-                                img?.load(R.drawable.empty)
-                                val title = SpannableString("Add Your First Store!!")
-                                title.setSpan(
-                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                        0,
-                                        title.length,
-                                        0
-                                )
-                                msg?.setText(title)
-                                msg?.setX(200.00F)
-                                msg?.setY(500.00F)
-                                msg?.textSize = 28F
-                                img?.maxHeight = 100
-                                img?.maxWidth = 100
-                                img?.minimumHeight = 100
-                                img?.minimumWidth = 100
-                                img?.animation = spinAnim
-                                fr?.layoutParams = fr?.getLayoutParams()
-                                fr?.addView(img)
-                                fr?.addView(msg)
+                            Log.d("successmessage", "" + response.body()?.message)
+                            if (s == "") {
+                                allstore()
+//                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+//                            Log.d("visible", stRc?.visibility.toString())
+//                            stRc?.isVisible = false
+//                            Log.d("visiblea", stRc?.visibility.toString())
+//                            var img: ImageView? = ImageView(context)
+//                            var msg: TextView? = TextView(context)
+//                            img?.load(R.drawable.empty)
+//                            val title = SpannableString("Add Your First Store!!")
+//                            title.setSpan(
+//                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+//                                0,
+//                                title.length,
+//                                0
+//                            )
+//                            msg?.setText(title)
+//                            msg?.setX(200.00F)
+//                            msg?.setY(500.00F)
+//                            msg?.textSize = 28F
+//                            img?.maxHeight = 100
+//                            img?.maxWidth = 100
+//                            img?.minimumHeight = 100
+//                            img?.minimumWidth = 100
+//                            img?.animation = spinAnim
+//                            fr?.layoutParams = fr?.getLayoutParams()
+//                            fr?.addView(img)
+//                            fr?.addView(msg)
                             } else {
                                 // cRv.adapter = adapter
-                                checkNetwork()
+                                //    checkNetwork()
                                 dispLst.addAll(stList)
-                                var adapter = StoreAdapter(
-                                        requireContext(),
-                                        dispLst,
-                                        object : OnStartDragListener {
-                                            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                                itemTouchHelper?.startDrag(viewHolder!!)
-                                            }
-                                        })
+                                adapter = StoreAdapter(
+                                    requireContext(),
+                                    dispLst,
+                                    object : OnStartDragListener {
+                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                            itemTouchHelper?.startDrag(viewHolder!!)
+                                        }
+                                    })
                                 stRc.adapter = adapter
                                 val callBack = MyItemTouchHelperCallBack(adapter)
                                 itemTouchHelper = ItemTouchHelper(callBack)
@@ -189,10 +181,15 @@ class HomeScreen : Fragment() {
                             }
                             // stRc.layoutManager= GridLayoutManager(context, 2)
                         }
-                    }
-                    else
-                    {
-                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        if (s == "") {
+                            allstore()
+                        }
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Something Went Wrong!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -229,14 +226,14 @@ class HomeScreen : Fragment() {
 
         map[""] = toPart("") as RequestBody
         mAPIService!!.storeDetails(token!!, "StoreList", map).enqueue(object :
-                Callback<StoreDetailResponse> {
+            Callback<StoreDetailResponse> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(
-                    call: Call<StoreDetailResponse>,
-                    response: Response<StoreDetailResponse>
+                call: Call<StoreDetailResponse>,
+                response: Response<StoreDetailResponse>
             ) {
                 //  var ad = StoreAdapter(context!!.applicationContext, stList)
-                if(response.body()?.success==true) {
+                if (response.body()?.success == true) {
                     var dt = response.body()?.data
                     if (dt != null) {
                         for (d in dt) {
@@ -244,35 +241,58 @@ class HomeScreen : Fragment() {
                             stList.add(v)
                         }
                         //Log.d("arrayleng1", stList.size.toString())
-                        if (dt == null) {
-                          allstore()
+                        if (stList.size == 0) {
+                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                            Log.d("visible", stRc?.visibility.toString())
+                            stRc?.isVisible = false
+                            Log.d("visiblea", stRc?.visibility.toString())
+                            var img: ImageView? = ImageView(context)
+                            var msg: TextView? = TextView(context)
+                            img?.load(R.drawable.empty)
+                            val title = SpannableString("Add Your First Store!!")
+                            title.setSpan(
+                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                0,
+                                title.length,
+                                0
+                            )
+                            msg?.setText(title)
+                            msg?.setX(100.00F)
+                            msg?.setY(400.00F)
+                            msg?.textSize = 28F
+                            img?.maxHeight = 100
+                            img?.maxWidth = 100
+                            img?.minimumHeight = 100
+                            img?.minimumWidth = 100
+                            img?.animation = spinAnim
+                            fr?.layoutParams = fr?.getLayoutParams()
+                            fr?.addView(img)
+                            fr?.addView(msg)
                         } else {
                             // cRv.adapter = adapter
-                            //checkNetwork()
+                            //         checkNetwork()
                             dispLst.addAll(stList)
                             var adapter = StoreAdapter(
-                                    requireContext(),
-                                    dispLst,
-                                    object : OnStartDragListener {
-                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                            itemTouchHelper?.startDrag(viewHolder!!)
-                                        }
-                                    })
+                                requireContext(),
+                                dispLst,
+                                object : OnStartDragListener {
+                                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                        itemTouchHelper?.startDrag(viewHolder!!)
+                                    }
+                                })
                             stRc.adapter = adapter
                             val callBack = MyItemTouchHelperCallBack(adapter)
                             itemTouchHelper = ItemTouchHelper(callBack)
                             itemTouchHelper?.attachToRecyclerView(stRc)
                             stRc?.isVisible = true
+
+
                             var i = response.body()?.data
                         }
                         // stRc.layoutManager= GridLayoutManager(context, 2)
                     }
-                }
-                else
-                {
-                    allstore()
-
-                    Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -310,10 +330,10 @@ class HomeScreen : Fragment() {
                         img?.load(R.drawable.net)
                         val title = SpannableString("Network Connection Lost.")
                         title.setSpan(
-                                ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                0,
-                                title.length,
-                                0
+                            ForegroundColorSpan(Color.parseColor("#342ea9")),
+                            0,
+                            title.length,
+                            0
                         )
                         msg?.setText(title)
                         msg?.setX(300.00F)
@@ -334,6 +354,28 @@ class HomeScreen : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         requireActivity().menuInflater.inflate(R.menu.menu_filterser, menu)
+        var menuItem: MenuItem = menu.findItem(R.id.btnFilter)
+        val actionView = MenuItemCompat.getActionView(menuItem)
+        actionView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onOptionsItemSelected(menuItem)
+            }
+        })
+
+        val SHARED_PREF_NAME1 = "my_shared_preff"
+        val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
+            SHARED_PREF_NAME1,
+            Context.MODE_PRIVATE
+        )
+        var filtersize = sharedPreferences.getString("filtersize", "0")
+
+        var textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
+        if(filtersize == "0"){
+            textCartItemCount.isVisible = false
+        } else{
+            textCartItemCount.isVisible = true
+            textCartItemCount.text = filtersize
+        }
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -341,29 +383,120 @@ class HomeScreen : Fragment() {
         return when (item.itemId) {
             R.id.ser -> {
                 val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
-                var sec: androidx.appcompat.widget.SearchView = item.actionView as androidx.appcompat.widget.SearchView
+                var sec: androidx.appcompat.widget.SearchView =
+                    item.actionView as androidx.appcompat.widget.SearchView
                 val searchEditText: EditText =
-                        sec.findViewById(androidx.appcompat.R.id.search_src_text)
+                    sec.findViewById(androidx.appcompat.R.id.search_src_text)
                 searchEditText.setTextColor(resources.getColor(R.color.white))
+                val searchClose: View =
+                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+                searchClose.setOnClickListener {
+                    img2.isVisible = false
+                    startActivity(Intent(context, HomeActivity::class.java))
+                    //  allstore()
+                    onStart()
+                }
+                item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+//                        Toast.makeText(activity, "onMenuItemActionExpand called", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+
+                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+//                        Toast.makeText(activity, "onMenutItemActionCollapse called", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@HomeScreen.context, HomeActivity::class.java)
+                        startActivity(intent)
+                        return true
+                    }
+                })
+
 
                 if (item != null) {
                     sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
+//                            val se = query?.toLowerCase(Locale.getDefault())
+//                           dispLst.clear()
+//                            if (stList.contains(se)) {
+//                                for(i in stList) {
+//                                    dispLst.add(i)
+//                                    stRc?.adapter!!.notifyDataSetChanged()
+//                                }
+//                            }else{
+//                                Toast.makeText(context, "No Match found",Toast.LENGTH_LONG).show();
+//                            }
+//                            return false;
                             return true
                         }
 
                         override fun onQueryTextChange(newText: String?): Boolean {
+
+                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                            img2 = ImageView(context)
+                            var msg: TextView? = TextView(context)
                             if (newText!!.isNotEmpty()) {
                                 dispLst.clear()
                                 val se = newText.toLowerCase(Locale.getDefault())
-                                stList.forEach {
-                                    if (it.stname.toLowerCase(Locale.getDefault()).contains(se)) {
-                                        dispLst.add(it)
+                                var flag = false
+                                for (i in stList) {
+
+                                    if (i.stname.toLowerCase(Locale.getDefault()).contains(se)) {
+                                        //   img?.visibility=View.GONE
+                                        flag = true
+//                                       stRc?.isVisible = true
+//                                       stRc?.adapter!!.notifyDataSetChanged()
+
                                     }
+
                                 }
 
-                                stRc?.adapter!!.notifyDataSetChanged()
+                                if (flag == false) {
+
+//                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
+//                                            .show()
+//                                    //search not found start
+//                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
+
+
+                                    Log.d("visible", stRc?.visibility.toString())
+                                    stRc?.isVisible = false
+                                    Log.d("visiblea", stRc?.visibility.toString())
+
+                                    img2?.load(R.drawable.empty)
+                                    val title = SpannableString("Search not found!!")
+                                    title.setSpan(
+                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                        0,
+                                        title.length,
+                                        0
+                                    )
+                                    msg?.setText(title)
+                                    msg?.setX(200.00F)
+                                    msg?.setY(500.00F)
+                                    msg?.textSize = 28F
+                                    img2?.maxHeight = 100
+                                    img2?.maxWidth = 100
+                                    fr?.layoutParams = fr?.getLayoutParams()
+                                    fr?.addView(img2)
+//                                        fr?.addView(msg)
+
+                                    //search not found finis
+
+                                } else {
+                                    fr?.removeAllViews()
+                                    fr?.addView(stRc)
+                                    stRc?.isVisible = true
+
+                                    for (i in stList) {
+                                        if (i.stname.toLowerCase(Locale.getDefault())
+                                                .contains(se)
+                                        ) {
+                                            dispLst.add(i)
+                                            stRc?.adapter!!.notifyDataSetChanged()
+                                        }
+
+                                    }
+                                }
                             } else {
                                 dispLst.clear()
                                 dispLst.addAll(stList)
@@ -378,11 +511,21 @@ class HomeScreen : Fragment() {
             R.id.btnFilter -> {
                 if (f != "all") {
                     f = "filtered"
-                    //Toast.makeText(context,"" + item.title,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "" + item.title, Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@HomeScreen.context, FilterActivity::class.java)
                     startActivity(intent)
-                }
-                else{
+                } else {
+                    val SHARED_PREF_NAME1 = "my_shared_preff"
+                    val sharedPreferences: SharedPreferences =
+                        requireContext().getSharedPreferences(
+                            SHARED_PREF_NAME1,
+                            Context.MODE_PRIVATE
+                        )
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString("filterid", "")
+                    editor.putString("filtersize", "0")
+                    editor.apply()
+                    editor.commit()
                     startActivity(Intent(this@HomeScreen.context, HomeActivity::class.java))
                 }
                 return true
@@ -410,4 +553,6 @@ class HomeScreen : Fragment() {
                     }
                 }
     }
+
+
 }

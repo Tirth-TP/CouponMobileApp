@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -16,15 +17,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.stocardapp.models.FavoriteResponse
-import com.example.stocardapp.models.HideCardResponse
 import com.example.stocardapp.models.StoreDetail
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
-import okhttp3.internal.notifyAll
 import retrofit2.Call
 import retrofit2.Callback
 import java.util.*
-import kotlin.collections.ArrayList
 
 class StoreAdapter(
     var ctx: Context,
@@ -54,6 +52,34 @@ class StoreAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+//
+
+//        if (position == arr.lastIndex){
+//            val params = holder.itemView.layoutParams as FrameLayout.LayoutParams
+//            params.bottomMargin = 100
+//            holder.itemView.layoutParams = params
+//        }else{
+//            val params = holder.itemView.layoutParams as RecyclerView.LayoutParams
+//            params.bottomMargin = 0
+//            holder.itemView.layoutParams = params
+//        }
+
+
+
+//
+
+
+
+
+
+
+
+
+
+
+
+
         //  holder.Simg.setImageResource(list[position].imgSrc)
         holder.Stit.text = arr[position].stname
 
@@ -65,6 +91,9 @@ class StoreAdapter(
             holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
         }
 
+
+
+
         holder.stcv.setOnClickListener {
             // Toast.makeText(v.context,i.toString(),Toast.LENGTH_LONG).show()
             val i = Intent(ctx, CardListActivity::class.java)
@@ -74,6 +103,12 @@ class StoreAdapter(
             i.putExtra("storeCon", arr[position].stcontact)
             i.putExtra("storeLoc", arr[position].stlocation)
             SharedPrefManager.getInstance(ctx).saveStore(arr[position].id!!,arr[position].stname!!, arr[position].stlocation!!, arr[position].stcontact!!)
+            SharedPrefManager.getInstance(ctx).saveStore(
+                arr[position].id!!,
+                arr[position].stname!!,
+                arr[position].stlocation!!,
+                arr[position].stcontact!!
+            )
             ctx.startActivity(i)
         }
 
@@ -93,6 +128,12 @@ class StoreAdapter(
                         call: Call<FavoriteResponse>,
                         response: retrofit2.Response<FavoriteResponse>
                     ) {
+                        arr[position].is_favorite = "true"
+                        holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
+                        Log.d("resshh", response.toString())
+                        //     Log.d("iddd",cid.toString())
+                        Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
+
                         if(response.body()?.success == true) {
                             arr[position].is_favorite = "true"
                             holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
@@ -105,6 +146,7 @@ class StoreAdapter(
                             Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
                         }
                     }
+
                     override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                         Toast.makeText(ctx, t.message, Toast.LENGTH_LONG).show()
                     }
@@ -118,6 +160,11 @@ class StoreAdapter(
                         call: Call<FavoriteResponse>,
                         response: retrofit2.Response<FavoriteResponse>
                     ) {
+                        arr[position].is_favorite = "false"
+                        holder.favBtn.setColorFilter(Color.parseColor("#342ea9"));
+                        Log.d("resshh", response.toString())
+                        //     Log.d("iddd",cid.toString())
+                        Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
                         if(response.body()?.success == true) {
                             arr[position].is_favorite = "false"
                             holder.favBtn.setColorFilter(Color.parseColor("#342ea9"));
@@ -132,6 +179,7 @@ class StoreAdapter(
                         }
 
                     }
+
                     override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
                         Toast.makeText(ctx, t.message, Toast.LENGTH_LONG).show()
                     }

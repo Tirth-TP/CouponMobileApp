@@ -33,6 +33,7 @@ class SpalshActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_spalsh)
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -51,14 +52,19 @@ class SpalshActivity : AppCompatActivity() {
         title.animation = btANim
         desc.animation = btANim
         Handler().postDelayed({
-            startActivity(Intent(this,LoginActivity::class.java))
+            if (SharedPrefManager.getInstance(this).isLoggedIn) {
+                val i = (Intent(this, HomeActivity::class.java))
+//                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(i)
+            }
+            else{
+                startActivity(Intent(this,LoginActivity::class.java))
+            }
             Intent.FLAG_ACTIVITY_CLEAR_TOP
             Intent.FLAG_ACTIVITY_NEW_TASK
             finish()
         },4000)
-
     }
-
     @SuppressLint("PackageManagerGetSignatures")
     private fun hash() {
         val info: PackageInfo

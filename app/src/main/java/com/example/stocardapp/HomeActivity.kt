@@ -137,8 +137,12 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_logout->
                 {
                     SharedPrefManager.getInstance(applicationContext).clear()
-                    startActivity(Intent(this,LoginActivity::class.java))
-                    true
+                    Intent(this, LoginActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.also { startActivity(it) }
+                    finish()
+//                    true
                 }
             }
             dr.closeDrawer(GravityCompat.START)

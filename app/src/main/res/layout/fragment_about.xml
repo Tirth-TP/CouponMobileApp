@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/Dimen_20dp"
+    android:layout_gravity="center_vertical"
     tools:context=".About">
 
     <!-- TODO: Update blank fragment layout -->
@@ -18,15 +19,14 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="60dp"
         android:src="@mipmap/final_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/dark_blue" />
-
 
     <TextView
         android:id="@+id/spTxt"

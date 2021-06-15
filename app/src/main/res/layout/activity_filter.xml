@@ -29,9 +29,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="@dimen/_15sdp"
-        android:layout_marginRight="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_20sdp"
-        app:spanCount="4" />
+        app:spanCount="3" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/btnFil"

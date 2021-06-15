@@ -238,7 +238,7 @@ class LoginActivity : AppCompatActivity() {
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
                                                     alertDialog.dismiss()
-                                                if(response.body()?.status==true) {
+                                                if(response.body()?.success==true) {
                                                     var i = (Intent(
                                                         this@LoginActivity,
                                                         SetNewPasswordActivity::class.java
@@ -372,14 +372,14 @@ class LoginActivity : AppCompatActivity() {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (SharedPrefManager.getInstance(this).isLoggedIn) {
-            val i = (Intent(this, HomeActivity::class.java))
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if (SharedPrefManager.getInstance(this).isLoggedIn) {
+//            val i = (Intent(this, HomeActivity::class.java))
+//            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(i)
+//        }
+//    }
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

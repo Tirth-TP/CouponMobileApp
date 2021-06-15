@@ -73,7 +73,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                 ) {
-                    if(response.body()?.status == true) {
+                    if(response.body()?.success == true) {
                         Toast.makeText(this@ChangePasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
 
                         var i = (Intent(this@ChangePasswordActivity, HomeActivity::class.java))
