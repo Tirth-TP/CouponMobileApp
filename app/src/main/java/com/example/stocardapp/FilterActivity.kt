@@ -70,18 +70,25 @@ class FilterActivity : AppCompatActivity() {
                 call: Call<FilterResponse>,
                 response: Response<FilterResponse>
             ) {
-                var dt = response.body()?.data
-                if (dt != null) {
-                    for (d in dt) {
-                        var v = d
-                        stList.add(v)
-                    }
+                if(response.body()?.success == true) {
+                    var dt = response.body()?.data
+                    if (dt != null) {
+                        for (d in dt) {
+                            var v = d
+                            stList.add(v)
+                        }
 //                    val layoutManager = FlexboxLayoutManager(applicationContext)
 //                    layoutManager.flexDirection = FlexDirection.COLUMN
 //                    layoutManager.justifyContent = JustifyContent.FLEX_END
 //                    filterRv.setLayoutManager(layoutManager)
-                    var adapter = FilterAdapter(this@FilterActivity, stList)
-                    filterRv.adapter = adapter
+                        var adapter = FilterAdapter(this@FilterActivity, stList)
+                        filterRv.adapter = adapter
+                    }
+                }
+                else
+                {
+                    Toast.makeText(this@FilterActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
                 }
             }
 

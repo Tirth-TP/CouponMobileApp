@@ -25,7 +25,9 @@ class SharedPrefManager private constructor(private val mCtx:Context){
                     sharedPreferences.getString("email", null).toString(),
                     sharedPreferences.getString("pin", null).toString(),
                     sharedPreferences.getString("phone", null).toString(),
-                    sharedPreferences.getString("Image", null).toString()
+                    sharedPreferences.getString("Image", null).toString(),
+                            sharedPreferences.getString("device_id", null).toString()
+
             )
         }
 
@@ -39,6 +41,7 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.putString("pin", user.pin)
         editor.putString("phone", user.phone)
         editor.putString("Image",user.Image)
+        editor.putString("device_id",user.device_id)
         editor.apply()
     }
 
@@ -55,7 +58,11 @@ class SharedPrefManager private constructor(private val mCtx:Context){
     fun clear() {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.clear()
+        editor.remove("token")
+        editor.remove("email")
+        editor.remove("pin")
+        editor.remove("phone")
+        editor.remove("Image")
         editor.apply()
     }
 

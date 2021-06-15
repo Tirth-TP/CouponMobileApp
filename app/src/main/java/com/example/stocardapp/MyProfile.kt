@@ -1,9 +1,11 @@
 package com.example.stocardapp
 
+import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +21,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import coil.api.load
@@ -76,6 +80,7 @@ class MyProfile : Fragment() {
     }
 
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -89,6 +94,27 @@ class MyProfile : Fragment() {
 //            startActivity(Intent(context, HomeActivity::class.java))
 //        }
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val hasWritePermission = requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val hasReadPermission = requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            val permissions: MutableList<String> = ArrayList()
+            if (hasWritePermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+//              preferencesUtility.setString("storage", "true");
+            }
+            if (hasReadPermission != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            } else {
+//              preferencesUtility.setString("storage", "true");
+            }
+            if (!permissions.isEmpty()) {
+//              requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_SOME_FEATURES_PERMISSIONS);
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE),
+                        REQUEST_PERMISSION)
+            }
+        }
 
         val phn = requireView().findViewById(R.id.getMb) as EditText
         val name = requireView().findViewById(R.id.getNm) as EditText
@@ -154,10 +180,23 @@ class MyProfile : Fragment() {
         val editBtn = requireView().findViewById(R.id.btn_edit) as Button
         editBtn.setOnClickListener {
 
+            if(uri == null) {
+                val SHARED_PREF_NAME = "my_shared_preff"
+                val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                val image = sharedPreference.getString("Image", "defaultName")
+                var uimage = Uri.parse(image)
+                Log.d("Imageprofile", "image:- " + uimage)
+//                uri = Uri.parse("android.resource://your.package.name/" + R.drawable.icon_usuario);
+//                http://stocard.project-demo.info/upload/user_img/1065580801.jpg
+            } else {
+                Log.d("Imageprofileelse","hi " + uri)
+//                content://com.android.providers.media.documents/document/image%3A163122
+            }
+
             val n = name.text.toString().trim()
             val p = phn.text.toString().trim()
 
-            var imageurl = Uri.parse(uri.toString())
+//            var imageurl = Uri.parse(uri.toString())
 
             name.setText(n)
             phn.setText(p)
@@ -168,39 +207,49 @@ class MyProfile : Fragment() {
             //map["email"] = toPart(em!!)
             map["phone"] = toPart(p!!)
 
+            var file= File(URIPathHelper.getPath(requireContext(), uri!!))
 
-            val file: File = File(URIPathHelper.getPath(requireContext(), uri!!))
-            Log.d("imageabcd", file.toString())
+                Log.d("imageabcd", file.toString())
 
-            val requestFile = RequestBody.create(
-                requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                    file
-            )
-            val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
+                val requestFile = RequestBody.create(
+                        requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+                        file
+                )
+            Log.d("contentresolver","" + requestFile)
+                val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
+
             mAPIService.editProfile(token!!, body, "ChangeProfile", map).enqueue(object :
                     Callback<UpdateResponse> {
                 override fun onResponse(
                         call: Call<UpdateResponse>,
                         response: Response<UpdateResponse>
                 ) {
-                    var nurl = response.body()?.data!!.Image
-                    Log.d("newurl", nurl.toString())
 
-                    editor?.putString("name", n)
-                    editor?.putString("phone", p)
-                   // editor?.putString("pin", i)
-                    editor?.putString("Image", nurl.toString())
-                    editor?.commit()
+                        var nurl = response.body()?.data!!.Image
+                        Log.d("newurl", nurl.toString())
 
-                    Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
-                    //img_pro.load(u.toString())
-                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        editor?.putString("name", n)
+                        editor?.putString("phone", p)
+                        // editor?.putString("pin", i)
+                        editor?.putString("Image", nurl.toString())
+                        editor?.commit()
+
+                        Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
+                        //img_pro.load(u.toString())
+
+                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
 //                    val fr = fragmentManager!!.beginTransaction()
 //                    fr.replace(R.id.container, HomeScreen())
-                    startActivity(Intent(context,HomeActivity::class.java))
-                    getActivity()?.getFragmentManager()?.popBackStack()
+                        startActivity(Intent(context, HomeActivity::class.java))
+                        getActivity()?.getFragmentManager()?.popBackStack()
 //                    getActivity()?.getSupportFragmentManager()?.beginTransaction()?.remove(this@MyProfile)?.commit()
-                    Log.d("imageabc", file.name)
+                        Log.d("imageabc", file.name)
+
+//                    else
+//                    {
+//                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+//
+//                    }
                 }
 
                 override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
@@ -329,7 +378,6 @@ class MyProfile : Fragment() {
             }
         }
     }
-
 
     companion object {
         /**

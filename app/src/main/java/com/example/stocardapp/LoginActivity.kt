@@ -30,7 +30,6 @@ import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import com.example.stocardapp.models.LoginResponse
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
@@ -66,8 +65,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val tkn = FirebaseInstanceId.getInstance().token
-        Log.d("tkkkk", tkn.toString())
+
 
         val passsword = findViewById<EditText>(R.id.txtPass)
         val email = findViewById<EditText>(R.id.txtEm)
@@ -164,9 +162,7 @@ class LoginActivity : AppCompatActivity() {
         val SHARED_PREF_NAME = "my_shared_preff"
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
-        val dtoken = sharedPreference.getString("device_token", "defaultToken")
 
-        Log.d("detok", dtoken!!)
         txtFr.setOnClickListener {
 //            val builder = AlertDialog.Builder(this@LoginActivity)
 //            val view = layoutInflater.inflate(R.layout.forgot_ps, null)
@@ -242,7 +238,7 @@ class LoginActivity : AppCompatActivity() {
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
                                                     alertDialog.dismiss()
-                                                if(response.body()?.status==true) {
+                                                if(response.body()?.success==true) {
                                                     var i = (Intent(
                                                         this@LoginActivity,
                                                         SetNewPasswordActivity::class.java
@@ -311,6 +307,11 @@ class LoginActivity : AppCompatActivity() {
         var btn_Lg = findViewById(R.id.btnLg) as Button
         btn_Lg.setOnClickListener {
 
+            val SHARED_PREF_NAME2 = "my_shared_preff"
+            val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
+            val dtoken = sharedPreference1.getString("device_token", "defaultToken")
+            Log.d("detok", dtoken!!)
+
             val e = email.text.toString().trim()
             val p = passsword.text.toString().trim()
 
@@ -328,7 +329,7 @@ class LoginActivity : AppCompatActivity() {
             val map: MutableMap<String, RequestBody> = HashMap()
             map["email"] = toPart(e) as RequestBody
             map["password"] = toPart(p)
-            map["device_id"] = toPart(tkn.toString())
+            map["device_id"] = toPart(dtoken.toString())
             // val em = sharedPreference.getString("email","defaultName")
             RetrofitClient.instance.loginUser(token!!, "login", map).enqueue(object :
                 Callback<LoginResponse> {
@@ -371,14 +372,14 @@ class LoginActivity : AppCompatActivity() {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (SharedPrefManager.getInstance(this).isLoggedIn) {
-            val i = (Intent(this, HomeActivity::class.java))
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(i)
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if (SharedPrefManager.getInstance(this).isLoggedIn) {
+//            val i = (Intent(this, HomeActivity::class.java))
+//            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(i)
+//        }
+//    }
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

@@ -67,11 +67,18 @@ class SetNewPasswordActivity : AppCompatActivity() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
-                        Toast.makeText(this@SetNewPasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                        if(response.body()?.success == true) {
+                            Toast.makeText(this@SetNewPasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
 
-                        var i = (Intent(this@SetNewPasswordActivity,LoginActivity::class.java))
-                        i.flags= Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(i)
+                            var i = (Intent(this@SetNewPasswordActivity, LoginActivity::class.java))
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
+                        }
+                        else
+                        {
+                            Toast.makeText(this@SetNewPasswordActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                        }
                     }
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                         Toast.makeText(this@SetNewPasswordActivity, t.message, Toast.LENGTH_LONG).show()

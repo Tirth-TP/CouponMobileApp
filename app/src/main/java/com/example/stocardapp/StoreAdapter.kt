@@ -1,4 +1,4 @@
-package com.example.stocardapp
+ package com.example.stocardapp
 
 import android.content.Context
 import android.content.Intent
@@ -102,6 +102,7 @@ class StoreAdapter(
             i.putExtra("storeNm", arr[position].stname)
             i.putExtra("storeCon", arr[position].stcontact)
             i.putExtra("storeLoc", arr[position].stlocation)
+            SharedPrefManager.getInstance(ctx).saveStore(arr[position].id!!,arr[position].stname!!, arr[position].stlocation!!, arr[position].stcontact!!)
             SharedPrefManager.getInstance(ctx).saveStore(
                 arr[position].id!!,
                 arr[position].stname!!,
@@ -133,6 +134,17 @@ class StoreAdapter(
                         //     Log.d("iddd",cid.toString())
                         Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
 
+                        if(response.body()?.success == true) {
+                            arr[position].is_favorite = "true"
+                            holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
+                            Log.d("resshh", response.toString())
+                            //     Log.d("iddd",cid.toString())
+                            Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
+                        }
+                        else
+                        {
+                            Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<FavoriteResponse>, t: Throwable) {
@@ -153,8 +165,18 @@ class StoreAdapter(
                         Log.d("resshh", response.toString())
                         //     Log.d("iddd",cid.toString())
                         Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
+                        if(response.body()?.success == true) {
+                            arr[position].is_favorite = "false"
+                            holder.favBtn.setColorFilter(Color.parseColor("#342ea9"));
+                            Log.d("resshh", response.toString())
+                            //     Log.d("iddd",cid.toString())
+                            Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
 //                           ctx.startActivity(Intent(ctx,HomeActivity::class.java))
-
+                        }
+                        else
+                        {
+                            Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        }
 
                     }
 

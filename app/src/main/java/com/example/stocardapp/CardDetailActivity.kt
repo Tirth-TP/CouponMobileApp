@@ -93,6 +93,14 @@ class CardDetailActivity : AppCompatActivity() {
                     Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
                     val i = (Intent(applicationContext, CardListActivity::class.java))
                     startActivity(i)
+                    if(response.body()?.status == true) {
+                        Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                        val i = (Intent(applicationContext, CardListActivity::class.java))
+                        startActivity(i)
+                    }
+                    else{
+                        Toast.makeText(this@CardDetailActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
@@ -126,12 +134,18 @@ class CardDetailActivity : AppCompatActivity() {
                         response: retrofit2.Response<ShareResponse>
                 ) {
                     //Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                    var shareIntent = Intent().apply {
-                        this.action = Intent.ACTION_SEND
-                        this.putExtra(Intent.EXTRA_TEXT, response.body()?.data!!.share_code)
-                        this.type = "text/plain"
+                    if(response.body()?.success == true) {
+                        var shareIntent = Intent().apply {
+                            this.action = Intent.ACTION_SEND
+                            this.putExtra(Intent.EXTRA_TEXT, response.body()?.data!!.share_code)
+                            this.type = "text/plain"
+                        }
+                        startActivity(shareIntent)
                     }
-                    startActivity(shareIntent)
+                    else
+                    {
+                        Toast.makeText(this@CardDetailActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<ShareResponse>, t: Throwable) {

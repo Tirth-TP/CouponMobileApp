@@ -138,8 +138,12 @@ class HomeActivity : AppCompatActivity() {
                 R.id.nav_logout->
                 {
                     SharedPrefManager.getInstance(applicationContext).clear()
-                    startActivity(Intent(this,LoginActivity::class.java))
-                    true
+                    Intent(this, LoginActivity::class.java).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.also { startActivity(it) }
+                    finish()
+//                    true
                 }
             }
             dr.closeDrawer(GravityCompat.START)
@@ -215,10 +219,17 @@ class HomeActivity : AppCompatActivity() {
                     call: Call<ShareCardResponse>,
                     response: retrofit2.Response<ShareCardResponse>
                 ) {
-                    Log.d("resshh1", response.toString())
-                    // Log.d("resshh1",response.body()!!.message)
-                    Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG)
-                        .show()
+                    if(response.body()?.success == true) {
+                        Log.d("resshh1", response.toString())
+                        // Log.d("resshh1",response.body()!!.message)
+                        Toast.makeText(this@HomeActivity, response.body()?.message, Toast.LENGTH_LONG)
+                                .show()
+                    }
+                    else
+                    {
+                        Toast.makeText(this@HomeActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                    }
                 }
 
                 override fun onFailure(call: Call<ShareCardResponse>, t: Throwable) {

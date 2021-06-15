@@ -274,7 +274,7 @@ class AddStoreActivity : AppCompatActivity() {
                             val i = (Intent(applicationContext, HomeActivity::class.java))
                             startActivity(i)
                         } else {
-                            Toast.makeText(applicationContext, "failure", Toast.LENGTH_LONG).show()
+                            Toast.makeText(applicationContext, "Something went wrong!", Toast.LENGTH_LONG).show()
                         }
                         // i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //                        val un=  i.getStringExtra("Username")
@@ -401,12 +401,18 @@ class AddStoreActivity : AppCompatActivity() {
                 call: Call<FilterResponse>,
                 response: Response<FilterResponse>
             ) {
-                val jArray = response.body()?.data!!
-                for (i in jArray) {
-                    customers.add(i.name)
-                    temp.add(i.id.toString())
+                if(response.body()?.success == true) {
+                    val jArray = response.body()?.data!!
+                    for (i in jArray) {
+                        customers.add(i.name)
+                        temp.add(i.id.toString())
+                    }
+                    c.addAll(customers)
                 }
-                c.addAll(customers)
+                else
+                {
+                    Toast.makeText(this@AddStoreActivity,response.body()?.message,Toast.LENGTH_LONG).show()
+                }
             }
 
             override fun onFailure(call: Call<FilterResponse>, t: Throwable) {

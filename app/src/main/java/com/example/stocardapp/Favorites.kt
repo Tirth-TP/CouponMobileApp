@@ -82,29 +82,35 @@ class Favorites : Fragment() {
                 response: retrofit2.Response<StoreDetailResponse>
             ) {
 
-                var dt = response.body()?.data
-                if (dt != null) {
-                    for (d in dt) {
-                        var v = d
-                        stList.add(v)
-                    }
-                    // cRv.adapter = ad
-                    dispLst.addAll(stList)
+                if(response.body()?.success == true) {
+                    var dt = response.body()?.data
+                    if (dt != null) {
+                        for (d in dt) {
+                            var v = d
+                            stList.add(v)
+                        }
+                        // cRv.adapter = ad
+                        dispLst.addAll(stList)
 
-                    var adapter = StoreAdapter(
-                        requireContext(),
-                        dispLst,
-                        object : OnStartDragListener {
-                            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                itemTouchHelper?.startDrag(viewHolder!!)
-                            }
-                        })
-                    stRc.adapter = adapter
-                    val callBack = MyItemTouchHelperCallBack(adapter)
-                    itemTouchHelper = ItemTouchHelper(callBack)
-                    itemTouchHelper?.attachToRecyclerView(stRc)
-                    stRc?.isVisible = true
-                    var i = response.body()?.data
+                        var adapter = StoreAdapter(
+                                requireContext(),
+                                dispLst,
+                                object : OnStartDragListener {
+                                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                        itemTouchHelper?.startDrag(viewHolder!!)
+                                    }
+                                })
+                        stRc.adapter = adapter
+                        val callBack = MyItemTouchHelperCallBack(adapter)
+                        itemTouchHelper = ItemTouchHelper(callBack)
+                        itemTouchHelper?.attachToRecyclerView(stRc)
+                        stRc?.isVisible = true
+                        var i = response.body()?.data
+                    }
+                }
+                else
+                {
+                    Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
                 }
             }
 

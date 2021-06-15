@@ -30,7 +30,6 @@ import androidx.core.view.isVisible
 import com.example.stocardapp.models.Response
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.header_black.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -56,6 +55,8 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+
         window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -78,6 +79,7 @@ class SignupActivity : AppCompatActivity() {
                         REQUEST_PERMISSION)
             }
         }
+
         val passsword = findViewById<EditText>(R.id.txtsPass)
         val cpass = findViewById<EditText>(R.id.txtcPass)
         val phn = findViewById<EditText>(R.id.txtMb)
@@ -286,13 +288,18 @@ class SignupActivity : AppCompatActivity() {
                 }
             }
 
+
             val SHARED_PREF_NAME = "my_shared_preff"
             val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             val token = "Bearer " + sharedPreference.getString("token", "defaultName")
             val file: File = File(URIPathHelper.getPath(this@SignupActivity, uri!!))
             val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
 
-            val tkn = FirebaseInstanceId.getInstance().token
+            val SHARED_PREF_NAME2 = "my_shared_preff"
+            val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
+            val dtoken = sharedPreference1.getString("device_token", "defaultToken")
+            Log.d("detok", dtoken!!)
+
             val requestFile = RequestBody.create(
                     contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
                     file
@@ -304,7 +311,7 @@ class SignupActivity : AppCompatActivity() {
             map["password"] = toPart(ups)
             map["phone"] = toPart(uph)
             map["pin"] = toPart(upin)
-            map["device_id"] = toPart(tkn.toString())
+            map["device_id"] = toPart(dtoken)
 
           RetrofitClient.instance.createUser("", body, "register", map).enqueue(object :
                   Callback<Response> {
@@ -312,12 +319,19 @@ class SignupActivity : AppCompatActivity() {
                       call: Call<Response>,
                       response: retrofit2.Response<Response>
               ) {
-                  Toast.makeText(this@SignupActivity, response.toString(), Toast.LENGTH_LONG).show()
-                  val i = (Intent(applicationContext, LoginActivity::class.java))
-                  i.putExtra("Username", response.body()?.data!!.name)
-                  i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                  startActivity(i)
-                  finish()
+                  Log.d("siiignn",response.body()?.success.toString())
+                  if(response.body()?.success == true) {
+                      Toast.makeText(this@SignupActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                      val i = (Intent(applicationContext, LoginActivity::class.java))
+                      i.putExtra("Username", response.body()?.data!!.name)
+                      i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                      startActivity(i)
+                      finish()
+                  }
+                  else
+                  {
+                      Toast.makeText(this@SignupActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                  }
               }
 
               override fun onFailure(call: Call<Response>, t: Throwable) {

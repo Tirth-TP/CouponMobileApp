@@ -101,6 +101,29 @@ class FilterAdapter(var ctx: Context, var list:ArrayList<Filter>):RecyclerView.A
             Log.d("getjoinedlist","" + F_list.size)
 
         }
+        Log.d("listsize","" + list.size)
+
+//        holder.chip.setOnClickListener {
+//            if (holder.chip.isChecked)
+//            {
+//                Log.d("ffiiddd", i)
+//                if(i == "") {
+//                    i = list[position].id.toString()
+//                }
+//                else
+//                {
+//                    i = i + "," +  list[position].id.toString()
+//                    Log.d("ffiiddd", i)
+//                }
+//            }
+//            val SHARED_PREF_NAME1 = "my_shared_preff"
+//            val sharedPreferences: SharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME1,Context.MODE_PRIVATE)
+//            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+//            editor.putString("filterid",i)
+//            editor.apply()
+//            editor.commit()
+//        }
+
     }
 
     override fun getItemCount(): Int {

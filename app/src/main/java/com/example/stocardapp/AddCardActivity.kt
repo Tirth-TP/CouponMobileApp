@@ -13,6 +13,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -105,6 +107,24 @@ class AddCardActivity : AppCompatActivity() {
         val icrd = findViewById<ImageView>(R.id.imgCr)
 
 
+        crwd.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if(crwd.text.toString().toInt() > 100)
+                    {
+                        crwd.setError("Percentage should not be grater than 100")
+                    }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+
 
 
         cdt.setOnClickListener{
@@ -172,11 +192,12 @@ class AddCardActivity : AppCompatActivity() {
         addCard.setOnClickListener {
 
             var sid = intent.getIntExtra("storeId", 0)
-            Toast.makeText(applicationContext, sid.toString(), Toast.LENGTH_LONG).show()
+
             val cn = cname.text.toString().trim()
             val cnm = cnum.text.toString().trim()
             val cd = cdtl.text.toString().trim()
             val crd = crwd.text.toString().trim()
+
             val map: MutableMap<String, RequestBody> = HashMap()
             map["cardname"] = toPart(cn) as RequestBody
             map["carddetail"] = toPart(cd)
@@ -200,12 +221,19 @@ class AddCardActivity : AppCompatActivity() {
                         call: Call<CardResponse>,
                         response: retrofit2.Response<CardResponse>
                 ) {
-                    Toast.makeText(applicationContext, response.body()?.message, Toast.LENGTH_LONG)
-                            .show()
-                    val i = (Intent(applicationContext, HomeActivity::class.java))
-                    // i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    //   i.putExtra("s_id",sid)
-                    startActivity(i)
+                    if(response.body()?.success == true) {
+                        Toast.makeText(applicationContext, response.body()?.message, Toast.LENGTH_LONG)
+                                .show()
+                        val i = (Intent(applicationContext, CardListActivity::class.java))
+                        // i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        //   i.putExtra("s_id",sid)
+                        startActivity(i)
+                    }
+                    else
+                    {
+                        Toast.makeText(this@AddCardActivity,"Something Went Wrong!",Toast.LENGTH_LONG).show()
+                    }
+
                 }
 
                 override fun onFailure(call: Call<CardResponse>, t: Throwable) {

@@ -80,6 +80,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
+                                    android:enabled="false"
                                     android:inputType="text"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +109,7 @@
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/catamaran"
                                     android:imeOptions="actionNext"
+                                    android:enabled="false"
                                     android:inputType="text"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +137,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:imeOptions="actionNext"
+                                    android:enabled="false"
                                     android:inputType="text"
                                     android:maxLines="1" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -168,6 +171,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:imeOptions="actionNext"
+                                        android:enabled="false"
                                         android:inputType="text"
                                         />
                                 </com.google.android.material.textfield.TextInputLayout>
@@ -202,6 +206,7 @@
                                         android:layout_height="wrap_content"
                                         android:imeOptions="actionNext"
                                         android:inputType="date"
+                                        android:enabled="false"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -217,18 +222,17 @@
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/btnCdel"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/_120sdp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom|end"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginRight="@dimen/_7sdp"
                 android:layout_marginBottom="22dp"
-                android:contentDescription="Delete Coupon"
+                android:contentDescription="Delete"
                 android:fontFamily="@font/catamaran"
                 android:text="Delete"
-               android:textAlignment="center"
+                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 app:backgroundTint="#342ea9"
@@ -245,7 +249,7 @@
                 android:layout_marginBottom="22dp"
                 android:layout_width="150dp"
                 android:textAlignment="center"
-                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:contentDescription="Add Coupon"
                 android:fontFamily="@font/catamaran"
                 android:text="Payment"

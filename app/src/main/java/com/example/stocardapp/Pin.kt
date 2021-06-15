@@ -99,7 +99,13 @@ class Pin : Fragment() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
-                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        Log.d("Pin_RESPONSE",response.body()?.success.toString())
+                        if (response.body()?.success == true) {
+                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        }
+                        else{
+                            Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
@@ -149,14 +155,14 @@ class Pin : Fragment() {
                         val otp = it.toString()
                         map["pin_otp"] = toPart(otp) as RequestBody
                         //start
-                        mAPIService.changePas(token!!, "OTP_Verify", map).enqueue(object :
+                        mAPIService.changePas(token!!, "OTP_Verify_Pin", map).enqueue(object :
                             Callback<ChangePasswordResponse> {
                             override fun onResponse(
                                 call: Call<ChangePasswordResponse>,
                                 response: retrofit2.Response<ChangePasswordResponse>
                             ) {
                                 alertDialog.dismiss()
-                                if (response.body()?.status == true) {
+                                if (response.body()?.success == true) {
                                     var i = (Intent(context, ResetActivity::class.java))
 
                                     i.flags =

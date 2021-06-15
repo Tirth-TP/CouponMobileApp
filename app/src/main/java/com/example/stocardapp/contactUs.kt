@@ -91,9 +91,16 @@ class contactUs : Fragment() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                 ) {
-                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@contactUs.context, HomeActivity::class.java)
-                    startActivity(intent)
+                    if(response.body()?.success == true) {
+                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@contactUs.context, HomeActivity::class.java)
+                        startActivity(intent)
+                    }
+                    else
+                    {
+                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                    }
                 }
                 override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()

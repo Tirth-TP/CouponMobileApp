@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -21,6 +23,11 @@ class ResetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reset)
+        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.header_black_2)
+        val txtTit = findViewById<TextView>(R.id.txtTitle)
+        txtTit.setText("Reset PIN")
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val np = findViewById(R.id.npi1) as EditText
         val cp = findViewById(R.id.cpi1) as EditText
@@ -48,8 +55,14 @@ class ResetActivity : AppCompatActivity() {
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
                         Log.d("hhhh","jj")
-                        Toast.makeText(this@ResetActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                        startActivity(Intent(this@ResetActivity,HomeActivity::class.java))
+                        if(response.body()?.success == true) {
+                            Toast.makeText(this@ResetActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                            startActivity(Intent(this@ResetActivity, HomeActivity::class.java))
+                        }
+                        else
+                        {
+                            Toast.makeText(this@ResetActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+                        }
                     }
                     override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                         Toast.makeText(this@ResetActivity, t.message, Toast.LENGTH_LONG).show()
