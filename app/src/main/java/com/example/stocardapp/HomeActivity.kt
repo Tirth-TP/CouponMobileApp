@@ -1,4 +1,4 @@
-package com.example.stocardapp
+       package com.example.stocardapp
 
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -71,7 +71,6 @@ class HomeActivity : AppCompatActivity() {
         itemsLayout.addView(view)
 
         intent.putExtra("Username",un)
-
         val tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.topAppBar)
         val dr = findViewById<DrawerLayout>(R.id.drawer)
         setSupportActionBar(tb)

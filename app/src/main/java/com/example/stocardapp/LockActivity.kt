@@ -40,7 +40,6 @@ class LockActivity : AppCompatActivity() {
         var im = intent.getStringExtra("cardImg")
 
         Log.d("imgggggg",im.toString())
-
         var  passcode_view = findViewById<PasscodeView>(R.id.passcode_view)
         val SHARED_PREF_NAME = "my_shared_preff"
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -92,7 +91,6 @@ class LockActivity : AppCompatActivity() {
                         }
                         override fun onFailure(call: Call<ShowCardResponse>, t: Throwable) {
                             Toast.makeText(this@LockActivity, t.message, Toast.LENGTH_LONG).show()
-
                         }
                     })
                 }

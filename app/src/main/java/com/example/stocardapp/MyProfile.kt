@@ -93,8 +93,6 @@ class MyProfile : Fragment() {
 //        ibk.setOnClickListener {
 //            startActivity(Intent(context, HomeActivity::class.java))
 //        }
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasWritePermission = requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             val hasReadPermission = requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -171,7 +169,6 @@ class MyProfile : Fragment() {
         name.setText(nm)
         email.setText(em)
         phn.setText(ph)
-
         Log.d("token", token!!)
 
         u = Uri.parse(pt)
@@ -227,7 +224,6 @@ class MyProfile : Fragment() {
 
                         var nurl = response.body()?.data!!.Image
                         Log.d("newurl", nurl.toString())
-
                         editor?.putString("name", n)
                         editor?.putString("phone", p)
                         // editor?.putString("pin", i)
