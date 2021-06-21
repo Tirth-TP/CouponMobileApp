@@ -51,7 +51,11 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.putInt("sid",sid)
         editor.putString("stname",stname)
         editor.putString("stlocation",stlocation)
+<<<<<<< HEAD
         editor.putString("stcontact",stcontact)
+=======
+        editor.putString("contact",stcontact)
+>>>>>>> 5479617693d742621dd7a811e6aaedadc550cac6
         editor.apply()
     }
 

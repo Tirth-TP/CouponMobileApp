@@ -51,7 +51,6 @@
                                 android:id="@+id/imgCr"
                                 android:src="@drawable/coupan" />
 
-
                         </LinearLayout>
  
                         <LinearLayout

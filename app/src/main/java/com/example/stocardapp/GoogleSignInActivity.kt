@@ -24,7 +24,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.stocardapp.models.Response
-import com.example.stocardapp.utils.Utils
 import kotlinx.android.synthetic.main.activity_google_sign_in.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -129,7 +128,7 @@ class GoogleSignInActivity : AppCompatActivity() {
         Log.d("urllllla", file.name)
         val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
         val map: MutableMap<String, RequestBody> = HashMap()
-        map["name"] = toPart(Utils.gettext(txtgNm)) as RequestBody
+        map["name"] = toPart(txtgNm.text.toString().trim()) as RequestBody
         map["email"] = toPart(txtgEm.text.toString().trim())
         map["phone"] = toPart(txtgMb.text.toString().trim())
         map["pin"] = toPart(txtsgPin.text.toString().trim())

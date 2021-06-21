@@ -273,7 +273,7 @@ class HomeScreen : Fragment(){
                             //         checkNetwork()
                             dispLst.addAll(stList)
                             var adapter = StoreAdapter(
-                                requireContext(),
+                                    context!!,
                                 dispLst,
                                 object : OnStartDragListener {
                                     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
