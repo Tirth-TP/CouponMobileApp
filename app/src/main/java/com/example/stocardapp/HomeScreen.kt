@@ -29,6 +29,7 @@ import com.example.stocardapp.models.StoreDetailResponse
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,10 +44,14 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class HomeScreen : Fragment(){
-    lateinit var spinAnim: Animation;
-    lateinit var btANim: Animation;
-    lateinit var adapter:StoreAdapter
+class HomeScreen : Fragment() {
+    lateinit var spinAnim: Animation
+    lateinit var btANim: Animation
+    lateinit var adapter: StoreAdapter
+    private var mainMenu: Menu? = null
+
+    var flag: Boolean = false
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -58,7 +63,8 @@ class HomeScreen : Fragment(){
     var itemTouchHelper: ItemTouchHelper? = null
     val map: MutableMap<String, RequestBody> = HashMap()
     lateinit var f: String
-    lateinit var img2:ImageView
+    lateinit var img2: ImageView
+    private var menuShowing = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -68,11 +74,11 @@ class HomeScreen : Fragment(){
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_home_screen, container, false)
     }
 
@@ -92,12 +98,11 @@ class HomeScreen : Fragment(){
         f = requireActivity().intent.getStringExtra("filter").toString()
         val SHARED_PREF_NAME1 = "my_shared_preff"
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-            SHARED_PREF_NAME1,
-            Context.MODE_PRIVATE
+                SHARED_PREF_NAME1,
+                Context.MODE_PRIVATE
         )
         var s = sharedPreferences.getString("filterid", "defaultName")
         Log.d("fiiff", s!!)
-
 
 
         //checkNetwork()
@@ -112,14 +117,14 @@ class HomeScreen : Fragment(){
 
         if (f == "all") {
 
-            map["filter_id"] = toPart(s!!) as RequestBody
+            map["filter_id"] = toPart(s)
 
-            mAPIService!!.storeDetails(token!!, "Filter", map).enqueue(object :
-                Callback<StoreDetailResponse> {
+            mAPIService!!.storeDetails(token, "Filter", map).enqueue(object :
+                    Callback<StoreDetailResponse> {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onResponse(
-                    call: Call<StoreDetailResponse>,
-                    response: Response<StoreDetailResponse>
+                        call: Call<StoreDetailResponse>,
+                        response: Response<StoreDetailResponse>
                 ) {
                     //  var ad = StoreAdapter(context!!.applicationContext, stList)
                     if (response.body()?.success == true) {
@@ -163,18 +168,19 @@ class HomeScreen : Fragment(){
                                 //    checkNetwork()
                                 dispLst.addAll(stList)
                                 adapter = StoreAdapter(
-                                    requireContext(),
-                                    dispLst,
-                                    object : OnStartDragListener {
-                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                            itemTouchHelper?.startDrag(viewHolder!!)
-                                        }
-                                    })
+                                        requireContext(),
+                                        dispLst,
+                                        object : OnStartDragListener {
+                                            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                                itemTouchHelper?.startDrag(viewHolder!!)
+                                            }
+                                        })
                                 stRc.adapter = adapter
                                 val callBack = MyItemTouchHelperCallBack(adapter)
                                 itemTouchHelper = ItemTouchHelper(callBack)
                                 itemTouchHelper?.attachToRecyclerView(stRc)
-                                stRc?.isVisible = true
+                                stRc.isVisible = true
+
                                 adapter.notifyDataSetChanged()
                                 stRc.adapter = adapter
                                 var i = response.body()?.data
@@ -186,9 +192,9 @@ class HomeScreen : Fragment(){
                         }
                     } else {
                         Toast.makeText(
-                            requireContext(),
-                            "Something Went Wrong!",
-                            Toast.LENGTH_SHORT
+                                requireContext(),
+                                "Something Went Wrong!",
+                                Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
@@ -224,13 +230,13 @@ class HomeScreen : Fragment(){
         val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
 
-        map[""] = toPart("") as RequestBody
-        mAPIService!!.storeDetails(token!!, "StoreList", map).enqueue(object :
-            Callback<StoreDetailResponse> {
+        map[""] = toPart("")
+        mAPIService!!.storeDetails(token, "StoreList", map).enqueue(object :
+                Callback<StoreDetailResponse> {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(
-                call: Call<StoreDetailResponse>,
-                response: Response<StoreDetailResponse>
+                    call: Call<StoreDetailResponse>,
+                    response: Response<StoreDetailResponse>
             ) {
                 //  var ad = StoreAdapter(context!!.applicationContext, stList)
                 if (response.body()?.success == true) {
@@ -242,50 +248,55 @@ class HomeScreen : Fragment(){
                         }
                         //Log.d("arrayleng1", stList.size.toString())
                         if (stList.size == 0) {
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            toggleMenuVisibility()
+                            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                            // hasOptionsMenu()
+
                             var fr = view?.findViewById<FrameLayout>(R.id.frame)
-                            Log.d("visible", stRc?.visibility.toString())
-                            stRc?.isVisible = false
-                            Log.d("visiblea", stRc?.visibility.toString())
+                            Log.d("visible", stRc.visibility.toString())
+                            stRc.isVisible = false
+                            Log.d("visiblea", stRc.visibility.toString())
                             var img: ImageView? = ImageView(context)
                             var msg: TextView? = TextView(context)
                             img?.load(R.drawable.empty)
                             val title = SpannableString("Add Your First Store!!")
                             title.setSpan(
-                                ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                0,
-                                title.length,
-                                0
+                                    ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                    0,
+                                    title.length,
+                                    0
                             )
-                            msg?.setText(title)
-                            msg?.setX(100.00F)
-                            msg?.setY(400.00F)
+                            msg?.text = title
+                            msg?.x = 100.00F
+                            msg?.y = 400.00F
                             msg?.textSize = 28F
                             img?.maxHeight = 100
                             img?.maxWidth = 100
                             img?.minimumHeight = 100
                             img?.minimumWidth = 100
                             img?.animation = spinAnim
-                            fr?.layoutParams = fr?.getLayoutParams()
+                            fr?.layoutParams = fr?.layoutParams
                             fr?.addView(img)
                             fr?.addView(msg)
                         } else {
+
                             // cRv.adapter = adapter
                             //         checkNetwork()
                             dispLst.addAll(stList)
                             var adapter = StoreAdapter(
                                     context!!,
-                                dispLst,
-                                object : OnStartDragListener {
-                                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
-                                        itemTouchHelper?.startDrag(viewHolder!!)
-                                    }
-                                })
+                                    dispLst,
+                                    object : OnStartDragListener {
+                                        override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
+                                            itemTouchHelper?.startDrag(viewHolder!!)
+                                        }
+                                    })
                             stRc.adapter = adapter
                             val callBack = MyItemTouchHelperCallBack(adapter)
                             itemTouchHelper = ItemTouchHelper(callBack)
                             itemTouchHelper?.attachToRecyclerView(stRc)
-                            stRc?.isVisible = true
-
+                            stRc.isVisible = true
 
                             var i = response.body()?.data
                         }
@@ -304,8 +315,9 @@ class HomeScreen : Fragment(){
     }
 
     fun toPart(data: String): RequestBody {
-        return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
+        return data.toRequestBody("text/plain".toMediaTypeOrNull())
     }
+
 
     fun checkNetwork() {
         //Check Network
@@ -313,9 +325,6 @@ class HomeScreen : Fragment(){
         var cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    super.onAvailable(network)
-                }
 
                 override fun onLost(network: Network) {
                     super.onLost(network)
@@ -323,27 +332,27 @@ class HomeScreen : Fragment(){
 
                     activity?.runOnUiThread(Runnable {
                         // Stuff that updates the UI
-                        stRc?.isVisible = false
+                        stRc.isVisible = false
                         Toast.makeText(requireContext(), "hhhhhh", Toast.LENGTH_LONG).show()
                         var img: ImageView? = ImageView(context)
                         var msg: TextView? = TextView(context)
                         img?.load(R.drawable.net)
                         val title = SpannableString("Network Connection Lost.")
                         title.setSpan(
-                            ForegroundColorSpan(Color.parseColor("#342ea9")),
-                            0,
-                            title.length,
-                            0
+                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                0,
+                                title.length,
+                                0
                         )
-                        msg?.setText(title)
-                        msg?.setX(300.00F)
-                        msg?.setY(500.00F)
+                        msg?.text = title
+                        msg?.x = 300.00F
+                        msg?.y = 500.00F
                         msg?.textSize = 28F
                         img?.maxHeight = 80
                         img?.maxWidth = 80
                         img?.minimumHeight = 80
                         img?.minimumWidth = 80
-                        fr?.layoutParams = fr?.getLayoutParams()
+                        fr?.layoutParams = fr?.layoutParams
                         fr?.addView(img)
                     })
                 }
@@ -352,10 +361,14 @@ class HomeScreen : Fragment(){
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         requireActivity().menuInflater.inflate(R.menu.menu_filterser, menu)
+        mainMenu = menu
         var menuItem: MenuItem = menu.findItem(R.id.btnFilter)
         val actionView = MenuItemCompat.getActionView(menuItem)
+        var searchView = menu.findItem(R.id.ser)
+
         actionView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 onOptionsItemSelected(menuItem)
@@ -364,19 +377,24 @@ class HomeScreen : Fragment(){
 
         val SHARED_PREF_NAME1 = "my_shared_preff"
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-            SHARED_PREF_NAME1,
-            Context.MODE_PRIVATE
+                SHARED_PREF_NAME1,
+                Context.MODE_PRIVATE
         )
         var filtersize = sharedPreferences.getString("filtersize", "0")
 
         var textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
-        if(filtersize == "0"){
+        if (filtersize == "0") {
             textCartItemCount.isVisible = false
-        } else{
+        } else {
             textCartItemCount.isVisible = true
             textCartItemCount.text = filtersize
         }
         return super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    fun toggleMenuVisibility() {
+        mainMenu?.findItem(R.id.ser)?.isVisible = !menuShowing
+        menuShowing = !menuShowing
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -384,12 +402,12 @@ class HomeScreen : Fragment(){
             R.id.ser -> {
                 val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
                 var sec: androidx.appcompat.widget.SearchView =
-                    item.actionView as androidx.appcompat.widget.SearchView
+                        item.actionView as androidx.appcompat.widget.SearchView
                 val searchEditText: EditText =
-                    sec.findViewById(androidx.appcompat.R.id.search_src_text)
+                        sec.findViewById(androidx.appcompat.R.id.search_src_text)
                 searchEditText.setTextColor(resources.getColor(R.color.white))
                 val searchClose: View =
-                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+                        sec.findViewById(androidx.appcompat.R.id.search_close_btn)
                 searchClose.setOnClickListener {
                     img2.isVisible = false
                     startActivity(Intent(context, HomeActivity::class.java))
@@ -413,7 +431,7 @@ class HomeScreen : Fragment(){
 
                 if (item != null) {
                     sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                            androidx.appcompat.widget.SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
 //                            val se = query?.toLowerCase(Locale.getDefault())
 //                           dispLst.clear()
@@ -430,7 +448,6 @@ class HomeScreen : Fragment(){
                         }
 
                         override fun onQueryTextChange(newText: String?): Boolean {
-
                             var fr = view?.findViewById<FrameLayout>(R.id.frame)
                             img2 = ImageView(context)
                             var msg: TextView? = TextView(context)
@@ -447,36 +464,34 @@ class HomeScreen : Fragment(){
 //                                       stRc?.adapter!!.notifyDataSetChanged()
 
                                     }
-
                                 }
 
                                 if (flag == false) {
-
 //                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
 //                                            .show()
 //                                    //search not found start
 //                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
 
 
-                                    Log.d("visible", stRc?.visibility.toString())
-                                    stRc?.isVisible = false
-                                    Log.d("visiblea", stRc?.visibility.toString())
+                                    Log.d("visible", stRc.visibility.toString())
+                                    stRc.isVisible = false
+                                    Log.d("visiblea", stRc.visibility.toString())
 
-                                    img2?.load(R.drawable.empty)
+                                    img2.load(R.drawable.empty)
                                     val title = SpannableString("Search not found!!")
                                     title.setSpan(
-                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
-                                        0,
-                                        title.length,
-                                        0
+                                            ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                            0,
+                                            title.length,
+                                            0
                                     )
-                                    msg?.setText(title)
-                                    msg?.setX(200.00F)
-                                    msg?.setY(500.00F)
+                                    msg?.text = title
+                                    msg?.x = 200.00F
+                                    msg?.y = 500.00F
                                     msg?.textSize = 28F
-                                    img2?.maxHeight = 100
-                                    img2?.maxWidth = 100
-                                    fr?.layoutParams = fr?.getLayoutParams()
+                                    img2.maxHeight = 100
+                                    img2.maxWidth = 100
+                                    fr?.layoutParams = fr?.layoutParams
                                     fr?.addView(img2)
 //                                        fr?.addView(msg)
 
@@ -485,14 +500,14 @@ class HomeScreen : Fragment(){
                                 } else {
                                     fr?.removeAllViews()
                                     fr?.addView(stRc)
-                                    stRc?.isVisible = true
+                                    stRc.isVisible = true
 
                                     for (i in stList) {
                                         if (i.stname.toLowerCase(Locale.getDefault())
-                                                .contains(se)
+                                                        .contains(se)
                                         ) {
                                             dispLst.add(i)
-                                            stRc?.adapter!!.notifyDataSetChanged()
+                                            stRc.adapter!!.notifyDataSetChanged()
                                         }
 
                                     }
@@ -500,14 +515,17 @@ class HomeScreen : Fragment(){
                             } else {
                                 dispLst.clear()
                                 dispLst.addAll(stList)
-                                stRc?.adapter!!.notifyDataSetChanged()
+                                stRc.adapter!!.notifyDataSetChanged()
                             }
                             return true
                         }
+
                     })
                 }
                 true
+
             }
+
             R.id.btnFilter -> {
                 if (f != "all") {
                     f = "filtered"
@@ -517,10 +535,10 @@ class HomeScreen : Fragment(){
                 } else {
                     val SHARED_PREF_NAME1 = "my_shared_preff"
                     val sharedPreferences: SharedPreferences =
-                        requireContext().getSharedPreferences(
-                            SHARED_PREF_NAME1,
-                            Context.MODE_PRIVATE
-                        )
+                            requireContext().getSharedPreferences(
+                                    SHARED_PREF_NAME1,
+                                    Context.MODE_PRIVATE
+                            )
                     val editor: SharedPreferences.Editor = sharedPreferences.edit()
                     editor.putString("filterid", "")
                     editor.putString("filtersize", "0")

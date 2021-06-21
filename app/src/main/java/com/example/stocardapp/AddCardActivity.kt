@@ -152,7 +152,7 @@ class AddCardActivity : AppCompatActivity() {
         val bmp: Bitmap
         val byteArray = intent.getByteArrayExtra("imagebitmap")
         if (byteArray == null) {
-            icrd.setImageDrawable(resources.getDrawable(R.drawable.addst))
+            icrd.setImageDrawable(resources.getDrawable(R.drawable.coupan))
         } else {
             Log.d("bytearray", "" + byteArray)
             bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray!!.size)
