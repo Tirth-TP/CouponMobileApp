@@ -76,10 +76,6 @@ class StoreAdapter(
 
 
 
-
-
-
-
         //  holder.Simg.setImageResource(list[position].imgSrc)
         holder.Stit.text = arr[position].stname
 
@@ -102,7 +98,7 @@ class StoreAdapter(
             i.putExtra("storeNm", arr[position].stname)
             i.putExtra("storeCon", arr[position].stcontact)
             i.putExtra("storeLoc", arr[position].stlocation)
-            SharedPrefManager.getInstance(ctx).saveStore(arr[position].id!!,arr[position].stname!!, arr[position].stlocation!!, arr[position].stcontact!!)
+          //  SharedPrefManager.getInstance(ctx).saveStore(arr[position].id!!,arr[position].stname!!, arr[position].stlocation!!, arr[position].stcontact!!)
             SharedPrefManager.getInstance(ctx).saveStore(
                 arr[position].id!!,
                 arr[position].stname!!,
