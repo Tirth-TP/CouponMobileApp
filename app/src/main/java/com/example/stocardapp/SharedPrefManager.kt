@@ -41,7 +41,7 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.putString("pin", user.pin)
         editor.putString("phone", user.phone)
         editor.putString("Image",user.Image)
-        editor.putString("device_id",user.device_id)
+        editor.putString("device_id",user.device_token)
         editor.apply()
     }
 

@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -29,7 +30,13 @@ import com.example.stocardapp.R.*
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import com.example.stocardapp.models.LoginResponse
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
@@ -45,13 +52,20 @@ var message = ""
 class LoginActivity : AppCompatActivity() {
     var dtoken = ""
 
+    companion object {
+        private const val RC_SIGN_IN = 120
+    }
+
+    private lateinit var myAuth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        window.setStatusBarColor(ContextCompat.getColor(applicationContext,R.color.dark_blue))
+        window.setStatusBarColor(ContextCompat.getColor(applicationContext, R.color.dark_blue))
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         if (intent.extras != null) {
@@ -65,10 +79,21 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("696367015267-lmrdrhlme8ko5ak6uqppn7lv4lgv9fe6.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
 
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        myAuth = FirebaseAuth.getInstance()
 
         val passsword = findViewById<EditText>(R.id.txtPass)
         val email = findViewById<EditText>(R.id.txtEm)
+        val btnGgle = findViewById<Button>(R.id.btnGoogle)
+
+        btnGgle.setOnClickListener {
+            signIn()
+        }
 
         //validation
 
@@ -115,43 +140,7 @@ class LoginActivity : AppCompatActivity() {
 //        val ibk = findViewById<ImageView>(R.id.imgBack)
 //        ibk.isVisible = false
         val txtFr = findViewById<TextView>(R.id.txtForgot)
-        /* var pass = findViewById<EditText>(R.id.txtPass)
-         pass.setOnTouchListener(View.OnTouchListener { v, event ->
-             val DRAWABLE_RIGHT = 2
-             if (event.action == MotionEvent.ACTION_UP) {
-                 if (a == 0 && event.rawX >= pass.getRight() - pass.getCompoundDrawables()
-                         .get(DRAWABLE_RIGHT).getBounds().width()
-                 ) {
-                     pass.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                     a = 1
-                     pass.setCompoundDrawablesWithIntrinsicBounds(
-                         ContextCompat.getDrawable(
-                             this,
-                             drawable.ic_baseline_lock_24
-                         ),
-                         null,
-                         ContextCompat.getDrawable(this, drawable.ic_baseline_hide_source_24),
-                         null
-                     )
-                     return@OnTouchListener true
-                 }
-                 if (a == 1) {
-                     pass.transformationMethod = PasswordTransformationMethod.getInstance()
-                     a = 0
-                       pass.setCompoundDrawablesWithIntrinsicBounds(
-                         ContextCompat.getDrawable(
-                             this,
-                             drawable.ic_baseline_lock_24
-                         ),
-                         null,
-                         ContextCompat.getDrawable(this, drawable.ic_baseline_remove_red_eye_24),
-                         null
-                     )
-                     return@OnTouchListener true
-                 }
-             }
-             false
-         })*/
+
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -164,26 +153,10 @@ class LoginActivity : AppCompatActivity() {
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
 
         txtFr.setOnClickListener {
-//            val builder = AlertDialog.Builder(this@LoginActivity)
-//            val view = layoutInflater.inflate(R.layout.forgot_ps, null)
-//            var em = view.findViewById<EditText>(R.id.txtFem)
-//            em.setHint("Email")
-//            var alertDialog: AlertDialog? =null
+
             val email = findViewById<EditText>(R.id.txtEm)
             val e = email.text.toString().trim()
 
-//            with(builder)
-//            {
-//                val title = SpannableString("Enter Your Email")
-//                title.setSpan(
-//                        ForegroundColorSpan(Color.parseColor("#342ea9")),
-//                        0,
-//                        title.length,
-//                        0
-//                )
-//                setTitle(title)
-//                setTheme(R.style.Theme_StocardApp)
-//                setPositiveButton("Send"){ dialog, which ->
             if (e.isNotEmpty()) {
                 val map: MutableMap<String, RequestBody> = HashMap()
                 val e = email.text.toString().trim()
@@ -237,8 +210,8 @@ class LoginActivity : AppCompatActivity() {
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-                                                    alertDialog.dismiss()
-                                                if(response.body()?.success==true) {
+                                                alertDialog.dismiss()
+                                                if (response.body()?.success == true) {
                                                     var i = (Intent(
                                                         this@LoginActivity,
                                                         SetNewPasswordActivity::class.java
@@ -248,10 +221,12 @@ class LoginActivity : AppCompatActivity() {
                                                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                                     startActivity(i)
                                                     finish()
-                                                }
-                                                else
-                                                {
-                                                    Toast.makeText(this@LoginActivity,"Wrong OTP! Try Again",Toast.LENGTH_SHORT).show()
+                                                } else {
+                                                    Toast.makeText(
+                                                        this@LoginActivity,
+                                                        "Wrong OTP! Try Again",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
                                                 }
                                             }
 
@@ -329,7 +304,7 @@ class LoginActivity : AppCompatActivity() {
             val map: MutableMap<String, RequestBody> = HashMap()
             map["email"] = toPart(e) as RequestBody
             map["password"] = toPart(p)
-            map["device_id"] = toPart(dtoken.toString())
+            map["device_token"] = toPart(dtoken.toString())
             // val em = sharedPreference.getString("email","defaultName")
             RetrofitClient.instance.loginUser(token!!, "login", map).enqueue(object :
                 Callback<LoginResponse> {
@@ -372,7 +347,110 @@ class LoginActivity : AppCompatActivity() {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-//    override fun onStart() {
+    //Google signin
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            var mAPIService: UserApi? = null
+            mAPIService = ApiUtils.apiService
+
+            if (task.isSuccessful) {
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    val account = task.getResult(ApiException::class.java)!!
+                    Log.d("Tag", "firebaseAuthWithGoogle:" + account.id)
+                    firebaseAuthWithGoogle(account.idToken!!)
+                    val personName: String = account.displayName.toString()
+                    val perEmail: String = account.email.toString()
+                    Log.d("nmmmmm", personName)
+                    val personId: String = account.getId().toString()
+                    val personPhoto: Uri? = account.getPhotoUrl()
+
+                    val map: MutableMap<String, RequestBody> = HashMap()
+                    map["email"] = toPart(perEmail) as RequestBody
+                    map["providerId"] = toPart(personId)
+
+
+                    mAPIService.sociallogin("", "socialRegisterCheck", map).enqueue(object :
+                        Callback<LoginResponse> {
+                        override fun onResponse(
+                            call: Call<LoginResponse>,
+                            response: retrofit2.Response<LoginResponse>
+                        ) {
+
+                            Log.d("ressssgg", response.body()?.success.toString())
+                            if (response.body()?.success == true) {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    response.body()?.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                SharedPrefManager.getInstance(applicationContext)
+                                    .saveUser(response.body()?.data!!)
+                                val i = (Intent(this@LoginActivity, HomeActivity::class.java))
+                                i.putExtra("Username", response.body()?.data!!.name)
+                                // Log.d("token",response.body()?.data!!.token)
+//                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(i)
+                                finish()
+                            } else if (response.body()?.data == null) {
+                                var i = Intent(this@LoginActivity, GoogleSignInActivity::class.java)
+                                i.putExtra("personName", personName)
+                                i.putExtra("perEmail", perEmail)
+                                i.putExtra("personId", personId)
+                                i.putExtra("personPhoto", personPhoto.toString())
+                                startActivity(i)
+                            } else {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Something went wrong!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                            Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_LONG).show()
+                        }
+                    })
+
+                } catch (e: Exception) {
+                    // Google Sign In failed, update UI appropriately
+                    Log.w("Tag", "Google sign in failed", e)
+                }
+            } else {
+                Toast.makeText(this, "Failed to Sign in", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        myAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("Tag", "signInWithCredential:success")
+                    // startActivity(Intent(this,GoogleSignInActivity::class.java))
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("Tag", "signInWithCredential:failure", task.exception)
+
+                }
+            }
+    }
+
+    //    override fun onStart() {
 //        super.onStart()
 //        if (SharedPrefManager.getInstance(this).isLoggedIn) {
 //            val i = (Intent(this, HomeActivity::class.java))

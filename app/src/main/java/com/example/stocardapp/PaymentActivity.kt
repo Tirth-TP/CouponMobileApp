@@ -150,7 +150,6 @@ class PaymentActivity : AppCompatActivity() {
             if (status == "success") {
                 //Code to handle successful transaction here.
                 Toast.makeText(this@PaymentActivity, "Transaction successful.", Toast.LENGTH_SHORT).show()
-                Log.d("UPI", "responseStr: $approvalRefNo")
                 var cid = intent.getIntExtra("cardId", 0)
                 val map: MutableMap<String, RequestBody> = HashMap()
                 map["card_id"] = toPart(cid.toString()) as RequestBody
@@ -167,6 +166,7 @@ class PaymentActivity : AppCompatActivity() {
                         Toast.makeText(this@PaymentActivity, t.message, Toast.LENGTH_LONG).show()
                     }
                 })
+                Log.d("UPI", "responseStr: $approvalRefNo")
             } else if ("Payment cancelled by user." == paymentCancel) {
                 Toast.makeText(this@PaymentActivity, "Payment cancelled by user.", Toast.LENGTH_SHORT).show()
             } else {

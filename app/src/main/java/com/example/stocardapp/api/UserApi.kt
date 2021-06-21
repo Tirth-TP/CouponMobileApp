@@ -190,6 +190,13 @@ interface UserApi {
                 @PartMap map: Map<String, RequestBody>
         ): Call<StoreUpdateResponse>
 
+        @Multipart
+        @POST("{url}")
+        fun sociallogin(
+                @Header("Authorization") AUTH: String,
+                @Path(value = "url", encoded = true) url: String?,
+                @PartMap map: Map<String, RequestBody>
+        ): Call<LoginResponse>
 }
 
 object ApiUtils {

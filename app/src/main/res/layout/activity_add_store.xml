@@ -202,7 +202,6 @@
 
                         </LinearLayout>
 
-
                         <Button
                             android:id="@+id/btn_store"
                             android:layout_width="match_parent"
@@ -210,7 +209,7 @@
                             android:layout_marginTop="7dp"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:background="@drawable/btn_background"
-                            android:text="save changes"
+                            android:text="ADD STORE"
                             android:textColor="@color/white"
                             android:layout_marginStart="@dimen/_20sdp"
                             android:layout_marginLeft="@dimen/_20sdp"

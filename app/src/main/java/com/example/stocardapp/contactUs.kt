@@ -91,17 +91,16 @@ class contactUs : Fragment() {
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                 ) {
-                    if(response.body()?.success == true) {
+                    if (response.body()?.success == true) {
                         Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
                         val intent = Intent(this@contactUs.context, HomeActivity::class.java)
                         startActivity(intent)
-                    }
-                    else
-                    {
-                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
 
                     }
                 }
+
                 override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                 }
@@ -115,6 +114,7 @@ class contactUs : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
+
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
