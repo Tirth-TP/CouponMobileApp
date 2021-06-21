@@ -29,7 +29,13 @@ import com.example.stocardapp.R.*
 import com.example.stocardapp.models.ChangePasswordResponse
 import com.example.stocardapp.models.ForgotPsResponse
 import com.example.stocardapp.models.LoginResponse
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
@@ -44,7 +50,12 @@ var message = ""
 
 class LoginActivity : AppCompatActivity() {
     var dtoken = ""
-
+    companion object
+    {
+        private const val RC_SIGN_IN = 120
+    }
+    private lateinit var myAuth: FirebaseAuth
+    private  lateinit var googleSignInClient: GoogleSignInClient
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,10 +76,21 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("995109738136-r5qhane ie90ocuqf5lhqo0pl8ek54v6j.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
 
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        myAuth = FirebaseAuth.getInstance()
 
         val passsword = findViewById<EditText>(R.id.txtPass)
         val email = findViewById<EditText>(R.id.txtEm)
+        val btnGgle = findViewById<Button>(R.id.btnGoogle)
+
+        btnGgle.setOnClickListener {
+            signIn()
+        }
 
         //validation
 
@@ -237,7 +259,7 @@ class LoginActivity : AppCompatActivity() {
                                                 call: Call<ChangePasswordResponse>,
                                                 response: retrofit2.Response<ChangePasswordResponse>
                                             ) {
-                                                    alertDialog.dismiss()
+                                                alertDialog.dismiss()
                                                 if(response.body()?.success==true) {
                                                     var i = (Intent(
                                                         this@LoginActivity,
@@ -329,7 +351,7 @@ class LoginActivity : AppCompatActivity() {
             val map: MutableMap<String, RequestBody> = HashMap()
             map["email"] = toPart(e) as RequestBody
             map["password"] = toPart(p)
-            map["device_id"] = toPart(dtoken.toString())
+            map["device_token"] = toPart(dtoken.toString())
             // val em = sharedPreference.getString("email","defaultName")
             RetrofitClient.instance.loginUser(token!!, "login", map).enqueue(object :
                 Callback<LoginResponse> {
@@ -372,7 +394,55 @@ class LoginActivity : AppCompatActivity() {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
-//    override fun onStart() {
+    //Google signin
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val exception = task.exception
+            if (task.isSuccessful) {
+                try {
+                    // Google Sign In was successful, authenticate with Firebase
+                    val account = task.getResult(ApiException::class.java)!!
+                    Log.d("Tag", "firebaseAuthWithGoogle:" + account.id)
+                    firebaseAuthWithGoogle(account.idToken!!)
+                } catch (e: ApiException) {
+                    // Google Sign In failed, update UI appropriately
+                    Log.w("Tag", "Google sign in failed", e)
+                }
+            }
+            else
+            {
+                Log.w("GoogleSignInActivity",exception.toString())
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        myAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("Tag", "signInWithCredential:success")
+                    startActivity(Intent(this,LoginActivity::class.java))
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("Tag", "signInWithCredential:failure", task.exception)
+
+                }
+            }
+    }
+
+    //    override fun onStart() {
 //        super.onStart()
 //        if (SharedPrefManager.getInstance(this).isLoggedIn) {
 //            val i = (Intent(this, HomeActivity::class.java))
@@ -384,4 +454,6 @@ class LoginActivity : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+
+
 }

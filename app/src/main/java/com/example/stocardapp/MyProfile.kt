@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import coil.api.load
 import com.example.stocardapp.R.layout
@@ -58,7 +59,10 @@ class MyProfile : Fragment() {
     val TAKE_PICTURE = 1
     val SELECT_PICTURE = 2
     var uri: Uri?=null
+    var uri2: Uri?=null
     var u: Uri?=null
+   lateinit var requestFile:RequestBody
+   lateinit var file:File
     private val REQUEST_PERMISSION = 0
     private var param1: String? = null
     private var param2: String? = null
@@ -181,14 +185,27 @@ class MyProfile : Fragment() {
         editBtn.setOnClickListener {
 
             if(uri == null) {
-                val SHARED_PREF_NAME = "my_shared_preff"
-                val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-                val image = sharedPreference.getString("Image", "defaultName")
-                var uimage = Uri.parse(image)
-                Log.d("Imageprofile", "image:- " + uimage)
-//                uri = Uri.parse("android.resource://your.package.name/" + R.drawable.icon_usuario);
-//                http://stocard.project-demo.info/upload/user_img/1065580801.jpg
+                uri2="content://com.android.providers.media.documents/document/image%3A179462".toUri()
+                Log.d("imageabcd", uri2.toString())
+              file= File(URIPathHelper.getPath(requireContext(), uri2!!))
+
+                Log.d("imageabcd", file.toString())
+
+               requestFile = RequestBody.create(
+                        requireContext().contentResolver.getType(uri2!!)!!.toMediaTypeOrNull(),
+                        file
+                )
+
+
             } else {
+                 file= File(URIPathHelper.getPath(requireContext(), uri!!))
+
+                Log.d("imageabcd", file.toString())
+
+               requestFile = RequestBody.create(
+                        requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+                        file
+                )
                 Log.d("Imageprofileelse","hi " + uri)
 //                content://com.android.providers.media.documents/document/image%3A163122
             }
@@ -207,14 +224,7 @@ class MyProfile : Fragment() {
             //map["email"] = toPart(em!!)
             map["phone"] = toPart(p!!)
 
-            var file= File(URIPathHelper.getPath(requireContext(), uri!!))
 
-                Log.d("imageabcd", file.toString())
-
-                val requestFile = RequestBody.create(
-                        requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                        file
-                )
             Log.d("contentresolver","" + requestFile)
                 val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
 
@@ -259,11 +269,7 @@ class MyProfile : Fragment() {
         }
 
         txtChange.setOnClickListener {
-            //Toast.makeText(context, "Pro", Toast.LENGTH_LONG).show()
-           /* materialAlertDialogBuilder = MaterialAlertDialogBuilder(context?.applicationContext!!)
-            customAlertDialogView = LayoutInflater.from(context)
-                    .inflate(R.layout.change_ps, null, false)
-            launchCustomAlertDialog()*/
+
             val intent = Intent(this@MyProfile.context, ChangePasswordActivity::class.java)
             startActivity(intent)
 
@@ -275,25 +281,6 @@ class MyProfile : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
-  /*  private fun launchCustomAlertDialog() {
-        val ops = requireView().findViewById(R.id.chold) as EditText
-        val nps = requireView().findViewById(R.id.chNew) as EditText
-        val cps = requireView().findViewById(R.id.chCon) as EditText
-        materialAlertDialogBuilder.setView(customAlertDialogView)
-                .setTitle("Change Password")
-               // .setMessage("Enter your basic details")
-                .setPositiveButton("Save"){ dialog, _ ->
-                    val op = ops.text.toString()
-                    val np = nps.text.toString()
-                    val cp = cps.text.toString()
-                    Log.d("data",op+np+cp)
-                    dialog.dismiss()
-                }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
-    }*/
    fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
@@ -371,6 +358,7 @@ class MyProfile : Fragment() {
                 uri = data?.data
                 stImg.imageTintMode = null
                 stImg.setImageURI(uri)
+                Log.d("error", uri.toString())
             }
             catch (e: IOException)
             {

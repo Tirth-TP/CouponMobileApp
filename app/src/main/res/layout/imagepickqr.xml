@@ -45,7 +45,12 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_weight="1"
             android:src="@drawable/image_gallery" />
-
+        <ImageView
+            android:id="@+id/btn_scan"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="1"
+            android:src="@drawable/scan" />
     </LinearLayout>
 
     <Button

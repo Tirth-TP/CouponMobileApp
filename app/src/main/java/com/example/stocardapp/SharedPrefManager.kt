@@ -45,13 +45,13 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.apply()
     }
 
-    fun saveStore(sid: Int, stname: String, stlocation: String, contact: String) {
+    fun saveStore(sid: Int, stname: String, stlocation: String, stcontact: String) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("sid",sid)
         editor.putString("stname",stname)
         editor.putString("stlocation",stlocation)
-        editor.putString("contact",contact)
+        editor.putString("contact",stcontact)
         editor.apply()
     }
 
