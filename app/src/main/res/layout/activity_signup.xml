@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context=".SignupActivity">
@@ -40,14 +40,13 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-
                     <ImageView
-                        app:tint="@color/dark_blue"
+                        android:id="@+id/imgSPro"
                         android:layout_width="@dimen/_90sdp"
                         android:layout_height="@dimen/_100sdp"
-                        android:id="@+id/imgSPro"
                         android:padding="@dimen/_4sdp"
-                        android:src="@drawable/profile" />
+                        android:src="@drawable/profile"
+                        app:tint="@color/dark_blue" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -85,7 +84,6 @@
                                 android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789, "/>
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -234,6 +232,7 @@
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginTop="@dimen/_14sdp"
                                 android:padding="@dimen/_4sdp"
+                                android:gravity="center_vertical"
                                 android:src="@drawable/ic_baseline_phone_iphone_24"
                                 android:layout_marginLeft="@dimen/_20sdp" />
 
@@ -250,6 +249,7 @@
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
                                 android:hint="Phone"
+                                android:gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/_5sdp"
                                 android:layout_marginRight="@dimen/_20sdp">
 

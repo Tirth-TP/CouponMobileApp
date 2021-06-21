@@ -28,8 +28,8 @@ class ChangePasswordActivity : AppCompatActivity() {
         txtTit.setText("Change Password")
         var imgBack = findViewById<ImageView>(R.id.imgBack)
         imgBack.setOnClickListener {
-            var i = Intent(this,MyProfile::class.java)
-            i.putExtra("filter","all")
+            var i = Intent(this, MyProfile::class.java)
+            i.putExtra("filter", "all")
             finish()
         }
 
@@ -57,45 +57,42 @@ class ChangePasswordActivity : AppCompatActivity() {
             val np = nps.text.toString().trim()
             val cp = cps.text.toString().trim()
 
-            if(np.equals(cp))
-            {
-                Log.d("hhhhhhh",np)
+            if (np.equals(cp)) {
+                Log.d("hhhhhhh", np)
 
-            val map: MutableMap<String, RequestBody> = HashMap()
-            map["old_password"] = toPart(op) as RequestBody
-            map["new_password"] = toPart(np)
+                val map: MutableMap<String, RequestBody> = HashMap()
+                map["old_password"] = toPart(op) as RequestBody
+                map["new_password"] = toPart(np)
 //            map["confirm_password"] = toPart(cp)
-            Log.d("token",token!!)
+                Log.d("token", token!!)
 
-            mAPIService.changePas(token!!, "ChangePassword", map).enqueue(object :
-                    Callback<ChangePasswordResponse> {
-                override fun onResponse(
-                        call: Call<ChangePasswordResponse>,
-                        response: retrofit2.Response<ChangePasswordResponse>
-                ) {
-                    if(response.body()?.success == true) {
-                        Toast.makeText(this@ChangePasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
+                mAPIService.changePas(token!!, "ChangePassword", map).enqueue(object :
+                        Callback<ChangePasswordResponse> {
+                    override fun onResponse(
+                            call: Call<ChangePasswordResponse>,
+                            response: retrofit2.Response<ChangePasswordResponse>
+                    ) {
+                        if (response.body()?.success == true) {
+                            Toast.makeText(this@ChangePasswordActivity, response.body()?.message, Toast.LENGTH_LONG).show()
 
-                        var i = (Intent(this@ChangePasswordActivity, HomeActivity::class.java))
-                        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        startActivity(i)
+                            var i = (Intent(this@ChangePasswordActivity, HomeActivity::class.java))
+                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(i)
+                        } else {
+                            Toast.makeText(this@ChangePasswordActivity, "Something went wrong!", Toast.LENGTH_LONG).show()
+                        }
                     }
-                    else
-                    {
-                        Toast.makeText(this@ChangePasswordActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
+
+                    override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
+                        Toast.makeText(this@ChangePasswordActivity, t.message, Toast.LENGTH_LONG).show()
                     }
-                }
-                override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
-                    Toast.makeText(this@ChangePasswordActivity, t.message, Toast.LENGTH_LONG).show()
-                }
-            })
-            }
-            else
-            {
+                })
+            } else {
                 cps.setError("Password does not match!")
             }
         }
     }
+
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }

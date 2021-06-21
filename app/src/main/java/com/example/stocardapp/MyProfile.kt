@@ -59,10 +59,11 @@ class MyProfile : Fragment() {
     val TAKE_PICTURE = 1
     val SELECT_PICTURE = 2
     var uri: Uri?=null
-    var uri2: Uri?=null
+    var uimage:Uri?=null
     var u: Uri?=null
-   lateinit var requestFile:RequestBody
-   lateinit var file:File
+    var uri2: Uri?=null
+    lateinit var file:File
+    lateinit var requestFile:RequestBody
     private val REQUEST_PERMISSION = 0
     private var param1: String? = null
     private var param2: String? = null
@@ -92,13 +93,10 @@ class MyProfile : Fragment() {
 
 //        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
 //        txtTit.setText("My profile")
-
 //        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
 //        ibk.setOnClickListener {
 //            startActivity(Intent(context, HomeActivity::class.java))
 //        }
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasWritePermission = requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             val hasReadPermission = requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -175,7 +173,6 @@ class MyProfile : Fragment() {
         name.setText(nm)
         email.setText(em)
         phn.setText(ph)
-
         Log.d("token", token!!)
 
         u = Uri.parse(pt)
@@ -184,37 +181,57 @@ class MyProfile : Fragment() {
         val editBtn = requireView().findViewById(R.id.btn_edit) as Button
         editBtn.setOnClickListener {
 
+//            if(uri == null) {
+//
+//                val SHARED_PREF_NAME = "image_shared_preff"
+//                val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+//                val image = sharedPreference.getString("URI", "defaultName")
+//                Log.d("newurllll", "image:- " + image)
+//                uri = Uri.parse(image)
+//                Log.d("newurllll_1", "image:- " + uimage)
+//            }
+
             if(uri == null) {
-                uri2="content://com.android.providers.media.documents/document/image%3A179462".toUri()
+//                val SHARED_PREF_NAME = "image_shared_preff"
+//                val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+//                val image = sharedPreference.getString("URI", "defaultName")
+//                Log.d("newurllll", "image:- " + image)
+//              uri2 = Uri.parse(image)
+              uri2="content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F33/ORIGINAL/NONE/1858671968".toUri()
                 Log.d("imageabcd", uri2.toString())
-              file= File(URIPathHelper.getPath(requireContext(), uri2!!))
+                file= File(URIPathHelper.getPath(requireContext(), uri2!!))
 
                 Log.d("imageabcd", file.toString())
 
-               requestFile = RequestBody.create(
+                requestFile = RequestBody.create(
                         requireContext().contentResolver.getType(uri2!!)!!.toMediaTypeOrNull(),
                         file
                 )
-
+//                val SHARED_PREF_NAME = "my_shared_preff"
+//                val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+//                val image = sharedPreference.getString("Image", "defaultName")
+//                var uimage = Uri.parse(image)
+//                Log.d("Imageprofile", "image:- " + image)
 
             } else {
-                 file= File(URIPathHelper.getPath(requireContext(), uri!!))
+                file= File(URIPathHelper.getPath(requireContext(), uri!!))
 
                 Log.d("imageabcd", file.toString())
 
-               requestFile = RequestBody.create(
+                requestFile = RequestBody.create(
                         requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
                         file
                 )
                 Log.d("Imageprofileelse","hi " + uri)
 //                content://com.android.providers.media.documents/document/image%3A163122
             }
+                Log.d("Imageprofileelse","hi " + uri.toString())
+//                content://com.android.providers.media.documents/document/image%3A163122
+
 
             val n = name.text.toString().trim()
             val p = phn.text.toString().trim()
-
 //            var imageurl = Uri.parse(uri.toString())
-
             name.setText(n)
             phn.setText(p)
 
@@ -223,11 +240,20 @@ class MyProfile : Fragment() {
             map["name"] = toPart(n!!) as RequestBody
             //map["email"] = toPart(em!!)
             map["phone"] = toPart(p!!)
+            Log.d("newurllll_2", "image:- " + uimage)
+            Log.d("Imageprofileelsse","hi " + uri)
 
+           // var file= File(URIPathHelper.getPath(requireContext(), uri!!))
 
+                Log.d("imageabcd", file.toString())
+
+//            file= File(URIPathHelper.getPath(requireContext(), uri!!))
+//           var requestFile = RequestBody.create(
+//                    requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+//                    file!!
+//            )
+      val body = MultipartBody.Part.createFormData("user_img", file!!.name, requestFile)
             Log.d("contentresolver","" + requestFile)
-                val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
-
             mAPIService.editProfile(token!!, body, "ChangeProfile", map).enqueue(object :
                     Callback<UpdateResponse> {
                 override fun onResponse(
@@ -237,7 +263,6 @@ class MyProfile : Fragment() {
 
                         var nurl = response.body()?.data!!.Image
                         Log.d("newurl", nurl.toString())
-
                         editor?.putString("name", n)
                         editor?.putString("phone", p)
                         // editor?.putString("pin", i)
@@ -246,15 +271,13 @@ class MyProfile : Fragment() {
 
                         Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
                         //img_pro.load(u.toString())
-
                         Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
 //                    val fr = fragmentManager!!.beginTransaction()
 //                    fr.replace(R.id.container, HomeScreen())
                         startActivity(Intent(context, HomeActivity::class.java))
                         getActivity()?.getFragmentManager()?.popBackStack()
 //                    getActivity()?.getSupportFragmentManager()?.beginTransaction()?.remove(this@MyProfile)?.commit()
-                        Log.d("imageabc", file.name)
-
+                        Log.d("imageabc", file!!.name)
 //                    else
 //                    {
 //                        Toast.makeText(context,"Something went wrong!",Toast.LENGTH_LONG).show()
@@ -269,10 +292,13 @@ class MyProfile : Fragment() {
         }
 
         txtChange.setOnClickListener {
-
+            //Toast.makeText(context, "Pro", Toast.LENGTH_LONG).show()
+           /* materialAlertDialogBuilder = MaterialAlertDialogBuilder(context?.applicationContext!!)
+            customAlertDialogView = LayoutInflater.from(context)
+                    .inflate(R.layout.change_ps, null, false)
+            launchCustomAlertDialog()*/
             val intent = Intent(this@MyProfile.context, ChangePasswordActivity::class.java)
             startActivity(intent)
-
         }
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -281,6 +307,25 @@ class MyProfile : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
+  /*  private fun launchCustomAlertDialog() {
+        val ops = requireView().findViewById(R.id.chold) as EditText
+        val nps = requireView().findViewById(R.id.chNew) as EditText
+        val cps = requireView().findViewById(R.id.chCon) as EditText
+        materialAlertDialogBuilder.setView(customAlertDialogView)
+                .setTitle("Change Password")
+               // .setMessage("Enter your basic details")
+                .setPositiveButton("Save"){ dialog, _ ->
+                    val op = ops.text.toString()
+                    val np = nps.text.toString()
+                    val cp = cps.text.toString()
+                    Log.d("data",op+np+cp)
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+    }*/
    fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
@@ -342,9 +387,9 @@ class MyProfile : Fragment() {
             try {
                 var file = File(currentPath)
                 uri = Uri.fromFile(file)
+                Log.d("Imaggggee", "image:- " + uri)
                 stImg.imageTintMode = null
                 stImg.setImageURI(uri)
-
             }
             catch (e: IOException)
             {
@@ -352,18 +397,25 @@ class MyProfile : Fragment() {
             }
         }
 
-        if(requestCode == SELECT_PICTURE && resultCode == Activity.RESULT_OK)
+       else if(requestCode == SELECT_PICTURE && resultCode == Activity.RESULT_OK)
         {
             try {
                 uri = data?.data
+                Log.d("Imaggggee", "image:- " + uri)
                 stImg.imageTintMode = null
                 stImg.setImageURI(uri)
-                Log.d("error", uri.toString())
             }
             catch (e: IOException)
             {
                 Log.d("error", e.toString())
             }
+        }
+        else
+        {
+            val SHARED_PREF_NAME = "image_shared_preff"
+            val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val image = sharedPreference.getString("URI", "defaultName")
+            uri = Uri.parse(image)
         }
     }
 

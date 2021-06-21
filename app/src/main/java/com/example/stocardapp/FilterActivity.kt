@@ -82,13 +82,12 @@ class FilterActivity : AppCompatActivity() {
 //                    layoutManager.justifyContent = JustifyContent.FLEX_END
 //                    filterRv.setLayoutManager(layoutManager)
                         var adapter = FilterAdapter(this@FilterActivity, stList)
-                        filterRv.adapter = adapter
+                           filterRv.adapter = adapter
                     }
                 }
                 else
                 {
                     Toast.makeText(this@FilterActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
-
                 }
             }
 
