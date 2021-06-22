@@ -1,5 +1,6 @@
 package com.example.stocardapp
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
@@ -41,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.*
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import kotlinx.android.synthetic.main.header_black.*
+import net.alhazmy13.gota.Gota
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
