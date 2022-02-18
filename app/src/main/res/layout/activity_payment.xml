@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".PaymentActivity">
+    tools:context=".activity.PaymentActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -167,15 +167,14 @@
 
                         </LinearLayout>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btn_prcd"
+                            style="@style/Button_yellow_caps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:background="@drawable/btn_background"
                             android:text="Proceed To Pay"
-                            android:textColor="@color/white"
                             android:layout_marginStart="@dimen/_20sdp"
                             android:layout_marginLeft="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_20sdp"/>

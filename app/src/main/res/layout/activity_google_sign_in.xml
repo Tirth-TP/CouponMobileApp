@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GoogleSignInActivity">
+    tools:context=".activity.GoogleSignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -215,8 +215,9 @@
 
                         </LinearLayout>
 
-                        <Button
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnGreg"
+                            style="@style/Button_yellow_caps"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_20sdp"
@@ -224,10 +225,7 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginEnd="@dimen/_20sdp"
                             android:layout_marginBottom="@dimen/_5sdp"
-                            android:background="@drawable/btn_background"
-                            android:fontFamily="@font/catamaran"
-                            android:text="Sign Up"
-                            android:textColor="@color/white" />
+                            android:text="Sign Up" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -255,7 +253,7 @@
                             android:fontFamily="@font/catamaran"
                             android:padding="@dimen/_5sdp"
                             android:text="Log in"
-                            android:textColor="#342ea9" />
+                            android:textColor="#4EB1E0" />
                     </LinearLayout>
 
                 </LinearLayout>

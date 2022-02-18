@@ -118,16 +118,15 @@
 
 
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnLg"
+                        style="@style/Button_yellow_caps"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
-                        android:textColor="@color/white"
-                        android:background="@drawable/btn_background"
                         android:text="Login" />
 
                     <TextView
@@ -178,7 +177,7 @@
                         android:layout_marginLeft="@dimen/_minus5sdp"
                         android:padding="@dimen/_5sdp"
                         android:text="Sign Up"
-                        android:textColor="#342ea9" />
+                        android:textColor="#4EB1E0" />
                 </LinearLayout>
 
             </LinearLayout>

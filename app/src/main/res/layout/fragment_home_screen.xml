@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".HomeScreen">
+    tools:context=".fragment.HomeScreenFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -59,7 +59,7 @@
         android:gravity="center_horizontal"
         android:textColor="@color/white"
         android:textStyle="bold"
-        app:backgroundTint="#342ea9"
+        app:backgroundTint="@color/teal_200"
         app:icon="@drawable/ic_baseline_add_24"
         app:iconTint="@color/white" />
 

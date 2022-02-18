@@ -6,7 +6,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".contactUs">
+    tools:context=".fragment.ContactUsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,7 +75,8 @@
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_14sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:src="@drawable/user" />
+                                    android:src="@drawable/user"
+                                    android:tint="@color/teal_200"/>
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpName"
@@ -112,7 +113,9 @@
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:src="@drawable/email" />
+                                    android:src="@drawable/email"
+                                    android:tint="@color/teal_200"/>
+
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpEmail"
@@ -152,6 +155,7 @@
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
+                                    android:tint="@color/teal_200"
                                     android:src="@drawable/email" />
 
                                 <com.google.android.material.textfield.TextInputLayout
@@ -197,6 +201,7 @@
                                         android:layout_marginLeft="@dimen/_20sdp"
                                         android:layout_marginTop="@dimen/_14sdp"
                                         android:padding="@dimen/_4sdp"
+                                        android:tint="@color/teal_200"
                                         android:src="@drawable/ic_baseline_message_24" />
 
                                     <com.google.android.material.textfield.TextInputLayout
@@ -222,34 +227,17 @@
                                 </LinearLayout>
 
                             </LinearLayout>
-                            <Button
+                            <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btn_cnt"
+                                style="@style/Button_yellow_caps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginBottom="@dimen/_15sdp"
-                                android:background="@drawable/btn_background"
                                 android:text="Send"
-                                android:fontFamily="@font/catamaran"
-                                android:textColor="@color/white"
-                                app:layout_constraintStart_toStartOf="parent"
-                                 />
-
-<!--                         <Button-->
-<!--                             android:id="@+id/btnCnt"-->
-<!--                             android:layout_width="match_parent"-->
-<!--                             android:layout_height="wrap_content"-->
-<!--                             android:layout_marginStart="@dimen/_20sdp"-->
-<!--                             android:layout_marginLeft="@dimen/_20sdp"-->
-<!--                             android:layout_marginTop="@dimen/_15sdp"-->
-<!--                             android:layout_marginEnd="@dimen/_20sdp"-->
-<!--                             android:fontFamily="@font/catamaran"-->
-<!--                             android:text="Send"-->
-<!--                             android:background="@drawable/btn_background"-->
-<!--                             android:textColor="@color/white"-->
-<!--                             />-->
+                                app:layout_constraintStart_toStartOf="parent" />
 
                         </LinearLayout>
 

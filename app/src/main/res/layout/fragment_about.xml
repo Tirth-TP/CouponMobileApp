@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/Dimen_20dp"
     android:layout_gravity="center_vertical"
-    tools:context=".About">
+    tools:context=".fragment.AboutFragment">
 
     <!-- TODO: Update blank fragment layout -->
 <!--    <include-->

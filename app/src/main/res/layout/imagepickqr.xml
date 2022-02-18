@@ -19,9 +19,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/Light_gray"
+        android:background="@color/Light_gray">
 
-        >
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
@@ -53,8 +52,9 @@
             android:src="@drawable/scan" />
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_cancel"
+        style="@style/Button_yellow_caps"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_20sdp"
@@ -62,9 +62,7 @@
         android:layout_marginTop="80dp"
         android:layout_marginEnd="@dimen/_20sdp"
         android:text="Cancel"
-        android:textColor="@color/white"
         android:textColorHint="#FFFFFF"
-        android:background="@drawable/btn_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

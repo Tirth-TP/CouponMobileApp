@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context=".Pin">
+    tools:context=".fragment.PinFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
@@ -61,6 +61,7 @@
                                     android:layout_marginStart="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
+                                    android:tint="@color/teal_200"
                                     android:src="@drawable/lock"
                                     android:layout_marginLeft="@dimen/_20sdp" />
 
@@ -105,6 +106,7 @@
                                         android:layout_marginStart="@dimen/_20sdp"
                                         android:layout_marginTop="@dimen/_14sdp"
                                         android:padding="@dimen/_4sdp"
+                                        android:tint="@color/teal_200"
                                         android:src="@drawable/lock"
                                         android:layout_marginLeft="@dimen/_20sdp" />
 
@@ -149,6 +151,7 @@
                                         android:layout_width="@dimen/_25sdp"
                                         android:layout_height="@dimen/_25sdp"
                                         android:layout_marginStart="@dimen/_20sdp"
+                                        android:tint="@color/teal_200"
                                         android:layout_marginTop="@dimen/_14sdp"
                                         android:padding="@dimen/_4sdp"
                                         android:src="@drawable/lock"
@@ -180,8 +183,9 @@
 
                             </LinearLayout>
 
-                            <Button
+                            <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btnFrg"
+                                style="@style/Button_yellow_caps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
@@ -189,10 +193,7 @@
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginEnd="@dimen/_20sdp"
                                 android:layout_marginBottom="@dimen/_5sdp"
-                                android:background="@drawable/btn_background"
-                                android:fontFamily="@font/catamaran"
-                                android:text="Save PIN"
-                                android:textColor="@color/white" />
+                                android:text="Save PIN" />
 
                             <TextView
                                 android:id="@+id/txtForPin"
@@ -202,7 +203,7 @@
                                 android:fontFamily="@font/catamaran"
                                 android:padding="@dimen/_5sdp"
                                 android:text="Forgot PIN"
-                                android:textColor="#32465B" />
+                                android:textColor="@color/teal_200" />
                         </LinearLayout>
 
 

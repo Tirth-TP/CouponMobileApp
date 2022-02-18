@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.stocardapp">
+    package="com.example.couponMobileApp">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -24,15 +24,21 @@
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StocardApp"
+        android:theme="@style/Theme.CouponBagApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".GoogleSignInActivity"
+        <activity android:name="com.example.couponMobileApp.activity.GoogleSignInActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         </activity>
-        <activity android:name=".FilterActivity" />
-        <activity android:name=".ResetActivity" />
-        <activity android:name=".SetNewPasswordActivity" />
-        <activity android:name=".LockActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.FilterActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.ResetActivity">
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+        </activity>
+        <activity android:name="com.example.couponMobileApp.activity.SetNewPasswordActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.LockActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -58,7 +64,7 @@
             android:value="abcd" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name="com.example.couponMobileApp.activity.MapsActivity"
             android:label="@string/title_activity_maps" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -68,29 +74,35 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity android:name=".PaymentActivity" />
-        <activity android:name=".CardDetailActivity" />
-        <activity android:name=".CardListActivity" />
-        <activity android:name=".AddCardActivity" />
-        <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".AddStoreActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.PaymentActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.CardDetailActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.CardListActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.AddCardActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.ChangePasswordActivity" />
+        <activity android:name="com.example.couponMobileApp.activity.AddStoreActivity" />
         <activity
-            android:name=".HomeActivity"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
-        <activity
-            android:name=".SignupActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity
-            android:name=".LoginActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
-        <activity
-            android:name=".SpalshActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+            android:name="com.example.couponMobileApp.activity.HomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.couponMobileApp.activity.SignupActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name="com.example.couponMobileApp.LoginActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity
+            android:name="com.example.couponMobileApp.activity.SpalshActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <meta-data
@@ -99,7 +111,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.stocardapp.fileprovider"
+            android:authorities="com.example.couponMobileApp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -107,7 +119,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <service
-            android:name=".MyFirebaseMessegingService"
+            android:name="com.example.couponMobileApp.MyFirebaseMessegingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

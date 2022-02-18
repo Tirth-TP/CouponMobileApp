@@ -17,12 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cotp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:text="VERIFY"
+        style="@style/Button_pink_caps"
         app:layout_constraintEnd_toEndOf="@+id/votp"
         app:layout_constraintStart_toStartOf="@+id/votp"
         app:layout_constraintTop_toBottomOf="@+id/votp" />

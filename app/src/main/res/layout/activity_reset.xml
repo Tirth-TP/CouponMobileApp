@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResetActivity">
+    tools:context=".activity.ResetActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout9"
@@ -103,47 +103,28 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/okBtn1"
         android:layout_width="@dimen/_100sdp"
+        style="@style/Button_yellow_caps"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="45dp"
-        android:background="@drawable/btn_background"
-        android:fontFamily="@font/catamaran"
         android:text="Save"
-        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cnBtn1"
         android:layout_width="@dimen/_100sdp"
+        style="@style/Button_pink_caps"
         android:layout_height="wrap_content"
-
-
-
-
         android:layout_marginStart="40dp"
         android:layout_marginTop="120dp"
-        android:background="@drawable/btn_background"
-        android:fontFamily="@font/catamaran"
         android:text="Cancel"
-        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
-<!--    <Button-->
-<!--        android:id="@+id/cnBtn1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="76dp"-->
-<!--        android:layout_marginEnd="92dp"-->
-<!--        android:background="@drawable/btn_background"-->
-<!--        android:text="Cancel"-->
-<!--        android:textColor="@color/white"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
