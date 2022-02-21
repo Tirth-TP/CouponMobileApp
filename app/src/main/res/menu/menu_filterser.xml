@@ -8,11 +8,11 @@
         android:iconTint="@color/white"
         app:actionViewClass="androidx.appcompat.widget.SearchView"/>
 
-<!--    <item android:id="@+id/btnFilter"-->
-<!--        android:title="filter"-->
-<!--        android:icon="@drawable/ic_baseline_filter_alt_24"-->
-<!--        app:showAsAction="always"-->
-<!--        app:actionLayout="@layout/badge_layout"-->
-<!--        android:iconTint="@color/white" />-->
+    <item android:id="@+id/btnFilter"
+        android:title="filter"
+        android:icon="@drawable/ic_baseline_filter_alt_24"
+        app:showAsAction="always"
+        app:actionLayout="@layout/badge_layout"
+        android:iconTint="@color/white" />
 
 </menu>

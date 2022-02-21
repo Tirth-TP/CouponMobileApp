@@ -1,4 +1,4 @@
-package com.example.stocardapp
+package com.example.couponMobileApp
 
 import android.content.Context
 import android.content.Intent
@@ -24,8 +24,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
-import com.example.stocardapp.models.StoreDetail
-import com.example.stocardapp.models.StoreDetailResponse
+import com.example.couponMobileApp.activity.AddStoreActivity
+import com.example.couponMobileApp.activity.FilterActivity
+import com.example.couponMobileApp.activity.HomeActivity
+import com.example.couponMobileApp.adapter.StoreAdapter
+import com.example.couponMobileApp.models.StoreDetail
+import com.example.couponMobileApp.models.StoreDetailResponse
 import kotlinx.android.synthetic.main.fragment_home_screen.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
