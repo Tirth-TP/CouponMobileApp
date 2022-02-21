@@ -1,16 +1,17 @@
-package com.example.stocardapp
+package com.example.couponMobileApp
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-
+import androidx.appcompat.app.AppCompatDelegate
+import com.example.couponMobileApp.activity.HomeActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,10 +20,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RateUs.newInstance] factory method to
+ * Use the [About.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RateUs : Fragment() {
+class About : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -40,28 +41,25 @@ class RateUs : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_rate_us, container, false)
+        return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (context as AppCompatActivity).supportActionBar!!.title = "Rate Us"
-//        val txtTit = requireView().findViewById<TextView>(R.id.txtTitle)
-//        txtTit.setText("Give Rating")
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        (context as AppCompatActivity).supportActionBar!!.title = "About Us"
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(context, HomeActivity::class.java))
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+//        val txtTit = requireView().findViewById(R.id.txtTitle) as TextView
+//        txtTit.setText("About US")
 //        val ibk = requireView().findViewById(R.id.imgBack) as ImageView
 //        ibk.setOnClickListener {
 //            startActivity(Intent(context,HomeActivity::class.java))
 //        }
-        val btnRt = requireView().findViewById<Button>(R.id.btn_rate)
-        btnRt.setOnClickListener {
-            var playstoreuri1: Uri = Uri.parse("market://details?id=com.example.stocardapp")
-            Toast.makeText(context, "Thank You For Rating", Toast.LENGTH_LONG).show()
-//            val intent = Intent(this@RateUs.context, HomeActivity::class.java)
-//            startActivity(intent)
-            var playstoreIntent1: Intent = Intent(Intent.ACTION_VIEW, playstoreuri1)
-            startActivity(playstoreIntent1)
-            //it genrate exception when devices do not have playstore
-        }
     }
 
     companion object {
@@ -71,12 +69,12 @@ class RateUs : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment RateUs.
+         * @return A new instance of fragment About.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RateUs().apply {
+            About().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
