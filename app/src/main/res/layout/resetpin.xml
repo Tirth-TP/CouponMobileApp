@@ -1,129 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/linearLayout9"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:padding="@dimen/_4sdp"
-                app:tint="@color/teal_200"
-                android:src="@drawable/lock" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txatInpPin"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:hint="New Pin"
-                app:passwordToggleEnabled="true">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/npi"
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:padding="@dimen/_4sdp"
+                    app:tint="@color/teal_200"
+                    android:src="@drawable/lock" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txatInpPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/catamaran"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberPassword"
-                    android:letterSpacing="0.5"
-                    android:maxLength="4"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:hint="New Pin"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/npi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/catamaran"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberPassword"
+                        android:letterSpacing="0.5"
+                        android:maxLength="4"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
         <LinearLayout
+            android:id="@+id/linearLayout11"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginTop="@dimen/_30sdp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
-            <ImageView
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_14sdp"
-                android:padding="@dimen/_4sdp"
-                android:tint="@color/teal_200"
-                android:src="@drawable/lock" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/txtIanpPin"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-                android:hint="Confirm Pin"
-                app:passwordToggleEnabled="true">
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cpi"
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:padding="@dimen/_4sdp"
+                    android:tint="@color/teal_200"
+                    android:src="@drawable/lock" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtIanpPin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/catamaran"
-                    android:imeOptions="actionNext"
-                    android:inputType="numberPassword"
-                    android:letterSpacing="0.5"
-                    android:maxLength="4"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:hint="Confirm Pin"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/cpi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/catamaran"
+                        android:imeOptions="actionNext"
+                        android:inputType="numberPassword"
+                        android:letterSpacing="0.5"
+                        android:maxLength="4"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/okBtn"
-        style="@style/Button_yellow_caps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="Save"
-        app:layout_constraintEnd_toStartOf="@+id/cnBtn"
-        app:layout_constraintHorizontal_bias="0.591"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
+        <Button
+            android:id="@+id/okBtn"
+            style="@style/Button_yellow_caps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:text="Save"
+            app:layout_constraintEnd_toStartOf="@+id/cnBtn"
+            app:layout_constraintHorizontal_bias="0.591"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
 
-    <Button
-        android:id="@+id/cnBtn"
-        style="@style/Button_pink_caps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="92dp"
-        android:text="Cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/cnBtn"
+            style="@style/Button_pink_caps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="92dp"
+            android:text="Cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout11" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

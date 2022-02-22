@@ -1,233 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.MyProfileFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
 
-    <RelativeLayout
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".fragment.MyProfileFragment">
 
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <ScrollView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                  android:fillViewport="true"
-                  android:scrollbarThumbVertical="@android:color/transparent">
+                    android:layout_height="match_parent">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true"
+                        android:scrollbarThumbVertical="@android:color/transparent">
 
 
-                  <LinearLayout
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
 
-                      <LinearLayout
-                          android:id="@+id/layoutRoot"
-                          android:layout_width="match_parent"
-                          android:layout_height="0dp"
-                          android:layout_weight="1"
-                          android:gravity="center"
-                          android:orientation="vertical">
+                            <LinearLayout
+                                android:id="@+id/layoutRoot"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
 
-                          <androidx.appcompat.widget.AppCompatImageView
-                              android:id="@+id/imgPro"
-                              android:layout_width="110dp"
-                              android:layout_height="110dp"
-                              android:clickable="true"
-                              android:src="@drawable/profile"
-                              android:focusable="true"
-                              android:padding="@dimen/_4sdp"
-                              android:layout_marginBottom="@dimen/_20sdp" />
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/imgPro"
+                                    android:layout_width="110dp"
+                                    android:layout_height="110dp"
+                                    android:clickable="true"
+                                    android:src="@drawable/profile"
+                                    android:focusable="true"
+                                    android:padding="@dimen/_4sdp"
+                                    android:layout_marginBottom="@dimen/_20sdp" />
 
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content">
-
-
-                          </LinearLayout>
-
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="horizontal">
-
-                              <ImageView
-                                  android:layout_width="@dimen/_25sdp"
-                                  android:layout_height="@dimen/_25sdp"
-                                  android:layout_marginStart="@dimen/_20sdp"
-                                  android:layout_marginTop="@dimen/_14sdp"
-                                  android:padding="@dimen/_4sdp"
-                                  android:src="@drawable/user"
-                                  android:tint="@color/teal_200"
-                                  android:layout_marginLeft="@dimen/_20sdp" />
-
-                              <com.google.android.material.textfield.TextInputLayout
-                                  android:id="@+id/txtInpName"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginStart="@dimen/_5sdp"
-                                  android:layout_marginEnd="@dimen/_20sdp"
-                                  android:hint="Name"
-                                  app:helperTextEnabled="true"
-                                  android:layout_marginLeft="@dimen/_5sdp"
-                                  android:layout_marginRight="@dimen/_20sdp">
-
-                                  <com.google.android.material.textfield.TextInputEditText
-                                      android:id="@+id/getNm"
-                                      android:layout_width="match_parent"
-                                      android:layout_height="wrap_content"
-                                      android:fontFamily="@font/catamaran"
-                                      android:imeOptions="actionNext"
-                                      android:inputType="textCapWords"
-                                      android:maxLines="1" />
-                              </com.google.android.material.textfield.TextInputLayout>
-                          </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
 
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/_5sdp"
-                              android:orientation="horizontal">
+                                </LinearLayout>
 
-                              <ImageView
-                                  android:layout_width="@dimen/_25sdp"
-                                  android:layout_height="@dimen/_25sdp"
-                                  android:layout_marginStart="@dimen/_20sdp"
-                                  android:layout_marginTop="@dimen/_15sdp"
-                                  android:padding="@dimen/_4sdp"
-                                  android:tint="@color/teal_200"
-                                  android:src="@drawable/email"
-                                  android:layout_marginLeft="@dimen/_20sdp" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
 
-                              <com.google.android.material.textfield.TextInputLayout
-                                  android:id="@+id/txtInpEmail"
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:layout_marginStart="@dimen/_5sdp"
-                                  android:layout_marginEnd="@dimen/_20sdp"
-                                  android:hint="Email"
-                                  app:helperTextEnabled="true"
-                                  android:layout_marginLeft="@dimen/_5sdp"
-                                  android:layout_marginRight="@dimen/_20sdp">
+                                    <ImageView
+                                        android:layout_width="@dimen/_25sdp"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_marginStart="@dimen/_20sdp"
+                                        android:layout_marginTop="@dimen/_14sdp"
+                                        android:padding="@dimen/_4sdp"
+                                        android:src="@drawable/user"
+                                        android:tint="@color/teal_200"
+                                        android:layout_marginLeft="@dimen/_20sdp" />
 
-                                  <com.google.android.material.textfield.TextInputEditText
-                                      android:id="@+id/getEm"
-                                      android:layout_width="match_parent"
-                                      android:layout_height="wrap_content"
-                                      android:clickable="false"
-                                      android:editable="true"
-                                      android:enabled="false"
-                                      android:fontFamily="@font/catamaran"
-                                      android:imeOptions="actionNext"
-                                      android:inputType="textEmailAddress"
-                                      android:maxLines="1" />
-                              </com.google.android.material.textfield.TextInputLayout>
-                          </LinearLayout>
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/txtInpName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_marginEnd="@dimen/_20sdp"
+                                        android:hint="Name"
+                                        app:helperTextEnabled="true"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_20sdp">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/getNm"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/catamaran"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textCapWords"
+                                            android:maxLines="1" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
 
 
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:orientation="horizontal">
 
-                          <LinearLayout
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginTop="@dimen/_5sdp"
-                              android:orientation="vertical">
+                                    <ImageView
+                                        android:layout_width="@dimen/_25sdp"
+                                        android:layout_height="@dimen/_25sdp"
+                                        android:layout_marginStart="@dimen/_20sdp"
+                                        android:layout_marginTop="@dimen/_15sdp"
+                                        android:padding="@dimen/_4sdp"
+                                        android:tint="@color/teal_200"
+                                        android:src="@drawable/email"
+                                        android:layout_marginLeft="@dimen/_20sdp" />
 
-                              <LinearLayout
-                                  android:layout_width="match_parent"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="horizontal">
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/txtInpEmail"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        android:layout_marginEnd="@dimen/_20sdp"
+                                        android:hint="Email"
+                                        app:helperTextEnabled="true"
+                                        android:layout_marginLeft="@dimen/_5sdp"
+                                        android:layout_marginRight="@dimen/_20sdp">
 
-                                  <ImageView
-                                      android:layout_width="@dimen/_25sdp"
-                                      android:layout_height="@dimen/_25sdp"
-                                      android:layout_marginStart="@dimen/_20sdp"
-                                      android:layout_marginTop="@dimen/_14sdp"
-                                      android:padding="@dimen/_4sdp"
-                                      android:src="@drawable/ic_baseline_phone_iphone_24"
-                                      android:tint="@color/teal_200"
-                                      android:layout_marginLeft="@dimen/_20sdp" />
-
-                                  <com.google.android.material.textfield.TextInputLayout
-                                      android:id="@+id/txatInpPin"
-                                      android:layout_width="match_parent"
-                                      android:layout_height="wrap_content"
-                                      android:layout_marginStart="@dimen/_5sdp"
-                                      android:layout_marginEnd="@dimen/_20sdp"
-                                      android:hint="Phone"
-                                      android:layout_marginLeft="@dimen/_5sdp"
-                                      android:layout_marginRight="@dimen/_20sdp">
-
-                                      <com.google.android.material.textfield.TextInputEditText
-                                          android:id="@+id/getMb"
-                                          android:layout_width="match_parent"
-                                          android:layout_height="wrap_content"
-                                          android:fontFamily="@font/catamaran"
-                                          android:imeOptions="actionNext"
-                                          android:inputType="phone"
-                                          android:letterSpacing="0.5"
-                                          android:maxLines="1" />
-                                  </com.google.android.material.textfield.TextInputLayout>
-                              </LinearLayout>
-
-                          </LinearLayout>
-
-                          <androidx.appcompat.widget.AppCompatButton
-                              android:id="@+id/btn_edit"
-                              style="@style/Button_yellow_caps"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:layout_marginStart="@dimen/_20sdp"
-                              android:layout_marginLeft="@dimen/_20sdp"
-                              android:layout_marginTop="@dimen/_15sdp"
-                              android:layout_marginEnd="@dimen/_20sdp"
-                              android:layout_marginBottom="@dimen/_5sdp"
-                              android:text="Save Changes" />
-
-                          <TextView
-                              android:id="@+id/txtChangePs"
-
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_gravity="center_horizontal"
-                              android:fontFamily="@font/catamaran"
-                              android:padding="@dimen/_5sdp"
-                              android:text="Change Password"
-                              android:textColor="@color/teal_200" />
-                      </LinearLayout>
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/getEm"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:clickable="false"
+                                            android:editable="true"
+                                            android:enabled="false"
+                                            android:fontFamily="@font/catamaran"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textEmailAddress"
+                                            android:maxLines="1" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
 
 
-                  </LinearLayout>
-              </ScrollView>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:orientation="vertical">
 
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="@dimen/_5sdp"
-                  android:background="@drawable/shadow_header" />
-          </RelativeLayout>
-      </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
 
-      <View
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/_5sdp"
-          android:layout_alignParentBottom="true"
-          android:background="@drawable/shadow_bottom"/>
+                                        <ImageView
+                                            android:layout_width="@dimen/_25sdp"
+                                            android:layout_height="@dimen/_25sdp"
+                                            android:layout_marginStart="@dimen/_20sdp"
+                                            android:layout_marginTop="@dimen/_14sdp"
+                                            android:padding="@dimen/_4sdp"
+                                            android:src="@drawable/ic_baseline_phone_iphone_24"
+                                            android:tint="@color/teal_200"
+                                            android:layout_marginLeft="@dimen/_20sdp" />
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/txatInpPin"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="@dimen/_5sdp"
+                                            android:layout_marginEnd="@dimen/_20sdp"
+                                            android:hint="Phone"
+                                            android:layout_marginLeft="@dimen/_5sdp"
+                                            android:layout_marginRight="@dimen/_20sdp">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/getMb"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:fontFamily="@font/catamaran"
+                                                android:imeOptions="actionNext"
+                                                android:inputType="phone"
+                                                android:letterSpacing="0.5"
+                                                android:maxLines="1" />
+                                        </com.google.android.material.textfield.TextInputLayout>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <androidx.appcompat.widget.AppCompatButton
+                                    android:id="@+id/btn_edit"
+                                    style="@style/Button_yellow_caps"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_marginTop="@dimen/_15sdp"
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:text="Save Changes" />
+
+                                <TextView
+                                    android:id="@+id/txtChangePs"
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:fontFamily="@font/catamaran"
+                                    android:padding="@dimen/_5sdp"
+                                    android:text="Change Password"
+                                    android:textColor="@color/teal_200" />
+                            </LinearLayout>
 
 
-  </RelativeLayout>
+                        </LinearLayout>
+                    </ScrollView>
 
-</FrameLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_5sdp"
+                        android:background="@drawable/shadow_header" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_5sdp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/shadow_bottom" />
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>
