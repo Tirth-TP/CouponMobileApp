@@ -34,26 +34,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
+
                         <ImageView
                             android:id="@+id/imageView"
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
                             android:layout_gravity="center_horizontal"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginTop="70dp"
-                            android:src="@mipmap/final_logo"
-                            app:tint="@color/dark_blue" />
-
-                        <TextView
-                            android:id="@+id/spTxt"
-                            android:layout_width="match_parent"
-                            android:layout_height="79dp"
-                            android:fontFamily="@font/bree_serif"
-                            android:gravity="center_horizontal"
-                            android:text="STOCARD"
-                            android:textAlignment="center"
-                            android:textAllCaps="false"
-                            android:textColor="#342ea9"
-                            android:textSize="30sp"/>
+                            android:src="@mipmap/couponbagimg" />
 
                         <LinearLayout
                             android:id="@+id/layoutRoot"
@@ -76,7 +64,7 @@
                                     android:layout_marginTop="@dimen/_14sdp"
                                     android:padding="@dimen/_4sdp"
                                     android:src="@drawable/user"
-                                    android:tint="@color/teal_200"/>
+                                    android:tint="@color/teal_200" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpName"
@@ -114,7 +102,7 @@
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
                                     android:src="@drawable/email"
-                                    android:tint="@color/teal_200"/>
+                                    android:tint="@color/teal_200" />
 
 
                                 <com.google.android.material.textfield.TextInputLayout
@@ -155,8 +143,8 @@
                                     android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginTop="@dimen/_15sdp"
                                     android:padding="@dimen/_4sdp"
-                                    android:tint="@color/teal_200"
-                                    android:src="@drawable/email" />
+                                    android:src="@drawable/email"
+                                    android:tint="@color/teal_200" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:id="@+id/txtInpSub"
@@ -201,8 +189,8 @@
                                         android:layout_marginLeft="@dimen/_20sdp"
                                         android:layout_marginTop="@dimen/_14sdp"
                                         android:padding="@dimen/_4sdp"
-                                        android:tint="@color/teal_200"
-                                        android:src="@drawable/ic_baseline_message_24" />
+                                        android:src="@drawable/ic_baseline_message_24"
+                                        android:tint="@color/teal_200" />
 
                                     <com.google.android.material.textfield.TextInputLayout
                                         android:id="@+id/txtIanpPin"
@@ -219,22 +207,23 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/catamaran"
-                                            android:imeOptions="actionNext"
                                             android:gravity="top|left"
+                                            android:imeOptions="actionNext"
                                             android:inputType="textMultiLine|textCapSentences"
                                             android:lines="3" />
                                     </com.google.android.material.textfield.TextInputLayout>
                                 </LinearLayout>
 
                             </LinearLayout>
+
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btn_cnt"
                                 style="@style/Button_yellow_caps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_20sdp"
                                 android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_20sdp"
                                 android:layout_marginBottom="@dimen/_15sdp"
                                 android:text="Send"
                                 app:layout_constraintStart_toStartOf="parent" />
