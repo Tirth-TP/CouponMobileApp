@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.MapsActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        tools:context=".activity.MapsActivity">
 
-    <EditText
-        android:layout_width="248dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_weight="0.5"
-        android:inputType="textPersonName"
-        android:hint="Search Location" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:onClick="searchLocation"
-        android:text="Search" />
+            <EditText
+                android:layout_width="248dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:layout_weight="0.5"
+                android:inputType="textPersonName"
+                android:hint="Search Location" />
 
-    </LinearLayout>
-</fragment>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:onClick="searchLocation"
+                android:text="Search" />
+
+        </LinearLayout>
+    </fragment>
+</layout>

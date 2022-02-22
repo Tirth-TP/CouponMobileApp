@@ -242,7 +242,7 @@ class HomeScreen : Fragment() {
                     call: Call<StoreDetailResponse>,
                     response: Response<StoreDetailResponse>
             ) {
-                //  var ad = StoreAdapter(context!!.applicationContext, stList)
+               // var ad = StoreAdapter(context!!.applicationContext, stList)
                 if (response.body()?.success == true) {
                     var dt = response.body()?.data
                     if (dt != null) {
