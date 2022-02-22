@@ -1,46 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".activity.CardListActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activity.CardListActivity">
 
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-
-<!--            android:id="@+id/appBarLayout"-->
-<!--            style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:fitsSystemWindows="true">-->
-
-<!--            <com.google.android.material.appbar.MaterialToolbar-->
-<!--                android:id="@+id/topAppBar"-->
-<!--                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                android:background="@android:color/transparent"-->
-<!--                android:elevation="0dp"-->
-<!--                app:title="@string/app_name" />-->
-
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-<!--            <ScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:fillViewport="true"-->
-<!--                android:scrollbarThumbVertical="@android:color/transparent">-->
+            <!--        <com.google.android.material.appbar.AppBarLayout-->
+
+            <!--            android:id="@+id/appBarLayout"-->
+            <!--            style="@style/Widget.MaterialComponents.AppBarLayout.PrimarySurface"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:fitsSystemWindows="true">-->
+
+            <!--            <com.google.android.material.appbar.MaterialToolbar-->
+            <!--                android:id="@+id/topAppBar"-->
+            <!--                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="?attr/actionBarSize"-->
+            <!--                android:background="@android:color/transparent"-->
+            <!--                android:elevation="0dp"-->
+            <!--                app:title="@string/app_name" />-->
+
+            <!--        </com.google.android.material.appbar.AppBarLayout>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!--            <ScrollView-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="match_parent"-->
+                <!--                android:fillViewport="true"-->
+                <!--                android:scrollbarThumbVertical="@android:color/transparent">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -156,71 +162,69 @@
                                 android:padding="@dimen/Dimen_10dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent" />
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnSdel"
-                            style="@style/Button_pink_caps"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="Delete store"
-                            android:padding="@dimen/Dimen_10dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            android:layout_marginStart="60dp"
-                            />
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btnSdel"
+                                style="@style/Button_pink_caps"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:text="Delete store"
+                                android:padding="@dimen/Dimen_10dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginStart="60dp" />
                         </LinearLayout>
 
-</LinearLayout>
+                    </LinearLayout>
+
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fillViewport="true"
                         android:scrollbarThumbVertical="@android:color/transparent">
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/rv_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        >
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/cdRv"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/rv_1"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:clipToPadding="false"
-                            android:paddingBottom="73dp"
-                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:spanCount="2" />
+                            android:layout_height="match_parent">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/cdRv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clipToPadding="false"
+                                android:paddingBottom="73dp"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:spanCount="2" />
 
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
                     </ScrollView>
                 </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/btn_addCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/_10sdp"
-                android:fontFamily="@font/catamaran"
-                android:text="Add Coupon"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:backgroundTint="#4EB1E0"
-                app:icon="@drawable/ic_baseline_add_24"
-                app:iconTint="@color/white" />
-        </RelativeLayout>
+                <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                    android:id="@+id/btn_addCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:fontFamily="@font/catamaran"
+                    android:text="Add Coupon"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:backgroundTint="#4EB1E0"
+                    app:icon="@drawable/ic_baseline_add_24"
+                    app:iconTint="@color/white" />
+            </RelativeLayout>
 
-    </LinearLayout>
-
-
+        </LinearLayout>
 
 
-
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
