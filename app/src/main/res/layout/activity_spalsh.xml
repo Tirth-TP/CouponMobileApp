@@ -10,23 +10,10 @@
 
     <ImageView
         android:id="@+id/spImg"
-        android:src="@drawable/ic_icon1"
-        android:layout_width="@dimen/_170sdp"
-        android:layout_height="@dimen/_170sdp"
-        app:srcCompat="@mipmap/final_logo"
-        app:tint="#342ea9" />
+        android:src="@mipmap/couponbagimg"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_270sdp" />
 
-    <TextView
-        android:id="@+id/spTxt"
-        android:layout_width="363dp"
-        android:layout_height="79dp"
-        android:fontFamily="@font/bree_serif"
-        android:gravity="center_horizontal"
-        android:text="STOCARD"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#342ea9"
-        android:textSize="55sp" />
 
     <TextView
         android:id="@+id/sptTxt"
@@ -34,7 +21,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/capriola"
         android:text="Digitise Your Card"
-        android:textColor="#6661C8"
+        android:textColor="@color/teal_200"
         android:layout_marginLeft="@dimen/_50sdp"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 </LinearLayout>

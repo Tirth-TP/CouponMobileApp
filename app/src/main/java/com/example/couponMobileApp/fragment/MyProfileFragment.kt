@@ -147,18 +147,18 @@ class MyProfileFragment : Fragment() {
 
         val sharedPreference = this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token ="Bearer " + (sharedPreference?.getString("token", "defaultName"))
-        val nm = sharedPreference?.getString("name", "defaultName")
-        val em = sharedPreference?.getString("email", "defaultName")
-        val ph = sharedPreference?.getString("phone", "defaultName")
-        val pn = sharedPreference?.getString("pin", null)
-        val pt =  sharedPreference?.getString("Image", "defaultName")
+//        val nm = sharedPreference?.getString("name", "defaultName")
+//        val em = sharedPreference?.getString("email", "defaultName")
+//        val ph = sharedPreference?.getString("phone", "defaultName")
+//        val pn = sharedPreference?.getString("pin", null)
+//        val pt =  sharedPreference?.getString("Image", "defaultName")
 
-        name.setText(nm)
-        email.setText(em)
-        phn.setText(ph)
-        Log.d("token", token!!)
+//        name.setText(nm)
+//        email.setText(em)
+//        phn.setText(ph)
+//        Log.d("token", token!!)
 
-        u = Uri.parse(pt)
+//        u = Uri.parse(pt)
         img_pro.load(u.toString())
 
         val editBtn = requireView().findViewById(R.id.btn_edit) as Button

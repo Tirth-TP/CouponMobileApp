@@ -48,7 +48,6 @@ class SpalshActivity : AppCompatActivity() {
         btANim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation)
 
         img = findViewById(R.id.spImg)
-        title = findViewById(R.id.spTxt)
         desc = findViewById(R.id.sptTxt)
 
         img.animation = topANim
