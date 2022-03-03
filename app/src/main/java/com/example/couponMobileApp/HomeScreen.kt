@@ -30,7 +30,6 @@ import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.adapter.StoreAdapter
 import com.example.couponMobileApp.models.StoreDetail
 import com.example.couponMobileApp.models.StoreDetailResponse
-import kotlinx.android.synthetic.main.fragment_home_screen.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -42,12 +41,6 @@ import kotlin.collections.HashMap
 import kotlin.collections.set
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
 class HomeScreen : Fragment() {
     lateinit var spinAnim: Animation
     lateinit var btANim: Animation
@@ -56,9 +49,7 @@ class HomeScreen : Fragment() {
 
     var flag: Boolean = false
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
 
     var mAPIService: UserApi? = null
     var dispLst = ArrayList<StoreDetail>()
@@ -69,13 +60,6 @@ class HomeScreen : Fragment() {
     lateinit var f: String
     lateinit var img2: ImageView
     private var menuShowing = true
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -93,7 +77,7 @@ class HomeScreen : Fragment() {
         val btnAdd = requireView().findViewById(R.id.btn_addStore) as Button
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
 
-        (context as AppCompatActivity).supportActionBar!!.title = "Stocard App"
+        (context as AppCompatActivity).supportActionBar!!.title = "CouponBag App"
         //  var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
         //   var itemsLayout:  = requireView().findViewById(R.id.nav)
         spinAnim = AnimationUtils.loadAnimation(context, R.anim.spin_animation)
@@ -138,13 +122,13 @@ class HomeScreen : Fragment() {
                                 var v = d
                                 stList.add(v)
                             }
-                            Log.d("successmessage", "" + response.body()?.message)
+                            Log.d("successMessage", "" + response.body()?.message)
                             if (s == "") {
-                                allstore()
+                                allStore()
 //                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
 //                            Log.d("visible", stRc?.visibility.toString())
 //                            stRc?.isVisible = false
-//                            Log.d("visiblea", stRc?.visibility.toString())
+//                            Log.d("Visible", stRc?.visibility.toString())
 //                            var img: ImageView? = ImageView(context)
 //                            var msg: TextView? = TextView(context)
 //                            img?.load(R.drawable.empty)
@@ -192,7 +176,7 @@ class HomeScreen : Fragment() {
                             // stRc.layoutManager= GridLayoutManager(context, 2)
                         }
                         if (s == "") {
-                            allstore()
+                            allStore()
                         }
                     } else {
                         Toast.makeText(
@@ -209,7 +193,7 @@ class HomeScreen : Fragment() {
                 }
             })
         } else {
-            allstore()
+            allStore()
         }
         //add store activity
         btnAdd.setOnClickListener {
@@ -220,14 +204,14 @@ class HomeScreen : Fragment() {
 
 //        switch1.setOnCheckedChangeListener({ _ , isChecked ->
 //            if(isChecked) "Switch1:ON" else {
-//                //allstore()
+//                //allStore()
 //               requireContext().startActivity(Intent(context,HomeActivity::class.java))
 //                switch1.isClickable = false
 //            }
 //        })
     }
 
-    private fun allstore() {
+    private fun allStore() {
         val SHARED_PREF_NAME = "my_shared_preff"
         val sharedPreference =
                 this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -250,7 +234,7 @@ class HomeScreen : Fragment() {
                             var v = d
                             stList.add(v)
                         }
-                        //Log.d("arrayleng1", stList.size.toString())
+                        //Log.d("arrayLang", stList.size.toString())
                         if (stList.size == 0) {
                             //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                             toggleMenuVisibility()
@@ -260,7 +244,7 @@ class HomeScreen : Fragment() {
                             var fr = view?.findViewById<FrameLayout>(R.id.frame)
                             Log.d("visible", stRc.visibility.toString())
                             stRc.isVisible = false
-                            Log.d("visiblea", stRc.visibility.toString())
+                            Log.d("Visible", stRc.visibility.toString())
                             var img: ImageView? = ImageView(context)
                             var msg: TextView? = TextView(context)
                             img?.load(R.drawable.empty)
@@ -415,7 +399,7 @@ class HomeScreen : Fragment() {
                 searchClose.setOnClickListener {
                     img2.isVisible = false
                     startActivity(Intent(context, HomeActivity::class.java))
-                    //  allstore()
+                    //  allStore()
                     onStart()
                 }
                 item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -425,7 +409,7 @@ class HomeScreen : Fragment() {
                     }
 
                     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-//                        Toast.makeText(activity, "onMenutItemActionCollapse called", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(activity, "onMenuItemActionCollapse called", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@HomeScreen.context, HomeActivity::class.java)
                         startActivity(intent)
                         return true
@@ -477,9 +461,9 @@ class HomeScreen : Fragment() {
 //                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
 
 
-                                    Log.d("visible", stRc.visibility.toString())
+                                    Log.d("Visible", stRc.visibility.toString())
                                     stRc.isVisible = false
-                                    Log.d("visiblea", stRc.visibility.toString())
+                                    Log.d("Visible", stRc.visibility.toString())
 
                                     img2.load(R.drawable.empty)
                                     val title = SpannableString("Search not found!!")
@@ -554,26 +538,6 @@ class HomeScreen : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                HomeScreen().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 
 

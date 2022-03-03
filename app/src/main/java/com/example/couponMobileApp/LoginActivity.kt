@@ -109,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
 
         var a = 0
         val txtTit = findViewById<TextView>(R.id.txtTitle)
-        txtTit.setText("Log In")
+        txtTit.text = "Log In"
 //        val ibk = findViewById<ImageView>(R.id.imgBack)
 //        ibk.isVisible = false
         val txtFr = findViewById<TextView>(R.id.txtForgot)
@@ -119,14 +119,13 @@ class LoginActivity : AppCompatActivity() {
         mAPIService = ApiUtils.apiService
 
         val deviceId = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
-        Log.d("deviceid", deviceId)
+        Log.d("deviceId", deviceId)
 
         val SHARED_PREF_NAME = "my_shared_preff"
         val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val token = "Bearer " + sharedPreference.getString("token", "defaultName")
 
         txtFr.setOnClickListener {
-
             val email = findViewById<EditText>(R.id.txtEm)
             val e = email.text.toString().trim()
 
@@ -236,16 +235,16 @@ class LoginActivity : AppCompatActivity() {
                     }
                 })
             } else {
-                email.setError("Enter Email..")
+                email.error = "Enter Email.."
             }
 
         }
-        var btnReg = findViewById(R.id.txtSignup) as TextView
+        var btnReg = findViewById<TextView>(R.id.txtSignup)
         btnReg.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
 
-        var btn_Lg = findViewById(R.id.btnLg) as Button
+        var btn_Lg = findViewById<Button>(R.id.btnLg)
         btn_Lg.setOnClickListener {
 
             val SHARED_PREF_NAME2 = "my_shared_preff"
