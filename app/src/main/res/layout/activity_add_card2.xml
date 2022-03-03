@@ -1,151 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".activity.AddCardActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activity.AddCardActivity">
 
-<!--        <include layout="@layout/header_black" />-->
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ScrollView
+            <!--        <include layout="@layout/header_black" />-->
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbarThumbVertical="@android:color/transparent">
+                android:layout_height="match_parent">
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:fillViewport="true"
+                    android:scrollbarThumbVertical="@android:color/transparent">
 
                     <LinearLayout
-                        android:id="@+id/layoutRoot"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <LinearLayout
+                            android:id="@+id/layoutRoot"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/_50sdp"
-                            android:orientation="horizontal"
-                            android:gravity="center_horizontal">
-
-                            <ImageView
-                                android:layout_width="@dimen/_110sdp"
-                                android:layout_height="@dimen/_110sdp"
-                                android:id="@+id/imgCr"
-                                android:src="@drawable/coupan" />
-
-                        </LinearLayout>
- 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/txtInpName"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_20sdp"
-                                android:hint="Coupon Name"
-                                app:helperTextEnabled="true"
-                                android:digits="qwertzuiopasdfghjklyxcvbnm, ,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
-                                android:layout_marginLeft="@dimen/_20sdp"
-                                android:layout_marginRight="@dimen/_20sdp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/cardNm"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/catamaran"
-                                    android:imeOptions="actionNext"
-                                    android:inputType="textCapWords"
-                                    android:maxLines="1" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/txtInpnEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_20sdp"
-                                android:hint="Coupon Number"
-                                app:helperTextEnabled="true"
-                                android:layout_marginLeft="@dimen/_20sdp"
-                                android:layout_marginRight="@dimen/_20sdp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/cardNum"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/catamaran"
-                                    android:imeOptions="actionNext"
-                                    android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
-                                    android:inputType="text"
-                                    android:maxLines="1" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/txtInpEmail"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_20sdp"
-                                android:hint="Reward (If Any)"
-                                app:helperTextEnabled="true"
-                                android:layout_marginLeft="@dimen/_20sdp"
-                                android:layout_marginRight="@dimen/_20sdp">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/cardRwd"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/catamaran"
-                                    android:imeOptions="actionNext"
-                                    android:inputType="number"
-                                    android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
-                                    android:maxLines="1" />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/_50sdp"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal">
+
+                                <ImageView
+                                    android:layout_width="@dimen/_110sdp"
+                                    android:layout_height="@dimen/_110sdp"
+                                    android:id="@+id/imgCr"
+                                    android:src="@drawable/coupan" />
+
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -153,95 +65,186 @@
                                 android:orientation="horizontal">
 
 
-
                                 <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/txtInpPin"
+                                    android:id="@+id/txtInpName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="@dimen/_20sdp"
                                     android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Coupon Details"
-                               android:layout_marginLeft="@dimen/_20sdp"
+                                    android:hint="Coupon Name"
+                                    app:helperTextEnabled="true"
+                                    android:digits="qwertzuiopasdfghjklyxcvbnm, ,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
+                                    android:layout_marginLeft="@dimen/_20sdp"
                                     android:layout_marginRight="@dimen/_20sdp">
 
                                     <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/cardDtl"
+                                        android:id="@+id/cardNm"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/catamaran"
                                         android:imeOptions="actionNext"
                                         android:inputType="textCapWords"
-                                        />
-                                </com.google.android.material.textfield.TextInputLayout>
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/lindat"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:id="@+id/txtInpaPin"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="@dimen/_20sdp"
-                                    android:layout_marginEnd="@dimen/_20sdp"
-                                    android:hint="Expiry Date(YYYY-MM-DD)"
-                                    android:layout_marginLeft="@dimen/_20sdp"
-                                    android:layout_marginRight="@dimen/_20sdp">
-
-                                    <com.google.android.material.textfield.TextInputEditText
-                                        android:id="@+id/cardDate"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:fontFamily="@font/catamaran"
-                                        android:imeOptions="actionNext"
                                         android:maxLines="1" />
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInpnEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:hint="Coupon Number"
+                                    app:helperTextEnabled="true"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/cardNum"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/catamaran"
+                                        android:imeOptions="actionNext"
+                                        android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
+                                        android:inputType="text"
+                                        android:maxLines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="horizontal">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/txtInpEmail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="@dimen/_20sdp"
+                                    android:layout_marginEnd="@dimen/_20sdp"
+                                    android:hint="Reward (If Any)"
+                                    app:helperTextEnabled="true"
+                                    android:layout_marginLeft="@dimen/_20sdp"
+                                    android:layout_marginRight="@dimen/_20sdp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/cardRwd"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/catamaran"
+                                        android:imeOptions="actionNext"
+                                        android:inputType="number"
+                                        android:digits="qwertzuiopasdfghjklyxcvbnm,QWERTYUIOPASDFGHJKLZXCVBNM,0123456789"
+                                        android:maxLines="1" />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/txtInpPin"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_20sdp"
+                                        android:layout_marginEnd="@dimen/_20sdp"
+                                        android:hint="Coupon Details"
+                                        android:layout_marginLeft="@dimen/_20sdp"
+                                        android:layout_marginRight="@dimen/_20sdp">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/cardDtl"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/catamaran"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textCapWords" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:id="@+id/lindat"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/txtInpaPin"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/_20sdp"
+                                        android:layout_marginEnd="@dimen/_20sdp"
+                                        android:hint="Expiry Date(YYYY-MM-DD)"
+                                        android:layout_marginLeft="@dimen/_20sdp"
+                                        android:layout_marginRight="@dimen/_20sdp">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/cardDate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/catamaran"
+                                            android:imeOptions="actionNext"
+                                            android:maxLines="1" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btn_card"
+                                style="@style/Button_yellow_caps"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:text="Add Coupon"
+                                android:layout_marginStart="@dimen/_20sdp"
+                                android:layout_marginLeft="@dimen/_20sdp"
+                                android:layout_marginEnd="@dimen/_20sdp" />
                         </LinearLayout>
 
 
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btn_card"
-                            style="@style/Button_yellow_caps"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_15sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:text="Add Coupon"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_marginLeft="@dimen/_20sdp"
-                            android:layout_marginEnd="@dimen/_20sdp"/>
                     </LinearLayout>
+                </ScrollView>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_5sdp"
+                    android:background="@drawable/shadow_header" />
+            </RelativeLayout>
+        </LinearLayout>
 
-                </LinearLayout>
-            </ScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_5sdp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/shadow_bottom" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_5sdp"
-                android:background="@drawable/shadow_header" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_5sdp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/shadow_bottom"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -1,72 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".activity.HomeActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <data>
+
+    </data>
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".activity.HomeActivity">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            style="@style/Theme.CouponBagApp"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_blue"
+            android:layout_height="match_parent"
             android:fitsSystemWindows="true">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                style="@style/Theme.CouponBagApp"
                 android:layout_width="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/teal_200"
-                android:elevation="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_blue"
+                android:fitsSystemWindows="true">
 
-                app:title="@string/app_name" />
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/teal_200"
+                    android:elevation="0dp"
 
-        </com.google.android.material.appbar.AppBarLayout>
+                    app:title="@string/app_name" />
 
-        <!-- Screen content -->
-        <!-- Use app:layout_behavior="@string/appbar_scrolling_view_behavior" to fit below top app bar -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <FrameLayout
-                android:id="@+id/fragmentContainer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <!-- Screen content -->
+            <!-- Use app:layout_behavior="@string/appbar_scrolling_view_behavior" to fit below top app bar -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            </FrameLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <FrameLayout
+                    android:id="@+id/fragmentContainer"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.navigation.NavigationView
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        android:id="@+id/nav"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start|left"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/main_menu"
-        app:itemIconTint="@color/dark_blue"
-        app:itemTextColor="@color/dark_blue"/>
+        <com.google.android.material.navigation.NavigationView
+
+            android:id="@+id/nav"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|left"
+            app:headerLayout="@layout/nav_header"
+            app:menu="@menu/main_menu"
+            app:itemIconTint="@color/dark_blue"
+            app:itemTextColor="@color/dark_blue" />
 
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</layout>

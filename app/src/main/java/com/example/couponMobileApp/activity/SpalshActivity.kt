@@ -25,13 +25,13 @@ import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 
-class SpalshActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     lateinit var topANim: Animation;
-    lateinit var btANim: Animation;
+    lateinit var btANim : Animation;
     lateinit var img : ImageView;
-    lateinit var  title : TextView;
-    lateinit var desc:TextView;
+//     var  title : TextView? = null;
+    lateinit var desc : TextView;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,7 @@ class SpalshActivity : AppCompatActivity() {
         desc = findViewById(R.id.sptTxt)
 
         img.animation = topANim
-        title.animation = btANim
+//        title?.animation = btANim
         desc.animation = btANim
         Handler().postDelayed({
             if (SharedPrefManager.getInstance(this).isLoggedIn) {

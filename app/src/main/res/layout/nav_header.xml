@@ -1,39 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_170sdp"
-        android:background="@color/dark_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_170sdp"
+            android:background="@color/dark_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:padding="16dp">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/nav_profilePic"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:clickable="true"
-            android:src="@drawable/profile"
-            android:focusable="true" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/nav_profilePic"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:clickable="true"
+                android:src="@drawable/profile"
+                android:focusable="true" />
 
-        <TextView
-            android:id="@+id/uname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:layout_marginLeft="@dimen/Dimen_10dp"
-            android:text="Hello"
-            android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/uname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:layout_marginLeft="@dimen/Dimen_10dp"
+                android:text="Hello"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

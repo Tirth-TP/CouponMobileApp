@@ -83,11 +83,11 @@
         <activity
             android:name="com.example.couponMobileApp.activity.HomeActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name="com.example.couponMobileApp.activity.SignupActivity"
@@ -96,13 +96,13 @@
             android:name="com.example.couponMobileApp.LoginActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name="com.example.couponMobileApp.activity.SpalshActivity"
+            android:name="com.example.couponMobileApp.activity.SplashActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data
