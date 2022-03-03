@@ -32,8 +32,6 @@ import com.example.couponMobileApp.models.Response
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_signup.*
-import net.alhazmy13.gota.Gota
-import net.alhazmy13.gota.GotaResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -46,7 +44,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-class SignupActivity : AppCompatActivity(), Gota.OnRequestPermissionsBack {
+class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
 
     var currentPath: String? = null
     val TAKE_PICTURE = 1
@@ -120,26 +118,55 @@ class SignupActivity : AppCompatActivity(), Gota.OnRequestPermissionsBack {
         })
         st.setOnClickListener {
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                Gota.Builder(this)
-                    .withPermissions(
-                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    .requestId(1)
-                    .setListener(this)
-                    .check()
-            }else{
-                Gota.Builder(this)
-                    .withPermissions(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    .requestId(1)
-                    .setListener(this)
-                    .check()
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//                Gota.Builder(this)
+//                    .withPermissions(
+//                        Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    )
+//                    .requestId(1)
+//                    .setListener(this)
+//                    .check()
+//            }else{
+//                Gota.Builder(this)
+//                    .withPermissions(
+//                        Manifest.permission.READ_EXTERNAL_STORAGE,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                    )
+//                    .requestId(1)
+//                    .setListener(this)
+//                    .check()
+//            }
+            var alertDialog: AlertDialog? = null
+            val builder = AlertDialog.Builder(this@SignupActivity)
+
+
+            val inflater = this.layoutInflater
+            val dialogView: View = inflater.inflate(R.layout.imagepick, null)
+            builder.setView(dialogView)
+
+            var cm = dialogView.findViewById<ImageView>(R.id.btn_cam)
+            var ga = dialogView.findViewById<ImageView>(R.id.btn_gal)
+            var cl = dialogView.findViewById<Button>(R.id.btn_cancel)
+
+            cm.setOnClickListener {
+                cl.performClick()
+                dispatchCamera()
             }
 
+            ga.setOnClickListener {
+                cl.performClick()
+                dispatchGallery()
+            }
+
+            cl.setOnClickListener {
+                if (alertDialog != null) {
+                    alertDialog!!.dismiss()
+                }
+            }
+            alertDialog = builder.create()
+            alertDialog.window?.setGravity(Gravity.BOTTOM)
+            alertDialog.show()
 
         }
 
@@ -415,39 +442,39 @@ class SignupActivity : AppCompatActivity(), Gota.OnRequestPermissionsBack {
         editor.commit()
     }
 
-    override fun onRequestBack(requestId: Int, gotaResponse: GotaResponse) {
-        if(requestId==1 && gotaResponse.isAllGranted) {
-            var alertDialog: AlertDialog? = null
-            val builder = AlertDialog.Builder(this@SignupActivity)
-
-
-            val inflater = this.layoutInflater
-            val dialogView: View = inflater.inflate(R.layout.imagepick, null)
-            builder.setView(dialogView)
-
-            var cm = dialogView.findViewById<ImageView>(R.id.btn_cam)
-            var ga = dialogView.findViewById<ImageView>(R.id.btn_gal)
-            var cl = dialogView.findViewById<Button>(R.id.btn_cancel)
-
-            cm.setOnClickListener {
-                cl.performClick()
-                dispatchCamera()
-            }
-
-            ga.setOnClickListener {
-                cl.performClick()
-                dispatchGallery()
-            }
-
-            cl.setOnClickListener {
-                if (alertDialog != null) {
-                    alertDialog!!.dismiss()
-                }
-            }
-            alertDialog = builder.create()
-            alertDialog.window?.setGravity(Gravity.BOTTOM)
-            alertDialog.show()
-            TODO("Not yet implemented")
-        }
-    }
+//    override fun onRequestBack(requestId: Int, gotaResponse: GotaResponse) {
+//        if(requestId==1 && gotaResponse.isAllGranted) {
+//            var alertDialog: AlertDialog? = null
+//            val builder = AlertDialog.Builder(this@SignupActivity)
+//
+//
+//            val inflater = this.layoutInflater
+//            val dialogView: View = inflater.inflate(R.layout.imagepick, null)
+//            builder.setView(dialogView)
+//
+//            var cm = dialogView.findViewById<ImageView>(R.id.btn_cam)
+//            var ga = dialogView.findViewById<ImageView>(R.id.btn_gal)
+//            var cl = dialogView.findViewById<Button>(R.id.btn_cancel)
+//
+//            cm.setOnClickListener {
+//                cl.performClick()
+//                dispatchCamera()
+//            }
+//
+//            ga.setOnClickListener {
+//                cl.performClick()
+//                dispatchGallery()
+//            }
+//
+//            cl.setOnClickListener {
+//                if (alertDialog != null) {
+//                    alertDialog!!.dismiss()
+//                }
+//            }
+//            alertDialog = builder.create()
+//            alertDialog.window?.setGravity(Gravity.BOTTOM)
+//            alertDialog.show()
+//            TODO("Not yet implemented")
+//        }
+//    }
 }
