@@ -107,7 +107,7 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (phn.length() < 10) {
-                    phn.setError("Invalid Phone Number")
+                    phn.error = "Invalid Phone Number"
                 }
             }
 
@@ -325,7 +325,7 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
     }
 
     private fun typeListener(editext: EditText) {
-        editext!!.addTextChangedListener(object : TextWatcher {
+        editext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -337,7 +337,7 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
                     ) {
                         txtInpEmail.error=""
                     } else {
-                        txtInpEmail.error="Invalid Email";
+                        txtInpEmail.error="Invalid email";
 //                        editext.setError("Invalid Email")
                     }
                 } else if (editText == txtsPass) {
@@ -374,7 +374,7 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
             {
                 var photoUrl = FileProvider.getUriForFile(
                     this,
-                    "com.example.stocardapp.fileprovider",
+                    "com.example.couponMobileApp.fileprovider",
                     photoFile
                 )
                 i.putExtra(MediaStore.EXTRA_OUTPUT, photoUrl)
