@@ -18,6 +18,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.MenuItemCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -25,6 +26,8 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.couponMobileApp.*
 import com.example.couponMobileApp.activity.AddStoreActivity
+import com.example.couponMobileApp.activity.FilterActivity
+import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.adapter.StoreAdapter
 import com.example.couponMobileApp.models.StoreDetail
 import com.example.couponMobileApp.models.StoreDetailResponse
@@ -317,15 +320,15 @@ class HomeScreenFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         requireActivity().menuInflater.inflate(R.menu.menu_filterser, menu)
         mainMenu = menu
-//        var menuItem: MenuItem = menu.findItem(R.id.btnFilter)
-//        val actionView = MenuItemCompat.getActionView(menuItem)
-//        var searchView = menu.findItem(R.id.ser)
-//
-//        actionView.setOnClickListener(object : View.OnClickListener {
-//            override fun onClick(v: View?) {
-//                onOptionsItemSelected(menuItem)
-//            }
-//        })
+        var menuItem: MenuItem = menu.findItem(R.id.btnFilter)
+        val actionView = MenuItemCompat.getActionView(menuItem)
+        var searchView = menu.findItem(R.id.ser)
+
+        actionView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                onOptionsItemSelected(menuItem)
+            }
+        })
 
         val SHARED_PREF_NAME1 = "my_shared_preff"
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
@@ -334,174 +337,174 @@ class HomeScreenFragment : Fragment() {
         )
         var filtersize = sharedPreferences.getString("filtersize", "0")
 
-//        var textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
-//        if (filtersize == "0") {
-//            textCartItemCount.isVisible = false
-//        } else {
-//            textCartItemCount.isVisible = true
-//            textCartItemCount.text = filtersize
-//        }
-//        return super.onCreateOptionsMenu(menu, inflater)
-//    }
+        var textCartItemCount = actionView.findViewById(R.id.cart_badge) as TextView
+        if (filtersize == "0") {
+            textCartItemCount.isVisible = false
+        } else {
+            textCartItemCount.isVisible = true
+            textCartItemCount.text = filtersize
+        }
+        return super.onCreateOptionsMenu(menu, inflater)
+    }
 
         fun toggleMenuVisibility() {
             mainMenu?.findItem(R.id.ser)?.isVisible = !menuShowing
             menuShowing = !menuShowing
         }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.ser -> {
-//                val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
-//                var sec: androidx.appcompat.widget.SearchView =
-//                    item.actionView as androidx.appcompat.widget.SearchView
-//                val searchEditText: EditText =
-//                    sec.findViewById(androidx.appcompat.R.id.search_src_text)
-//                searchEditText.setTextColor(resources.getColor(R.color.white))
-//                val searchClose: View =
-//                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
-//                searchClose.setOnClickListener {
-//                    img2.isVisible = false
-//                    startActivity(Intent(context, HomeActivity::class.java))
-//                    //  allstore()
-//                    onStart()
-//                }
-//                item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-//                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
-////                        Toast.makeText(activity, "onMenuItemActionExpand called", Toast.LENGTH_SHORT).show()
-//                        return true
-//                    }
-//
-//                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-////                        Toast.makeText(activity, "onMenutItemActionCollapse called", Toast.LENGTH_SHORT).show()
-//                        val intent = Intent(this@HomeScreenFragment.context, HomeActivity::class.java)
-//                        startActivity(intent)
-//                        return true
-//                    }
-//                })
-//
-//
-//                if (item != null) {
-//                    sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-//                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
-//                        override fun onQueryTextSubmit(query: String?): Boolean {
-////                            val se = query?.toLowerCase(Locale.getDefault())
-////                           dispLst.clear()
-////                            if (stList.contains(se)) {
-////                                for(i in stList) {
-////                                    dispLst.add(i)
-////                                    stRc?.adapter!!.notifyDataSetChanged()
-////                                }
-////                            }else{
-////                                Toast.makeText(context, "No Match found",Toast.LENGTH_LONG).show();
-////                            }
-////                            return false;
-//                            return true
-//                        }
-//
-//                        override fun onQueryTextChange(newText: String?): Boolean {
-//                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
-//                            img2 = ImageView(context)
-//                            var msg: TextView? = TextView(context)
-//                            if (newText!!.isNotEmpty()) {
-//                                dispLst.clear()
-//                                val se = newText.toLowerCase(Locale.getDefault())
-//                                var flag = false
-//                                for (i in stList) {
-//
-//                                    if (i.stname.toLowerCase(Locale.getDefault()).contains(se)) {
-//                                        //   img?.visibility=View.GONE
-//                                        flag = true
-////                                       stRc?.isVisible = true
-////                                       stRc?.adapter!!.notifyDataSetChanged()
-//
-//                                    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.ser -> {
+                val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
+                var sec: androidx.appcompat.widget.SearchView =
+                    item.actionView as androidx.appcompat.widget.SearchView
+                val searchEditText: EditText =
+                    sec.findViewById(androidx.appcompat.R.id.search_src_text)
+                searchEditText.setTextColor(resources.getColor(R.color.white))
+                val searchClose: View =
+                    sec.findViewById(androidx.appcompat.R.id.search_close_btn)
+                searchClose.setOnClickListener {
+                    img2.isVisible = false
+                    startActivity(Intent(context, HomeActivity::class.java))
+                    //  allstore()
+                    onStart()
+                }
+                item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+//                        Toast.makeText(activity, "onMenuItemActionExpand called", Toast.LENGTH_SHORT).show()
+                        return true
+                    }
+
+                    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+//                        Toast.makeText(activity, "onMenutItemActionCollapse called", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@HomeScreenFragment.context, HomeActivity::class.java)
+                        startActivity(intent)
+                        return true
+                    }
+                })
+
+
+                if (item != null) {
+                    sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                        androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+//                            val se = query?.toLowerCase(Locale.getDefault())
+//                           dispLst.clear()
+//                            if (stList.contains(se)) {
+//                                for(i in stList) {
+//                                    dispLst.add(i)
+//                                    stRc?.adapter!!.notifyDataSetChanged()
 //                                }
-//
-//                                if (flag == false) {
-////                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
-////                                            .show()
-////                                    //search not found start
-////                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
-//
-//
-//                                    Log.d("visible", stRc.visibility.toString())
-//                                    stRc.isVisible = false
-//                                    Log.d("visiblea", stRc.visibility.toString())
-//
-//                                    img2.load(R.drawable.empty)
-//                                    val title = SpannableString("Search not found!!")
-//                                    title.setSpan(
-//                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
-//                                        0,
-//                                        title.length,
-//                                        0
-//                                    )
-//                                    msg?.text = title
-//                                    msg?.x = 200.00F
-//                                    msg?.y = 500.00F
-//                                    msg?.textSize = 28F
-//                                    img2.maxHeight = 100
-//                                    img2.maxWidth = 100
-//                                    fr?.layoutParams = fr?.layoutParams
-//                                    fr?.addView(img2)
-////                                        fr?.addView(msg)
-//
-//                                    //search not found finis
-//
-//                                } else {
-//                                    fr?.removeAllViews()
-//                                    fr?.addView(stRc)
-//                                    stRc.isVisible = true
-//
-//                                    for (i in stList) {
-//                                        if (i.stname.toLowerCase(Locale.getDefault())
-//                                                .contains(se)
-//                                        ) {
-//                                            dispLst.add(i)
-//                                            stRc.adapter!!.notifyDataSetChanged()
-//                                        }
-//
-//                                    }
-//                                }
-//                            } else {
-//                                dispLst.clear()
-//                                dispLst.addAll(stList)
-//                                stRc.adapter!!.notifyDataSetChanged()
+//                            }else{
+//                                Toast.makeText(context, "No Match found",Toast.LENGTH_LONG).show();
 //                            }
-//                            return true
-//                        }
-//
-//                    })
-//                }
-//                true
-//
-//            }
-//
-//            R.id.btnFilter -> {
-//                if (f != "all") {
-//                    f = "filtered"
-////                    Toast.makeText(context, "" + item.title, Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this@HomeScreenFragment.context, FilterActivity::class.java)
-//                    startActivity(intent)
-//                } else {
-//                    val SHARED_PREF_NAME1 = "my_shared_preff"
-//                    val sharedPreferences: SharedPreferences =
-//                        requireContext().getSharedPreferences(
-//                            SHARED_PREF_NAME1,
-//                            Context.MODE_PRIVATE
-//                        )
-//                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
-//                    editor.putString("filterid", "")
-//                    editor.putString("filtersize", "0")
-//                    editor.apply()
-//                    editor.commit()
-//                    startActivity(Intent(this@HomeScreenFragment.context, HomeActivity::class.java))
-//                }
-//                return true
-//            }
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
+//                            return false;
+                            return true
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                            img2 = ImageView(context)
+                            var msg: TextView? = TextView(context)
+                            if (newText!!.isNotEmpty()) {
+                                dispLst.clear()
+                                val se = newText.toLowerCase(Locale.getDefault())
+                                var flag = false
+                                for (i in stList) {
+
+                                    if (i.stname.toLowerCase(Locale.getDefault()).contains(se)) {
+                                        //   img?.visibility=View.GONE
+                                        flag = true
+//                                       stRc?.isVisible = true
+//                                       stRc?.adapter!!.notifyDataSetChanged()
+
+                                    }
+                                }
+
+                                if (flag == false) {
+//                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
+//                                            .show()
+//                                    //search not found start
+//                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
+
+
+                                    Log.d("visible", stRc.visibility.toString())
+                                    stRc.isVisible = false
+                                    Log.d("visiblea", stRc.visibility.toString())
+
+                                    img2.load(R.drawable.empty)
+                                    val title = SpannableString("Search not found!!")
+                                    title.setSpan(
+                                        ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                        0,
+                                        title.length,
+                                        0
+                                    )
+                                    msg?.text = title
+                                    msg?.x = 200.00F
+                                    msg?.y = 500.00F
+                                    msg?.textSize = 28F
+                                    img2.maxHeight = 100
+                                    img2.maxWidth = 100
+                                    fr?.layoutParams = fr?.layoutParams
+                                    fr?.addView(img2)
+//                                        fr?.addView(msg)
+
+                                    //search not found finis
+
+                                } else {
+                                    fr?.removeAllViews()
+                                    fr?.addView(stRc)
+                                    stRc.isVisible = true
+
+                                    for (i in stList) {
+                                        if (i.stname.toLowerCase(Locale.getDefault())
+                                                .contains(se)
+                                        ) {
+                                            dispLst.add(i)
+                                            stRc.adapter!!.notifyDataSetChanged()
+                                        }
+
+                                    }
+                                }
+                            } else {
+                                dispLst.clear()
+                                dispLst.addAll(stList)
+                                stRc.adapter!!.notifyDataSetChanged()
+                            }
+                            return true
+                        }
+
+                    })
+                }
+                true
+
+            }
+
+            R.id.btnFilter -> {
+                if (f != "all") {
+                    f = "filtered"
+//                    Toast.makeText(context, "" + item.title, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@HomeScreenFragment.context, FilterActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val SHARED_PREF_NAME1 = "my_shared_preff"
+                    val sharedPreferences: SharedPreferences =
+                        requireContext().getSharedPreferences(
+                            SHARED_PREF_NAME1,
+                            Context.MODE_PRIVATE
+                        )
+                    val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                    editor.putString("filterid", "")
+                    editor.putString("filtersize", "0")
+                    editor.apply()
+                    editor.commit()
+                    startActivity(Intent(this@HomeScreenFragment.context, HomeActivity::class.java))
+                }
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
+//    }
 }

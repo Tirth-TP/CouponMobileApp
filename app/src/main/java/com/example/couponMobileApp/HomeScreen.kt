@@ -78,8 +78,8 @@ class HomeScreen : Fragment() {
         val stRc = requireView().findViewById(R.id.storeRv) as RecyclerView
 
         (context as AppCompatActivity).supportActionBar!!.title = "CouponBag App"
-        //  var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
-        //   var itemsLayout:  = requireView().findViewById(R.id.nav)
+          var cRv = requireView().findViewById<RecyclerView>(R.id.cdRv)
+//           var itemsLayout:  = requireView().findViewById(R.id.nav)
         spinAnim = AnimationUtils.loadAnimation(context, R.anim.spin_animation)
         btANim = AnimationUtils.loadAnimation(context, R.anim.bottom_animation)
 
@@ -125,35 +125,35 @@ class HomeScreen : Fragment() {
                             Log.d("successMessage", "" + response.body()?.message)
                             if (s == "") {
                                 allStore()
-//                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
-//                            Log.d("visible", stRc?.visibility.toString())
-//                            stRc?.isVisible = false
-//                            Log.d("Visible", stRc?.visibility.toString())
-//                            var img: ImageView? = ImageView(context)
-//                            var msg: TextView? = TextView(context)
-//                            img?.load(R.drawable.empty)
-//                            val title = SpannableString("Add Your First Store!!")
-//                            title.setSpan(
-//                                ForegroundColorSpan(Color.parseColor("#342ea9")),
-//                                0,
-//                                title.length,
-//                                0
-//                            )
-//                            msg?.setText(title)
-//                            msg?.setX(200.00F)
-//                            msg?.setY(500.00F)
-//                            msg?.textSize = 28F
-//                            img?.maxHeight = 100
-//                            img?.maxWidth = 100
-//                            img?.minimumHeight = 100
-//                            img?.minimumWidth = 100
-//                            img?.animation = spinAnim
-//                            fr?.layoutParams = fr?.getLayoutParams()
-//                            fr?.addView(img)
-//                            fr?.addView(msg)
+                            var fr = view?.findViewById<FrameLayout>(R.id.frame)
+                            Log.d("visible", stRc?.visibility.toString())
+                            stRc?.isVisible = false
+                            Log.d("Visible", stRc?.visibility.toString())
+                            var img: ImageView? = ImageView(context)
+                            var msg: TextView? = TextView(context)
+                            img?.load(R.drawable.empty)
+                            val title = SpannableString("Add Your First Store!!")
+                            title.setSpan(
+                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                0,
+                                title.length,
+                                0
+                            )
+                            msg?.setText(title)
+                            msg?.setX(200.00F)
+                            msg?.setY(500.00F)
+                            msg?.textSize = 28F
+                            img?.maxHeight = 100
+                            img?.maxWidth = 100
+                            img?.minimumHeight = 100
+                            img?.minimumWidth = 100
+                            img?.animation = spinAnim
+                            fr?.layoutParams = fr?.getLayoutParams()
+                            fr?.addView(img)
+                            fr?.addView(msg)
                             } else {
-                                // cRv.adapter = adapter
-                                //    checkNetwork()
+                                 cRv.adapter = adapter
+                                    checkNetwork()
                                 dispLst.addAll(stList)
                                 adapter = StoreAdapter(
                                         requireContext(),
@@ -421,18 +421,18 @@ class HomeScreen : Fragment() {
                     sec.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
                             androidx.appcompat.widget.SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
-//                            val se = query?.toLowerCase(Locale.getDefault())
-//                           dispLst.clear()
-//                            if (stList.contains(se)) {
-//                                for(i in stList) {
-//                                    dispLst.add(i)
-//                                    stRc?.adapter!!.notifyDataSetChanged()
-//                                }
-//                            }else{
-//                                Toast.makeText(context, "No Match found",Toast.LENGTH_LONG).show();
-//                            }
-//                            return false;
-                            return true
+                            val se = query?.toLowerCase(Locale.getDefault())
+                           dispLst.clear()
+                            if (stList.contains(se)) {
+                                for(i in stList) {
+                                    dispLst.add(i)
+                                    stRc?.adapter!!.notifyDataSetChanged()
+                                }
+                            }else{
+                                Toast.makeText(context, "No Match found",Toast.LENGTH_LONG).show();
+                            }
+                            return false;
+//                            return true
                         }
 
                         override fun onQueryTextChange(newText: String?): Boolean {
@@ -455,10 +455,10 @@ class HomeScreen : Fragment() {
                                 }
 
                                 if (flag == false) {
-//                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
-//                                            .show()
-//                                    //search not found start
-//                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "notfound", Toast.LENGTH_SHORT)
+                                            .show()
+                                    //search not found start
+                                    Toast.makeText(context, "Not Found", Toast.LENGTH_SHORT).show()
 
 
                                     Log.d("Visible", stRc.visibility.toString())
