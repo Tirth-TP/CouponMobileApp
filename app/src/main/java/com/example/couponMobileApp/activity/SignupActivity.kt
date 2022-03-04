@@ -335,7 +335,7 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
                     if (android.util.Patterns.EMAIL_ADDRESS.matcher(editext.text.toString())
                             .matches()
                     ) {
-
+                        txtInpEmail.error=""
                     } else {
                         txtInpEmail.error="Invalid Email";
 //                        editext.setError("Invalid Email")
