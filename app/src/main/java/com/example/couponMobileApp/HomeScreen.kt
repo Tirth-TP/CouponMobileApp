@@ -134,7 +134,7 @@ class HomeScreen : Fragment() {
                             img?.load(R.drawable.empty)
                             val title = SpannableString("Add Your First Store!!")
                             title.setSpan(
-                                ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                ForegroundColorSpan(Color.parseColor("#4EB1E0")),
                                 0,
                                 title.length,
                                 0
@@ -250,7 +250,7 @@ class HomeScreen : Fragment() {
                             img?.load(R.drawable.empty)
                             val title = SpannableString("Add Your First Store!!")
                             title.setSpan(
-                                    ForegroundColorSpan(Color.parseColor("#342ea9")),
+                                    ForegroundColorSpan(Color.parseColor("#4EB1E0")),
                                     0,
                                     title.length,
                                     0

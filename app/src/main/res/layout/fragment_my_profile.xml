@@ -56,7 +56,6 @@
                                     android:clickable="true"
                                     android:src="@drawable/profile"
                                     android:focusable="true"
-                                    app:tint="@color/light_blue"
                                     android:padding="@dimen/_4sdp"
                                     android:layout_marginBottom="@dimen/_20sdp" />
 
@@ -187,6 +186,7 @@
                                                 android:imeOptions="actionNext"
                                                 android:inputType="phone"
                                                 android:letterSpacing="0.5"
+                                                android:maxLength="10"
                                                 android:maxLines="1" />
                                         </com.google.android.material.textfield.TextInputLayout>
                                     </LinearLayout>

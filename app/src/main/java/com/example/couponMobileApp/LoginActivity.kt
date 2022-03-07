@@ -31,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -250,10 +251,14 @@ class LoginActivity : AppCompatActivity() {
             val SHARED_PREF_NAME2 = "my_shared_preff"
             val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
             val dtoken = sharedPreference1.getString("device_token", "defaultToken")
-            Log.d("detok", dtoken!!)
+            Log.d("test","detok"+dtoken!!)
+
 
             val e = email.text.toString().trim()
             val p = passsword.text.toString().trim()
+
+            Log.d("test","Email : "+e)
+            Log.d("test","Password : "+p)
 
             if (e.isEmpty()) {
                 email.error = "Email is required"
@@ -270,6 +275,8 @@ class LoginActivity : AppCompatActivity() {
             map["email"] = toPart(e) as RequestBody
             map["password"] = toPart(p)
             map["device_token"] = toPart(dtoken.toString())
+
+
             // val em = sharedPreference.getString("email","defaultName")
             RetrofitClient.instance.loginUser(token!!, "login", map).enqueue(object :
                 Callback<LoginResponse> {
@@ -288,7 +295,7 @@ class LoginActivity : AppCompatActivity() {
                                 .saveUser(response.body()?.data!!)
                             val i = (Intent(this@LoginActivity, HomeActivity::class.java))
                             i.putExtra("Username", response.body()?.data!!.name)
-                            // Log.d("token",response.body()?.data!!.token)
+//                             Log.d("token",response.body()?.data!!.token)
 //                            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(i)
                             finish()
