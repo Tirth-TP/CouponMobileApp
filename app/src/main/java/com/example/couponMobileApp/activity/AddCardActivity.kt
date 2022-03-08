@@ -114,6 +114,11 @@ class AddCardActivity : AppCompatActivity() {
         val cdt = findViewById<TextInputEditText>(R.id.cardDate)
         val txtinpt = findViewById<LinearLayout>(R.id.lindat)
         val icrd = findViewById<ImageView>(R.id.imgCr)
+        val ibk = findViewById<ImageView>(R.id.imgBack)
+
+        ibk.setOnClickListener {
+            startActivity(Intent(this, CardListActivity::class.java))
+        }
 
         crwd.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

@@ -169,8 +169,8 @@ class CardListActivity : AppCompatActivity() {
                                 response.body()?.message,
                                 Toast.LENGTH_SHORT
                         ).show()
-                        val i = (Intent(applicationContext, CardListActivity::class.java))
-                        startActivity(i)
+//                        val i = (Intent(applicationContext, CardListActivity::class.java))
+//                        startActivity(i)
                     } else {
                         Toast.makeText(
                                 applicationContext,
