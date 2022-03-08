@@ -1,33 +1,49 @@
 {
   "project_info": {
-    "project_number": "696367015267",
-    "project_id": "stocard-app",
-    "storage_bucket": "stocard-app.appspot.com"
+    "project_number": "403594438024",
+    "project_id": "couponbagapp",
+    "storage_bucket": "couponbagapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:696367015267:android:3902d2ca00dbc41dfc9f56",
+        "mobilesdk_app_id": "1:403594438024:android:c5de1bcbbfda997787c63d",
         "android_client_info": {
-          "package_name": "com.example.stocardapp"
+          "package_name": "com.example.couponMobileApp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "696367015267-lmrdrhlme8ko5ak6uqppn7lv4lgv9fe6.apps.googleusercontent.com",
+          "client_id": "403594438024-4udsc1segc6g57g2j2j98fkdlbk8c21q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.couponMobileApp",
+            "certificate_hash": "705fa9c04458e32d5a9a5664bebe5d0ad3b504de"
+          }
+        },
+        {
+          "client_id": "403594438024-91mfkb78esobp6k4bfl16rnpjp02ur6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.couponMobileApp",
+            "certificate_hash": "2a184de6d806efd8c280837d746a8875a6d06c2c"
+          }
+        },
+        {
+          "client_id": "403594438024-qiam59g3066qmlg541jgg3rv2v23ij6p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCCeaSbOYdzZL4lod4LYs2zgC642YNitwc"
+          "current_key": "AIzaSyAsYpEOtlPPJFO7dmm6YVcbNtB0YYfNKU8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "696367015267-lmrdrhlme8ko5ak6uqppn7lv4lgv9fe6.apps.googleusercontent.com",
+              "client_id": "403594438024-qiam59g3066qmlg541jgg3rv2v23ij6p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
