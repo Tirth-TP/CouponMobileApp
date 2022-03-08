@@ -59,7 +59,7 @@ class LockActivity : AppCompatActivity() {
                     Toast.makeText(this@LockActivity,"Password is Wrong", Toast.LENGTH_LONG).show()
                     Log.d("wwwww","hhhh")
                     Toast.makeText(this@LockActivity, ct.toString(), Toast.LENGTH_LONG).show()
-                    passcode_view.setLocalPasscode("")
+                    passcode_view.localPasscode = ""
                 }
 
                 override fun onSuccess(number: String?) {
