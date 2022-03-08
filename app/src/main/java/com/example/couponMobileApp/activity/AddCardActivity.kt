@@ -3,6 +3,7 @@ package com.example.couponMobileApp.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -23,7 +24,6 @@ import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
-import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
@@ -45,7 +45,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class AddCardActivity : AppCompatActivity() {
@@ -125,8 +124,11 @@ class AddCardActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (crwd.text.toString().toInt() > 100) {
-                    crwd.setError("Percentage should not be grater than 100")
+                if (!s.isNullOrEmpty()) {
+                    if (crwd.text.toString().toInt() > 100) {
+                        crwd.error = "Percentage should not be grater than 100"
+                    }
+
                 }
             }
 
