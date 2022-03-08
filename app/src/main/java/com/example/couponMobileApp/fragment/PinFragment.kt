@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.couponMobileApp.ApiUtils
 import com.example.couponMobileApp.R
+import com.example.couponMobileApp.SharedPrefManager
 import com.example.couponMobileApp.UserApi
 import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.activity.ResetActivity
@@ -73,15 +74,20 @@ class PinFragment : Fragment() {
                 map["old_pin"] = toPart(op) as RequestBody
                 map["new_pin"] = toPart(np)
 
+                //Shared Preference Fro Update pin
+
+                SharedPrefManager.getInstance(requireContext()).updatePin(np)
+
                 mAPIService.changePas(token!!, "Change_Pin", map).enqueue(object :
                     Callback<ChangePasswordResponse> {
                     override fun onResponse(
                         call: Call<ChangePasswordResponse>,
                         response: retrofit2.Response<ChangePasswordResponse>
                     ) {
-                        Log.d("Pin_RESPONSE",response.body()?.success.toString())
+                        Log.d("Pin_RESPONSE", response.body()?.success.toString())
                         if (response.body()?.success == true) {
-                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG)
+                                .show()
                             startActivity(Intent(requireActivity(), HomeActivity::class.java))
                         }
                         else{

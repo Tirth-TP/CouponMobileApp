@@ -42,6 +42,14 @@ class SharedPrefManager private constructor(private val mCtx:Context){
         editor.apply()
     }
 
+    //For pin update problem
+    fun updatePin(pin :String){
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("pin", pin)
+        editor.apply()
+    }
+
     fun saveStore(sid: Int, stname: String, stlocation: String, stcontact: String) {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
