@@ -1,5 +1,6 @@
 package com.example.couponMobileApp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -435,6 +436,7 @@ class HomeScreen : Fragment() {
 //                            return true
                         }
 
+                        @SuppressLint("NotifyDataSetChanged")
                         override fun onQueryTextChange(newText: String?): Boolean {
                             var fr = view?.findViewById<FrameLayout>(R.id.frame)
                             img2 = ImageView(context)

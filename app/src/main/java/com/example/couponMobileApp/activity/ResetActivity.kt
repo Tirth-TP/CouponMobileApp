@@ -11,8 +11,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.couponMobileApp.ApiUtils
 import com.example.couponMobileApp.R
+import com.example.couponMobileApp.SharedPrefManager
 import com.example.couponMobileApp.UserApi
 import com.example.couponMobileApp.models.ChangePasswordResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -47,8 +50,13 @@ class ResetActivity : AppCompatActivity() {
             var c = cp.text.toString()
 
             if (n.equals(c)) {
+
                 val map: MutableMap<String, RequestBody> = HashMap()
                 map["new_pin"] = toPart(np.text.toString()) as RequestBody
+
+                //Shared Preference For Reset pin
+                SharedPrefManager.getInstance(applicationContext).updatePin(n)
+
                 mAPIService.changePas(token!!, "Create_New_Pin", map).enqueue(object :
                     Callback<ChangePasswordResponse> {
                     override fun onResponse(
@@ -69,12 +77,14 @@ class ResetActivity : AppCompatActivity() {
                         Toast.makeText(this@ResetActivity, t.message, Toast.LENGTH_LONG).show()
                     }
                 })
-            }
+}
             else{
                 cp.setError("Password does not match!")
             }
         }
     }
+
+
     fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
