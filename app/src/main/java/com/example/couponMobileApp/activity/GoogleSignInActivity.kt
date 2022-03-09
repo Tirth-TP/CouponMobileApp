@@ -58,7 +58,6 @@ class GoogleSignInActivity : AppCompatActivity() {
         imggPro.load(pimg)
         imggPro.imageTintMode = null
 
-
         val SHARED_PREF_NAME2 = "my_shared_preff"
         val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
         dtoken = sharedPreference1.getString("device_token", "defaultToken") ?: ""
@@ -66,7 +65,6 @@ class GoogleSignInActivity : AppCompatActivity() {
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
-
 
 
         btnGreg.setOnClickListener {
@@ -80,8 +78,6 @@ class GoogleSignInActivity : AppCompatActivity() {
             }
             var profileImagePath =
                 rootdir.absolutePath + File.separator.toString() + "" + System.currentTimeMillis() + ".jpg"
-
-
 
             Glide.with(this)
                 .asBitmap()
@@ -107,11 +103,6 @@ class GoogleSignInActivity : AppCompatActivity() {
 
                     }
                 })
-
-
-
-
-
         }
     }
 
