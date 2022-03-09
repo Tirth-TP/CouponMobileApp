@@ -74,10 +74,9 @@ class PinFragment : Fragment() {
                 map["old_pin"] = toPart(op) as RequestBody
                 map["new_pin"] = toPart(np)
 
-                //Shared Preference Fro Update pin
+                //Shared Preference For Update pin
 
                 SharedPrefManager.getInstance(requireContext()).updatePin(np)
-
                 mAPIService.changePas(token!!, "Change_Pin", map).enqueue(object :
                     Callback<ChangePasswordResponse> {
                     override fun onResponse(
