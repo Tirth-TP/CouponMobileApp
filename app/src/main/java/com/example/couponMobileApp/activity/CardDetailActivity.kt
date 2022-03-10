@@ -1,5 +1,6 @@
 package com.example.couponMobileApp.activity
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -82,34 +83,59 @@ class CardDetailActivity : AppCompatActivity() {
         getDt.setText(cdt)
 
         btn_del.setOnClickListener {
-            var cid = intent.getIntExtra("cardId", 0)
-            Log.d("cid", cid.toString())
-            val map: MutableMap<String, RequestBody> = HashMap()
-            map["id"] = toPart(cid.toString()) as RequestBody
-            mAPIService!!.delCard(token!!, "CardDelete", map).enqueue(object :
-                    Callback<DeleteResponse> {
-                override fun onResponse(
 
-                        call: Call<DeleteResponse>,
-                        response: retrofit2.Response<DeleteResponse>
-                ) {
-                    Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                    val i = (Intent(applicationContext, CardListActivity::class.java))
-                    startActivity(i)
-                    if(response.body()?.status == true) {
-                        Toast.makeText(this@CardDetailActivity, response.body()?.message, Toast.LENGTH_LONG).show()
-                        val i = (Intent(applicationContext, CardListActivity::class.java))
-                        startActivity(i)
-                    }
-                    else{
-                        Toast.makeText(this@CardDetailActivity,"Something went wrong!",Toast.LENGTH_LONG).show()
-                    }
-                }
+            val builder = AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_dustbin)
+                .setTitle("Delete Coupon")
+                .setMessage("Are you sure you want to delete Coupon ?")
+                .setPositiveButton("Yes") { dialogInterface, which ->
 
-                override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
-                    Toast.makeText(this@CardDetailActivity, t.message, Toast.LENGTH_LONG).show()
+                    var cid = intent.getIntExtra("cardId", 0)
+                    Log.d("cid", cid.toString())
+                    val map: MutableMap<String, RequestBody> = HashMap()
+                    map["id"] = toPart(cid.toString()) as RequestBody
+                    mAPIService!!.delCard(token!!, "CardDelete", map).enqueue(object :
+                        Callback<DeleteResponse> {
+                        override fun onResponse(
+
+                            call: Call<DeleteResponse>,
+                            response: retrofit2.Response<DeleteResponse>
+                        ) {
+                            Toast.makeText(
+                                this@CardDetailActivity,
+                                response.body()?.message,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            val i = (Intent(applicationContext, CardListActivity::class.java))
+                            startActivity(i)
+                            if (response.body()?.status == true) {
+                                Toast.makeText(
+                                    this@CardDetailActivity,
+                                    response.body()?.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                val i = (Intent(applicationContext, CardListActivity::class.java))
+                                startActivity(i)
+                            } else {
+                                Toast.makeText(
+                                    this@CardDetailActivity,
+                                    "Something went wrong!",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+                            Toast.makeText(this@CardDetailActivity, t.message, Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    })
                 }
-            })
+                .setNegativeButton("No") { dialogInterface, which ->
+                }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
+
         }
         }
 

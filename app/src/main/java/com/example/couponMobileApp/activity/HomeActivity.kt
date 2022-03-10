@@ -3,7 +3,9 @@ package com.example.couponMobileApp.activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -38,9 +40,9 @@ import kotlin.system.exitProcess
 
 
 class HomeActivity : AppCompatActivity() {
-    var img: ImageView? = null
+    lateinit var img: ImageView
     var tvItem: TextView? = null
-
+    lateinit var dr: DrawerLayout
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,15 @@ class HomeActivity : AppCompatActivity() {
         tvItem = view.findViewById(R.id.uname)
         img = view.findViewById(R.id.nav_profilePic)
 
+    //For Redirect in Profile when click on drawer pic
+
+        img.setOnClickListener {
+            movetoFragment(
+                MyProfileFragment()
+            )
+            dr.closeDrawer(GravityCompat.START)
+        }
+
         var u: Uri = Uri.parse(pt)
         Log.d("path1", u.toString())
         img!!.load(u.toString())
@@ -73,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
 
         intent.putExtra("Username", un)
         val tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.topAppBar)
-        val dr = findViewById<DrawerLayout>(R.id.drawer)
+        dr = findViewById<DrawerLayout>(R.id.drawer)
         setSupportActionBar(tb)
         //creating hamburger icon
         var toggler = ActionBarDrawerToggle(this, dr, tb, 0, 0)
@@ -135,19 +146,29 @@ class HomeActivity : AppCompatActivity() {
 //                }
 
                 R.id.nav_logout -> {
-                    SharedPrefManager.getInstance(applicationContext).clear()
-                    mGoogleSignInClient.signOut().addOnCompleteListener {
-                        Intent(this, LoginActivity::class.java).apply {
-                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }.also { startActivity(it) }
-                    }
-                    finish()
-//                    true
+                    val builder  = AlertDialog.Builder(this)
+                        .setIcon(R.drawable.ic_logout_dialog)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to Logout ?")
+                        .setPositiveButton("Yes"){dialogInterface, which ->
+                            SharedPrefManager.getInstance(applicationContext).clear()
+                            mGoogleSignInClient.signOut().addOnCompleteListener {
+                                Intent(this, LoginActivity::class.java).apply {
+                                    addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }.also { startActivity(it) }
+                            }
+                            finish()
+                        }
+                        .setNegativeButton("No"){dialogInterface, which ->
+                        }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.show()
+//                    false
                 }
             }
             dr.closeDrawer(GravityCompat.START)
-            true
+            false
         }
     }
 
