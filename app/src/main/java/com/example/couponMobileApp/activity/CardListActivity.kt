@@ -1,6 +1,7 @@
 package com.example.couponMobileApp.activity
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.couponMobileApp.*
 import com.example.couponMobileApp.adapter.CardAdapter
+import com.example.couponMobileApp.fragment.HomeScreenFragment
 import com.example.couponMobileApp.models.*
 import com.example.couponMobileApp.utils.Utils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -208,31 +211,43 @@ class CardListActivity : AppCompatActivity() {
 //                    val i = (Intent(applicationContext, HomeActivity::class.java))
 //                    startActivity(i)
 //                }
-                map["id"] = toPart(sid.toString()) as RequestBody
-                mAPIService.delStore(token!!, "StoreDelete", map).enqueue(
-                object :
-                        Callback<DeleteResponse> {
-                    override fun onResponse(
-                            call: Call<DeleteResponse>,
-                            response: retrofit2.Response<DeleteResponse>
-                    ) {
-                        if (response.body()?.status == true) {
-                            Toast.makeText(
-                                    this@CardListActivity,
-                                    response.body()?.message,
-                                    Toast.LENGTH_LONG
-                            ).show()
-                            val i = (Intent(applicationContext, HomeActivity::class.java))
-                            startActivity(i)
-                        } else {
-                            Toast.makeText(this@CardListActivity, "Something went wrong!", Toast.LENGTH_LONG).show()
-                        }
-                    }
 
-                    override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
-                        Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
-                    }
-                })
+            // Alert Dialog box for delete store
+            val builder  = AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_dustbin)
+                .setTitle("Delete Store")
+                .setMessage("Are you sure you want to Delete Store ?")
+                .setPositiveButton("Yes"){dialogInterface, which ->
+                    map["id"] = toPart(sid.toString()) as RequestBody
+                    mAPIService.delStore(token!!, "StoreDelete", map).enqueue(
+                        object :
+                            Callback<DeleteResponse> {
+                            override fun onResponse(
+                                call: Call<DeleteResponse>,
+                                response: retrofit2.Response<DeleteResponse>
+                            ) {
+                                if (response.body()?.status == true) {
+                                    Toast.makeText(
+                                        this@CardListActivity,
+                                        response.body()?.message,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    val i = (Intent(applicationContext, HomeActivity::class.java))
+                                    startActivity(i)
+                                } else {
+                                    Toast.makeText(this@CardListActivity, "Something went wrong!", Toast.LENGTH_LONG).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+                                Toast.makeText(this@CardListActivity, t.message, Toast.LENGTH_LONG).show()
+                            }
+                        })
+                }
+                .setNegativeButton("No"){dialogInterface, which ->
+                }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
             }
 
         }
