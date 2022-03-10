@@ -27,8 +27,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.Call
-import java.io.*
-import kotlin.collections.HashMap
+import java.io.File
+import java.io.FileOutputStream
 
 
 class GoogleSignInActivity : AppCompatActivity() {
@@ -71,9 +71,8 @@ class GoogleSignInActivity : AppCompatActivity() {
 
             val img = intent.getStringExtra("personPhoto")
 
-            val rootdir =
-                File(Environment.getExternalStorageDirectory().toString() + "/" + "stocard/")
-            if (!rootdir.exists()) {
+            val rootdir = getExternalFilesDir("couponBag/")
+            if (!rootdir?.exists()!!) {
                 rootdir.mkdirs()
             }
             var profileImagePath =
@@ -84,21 +83,23 @@ class GoogleSignInActivity : AppCompatActivity() {
                 .load(img)
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
-                            bit: Bitmap,
-                            transition: Transition<in Bitmap>?
+                        bit: Bitmap,
+                        transition: Transition<in Bitmap>?
                     ) {
-                        val out = FileOutputStream(profileImagePath)
-                        bit.compress(Bitmap.CompressFormat.JPEG, 90, out)
-                        out.flush()
-                        out.close()
-                        if (profileImagePath.length > 0) {
-                            this@GoogleSignInActivity.runOnUiThread {
-                                signupApi(profileImagePath);
+                        try {
+                            val out = FileOutputStream(profileImagePath)
+                            bit.compress(Bitmap.CompressFormat.JPEG, 90, out)
+                            out.flush()
+                            out.close()
+                            if (profileImagePath.length > 0) {
+                                this@GoogleSignInActivity.runOnUiThread {
+                                    signupApi(profileImagePath);
+                                }
                             }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
-
                     }
-
                     override fun onLoadCleared(placeholder: Drawable?) {
 
                     }
@@ -110,7 +111,7 @@ class GoogleSignInActivity : AppCompatActivity() {
 
         val file = File(profileImagePath)
         val requestFile = file.asRequestBody(
-                contentResolver.getType(Uri.parse(profileImagePath))?.toMediaTypeOrNull()
+            contentResolver.getType(Uri.parse(profileImagePath))?.toMediaTypeOrNull()
         )
         Log.d("urllllla", file.name)
         val body = MultipartBody.Part.createFormData("user_img", file.name, requestFile)
@@ -120,20 +121,19 @@ class GoogleSignInActivity : AppCompatActivity() {
         map["phone"] = toPart(txtgMb.text.toString().trim())
         map["pin"] = toPart(txtsgPin.text.toString().trim())
         map["device_token"] = toPart(dtoken ?: "")
-        map["providerID"] = toPart(pid.toString())
+        map["providerID"] = toPart(pid)
 
-        RetrofitClient.instance.createUser("", body, "SocialRegister", map).enqueue(object :
-                retrofit2.Callback<Response> {
+        RetrofitClient.instance.createUser("", body, "SocialRegister", map).enqueue(object : retrofit2.Callback<Response> {
             override fun onResponse(
-                    call: Call<Response>,
-                    response: retrofit2.Response<Response>
+                call: retrofit2.Call<Response>,
+                response: retrofit2.Response<Response>
             ) {
                 Log.d("siiignn", response.body()?.success.toString())
                 if (response.body()?.success == true) {
                     Toast.makeText(
-                            this@GoogleSignInActivity,
-                            response.body()?.message,
-                            Toast.LENGTH_LONG
+                        this@GoogleSignInActivity,
+                        response.body()?.message,
+                        Toast.LENGTH_LONG
                     ).show()
                     SharedPrefManager.getInstance(applicationContext)
                         .saveUser(response.body()?.data!!)
@@ -144,9 +144,9 @@ class GoogleSignInActivity : AppCompatActivity() {
                     finish()
                 } else {
                     Toast.makeText(
-                            this@GoogleSignInActivity,
-                            "Something went wrong!",
-                            Toast.LENGTH_LONG
+                        this@GoogleSignInActivity,
+                        "Something went wrong!",
+                        Toast.LENGTH_LONG
                     ).show()
                 }
             }

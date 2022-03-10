@@ -23,8 +23,7 @@ class SharedPrefManager private constructor(private val mCtx:Context){
                     sharedPreferences.getString("pin", null).toString(),
                     sharedPreferences.getString("phone", null).toString(),
                     sharedPreferences.getString("Image", null).toString(),
-                            sharedPreferences.getString("device_id", null).toString()
-
+                    sharedPreferences.getString("device_id", null).toString(),
             )
         }
 

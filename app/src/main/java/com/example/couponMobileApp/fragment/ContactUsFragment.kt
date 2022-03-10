@@ -74,7 +74,7 @@ class ContactUsFragment : Fragment() {
             map["subject"] = toPart(sb)
             map["description"] = toPart(mg)
 
-            mAPIService.changePas(token!!, "ContactUs", map).enqueue(object :
+            mAPIService.changePas(token!!, "ContactUsFragment", map).enqueue(object :
                 Callback<ChangePasswordResponse> {
                 override fun onResponse(
                     call: Call<ChangePasswordResponse>,
@@ -87,10 +87,8 @@ class ContactUsFragment : Fragment() {
                         startActivity(intent)
                     } else {
                         Toast.makeText(context, "Something went wrong!", Toast.LENGTH_LONG).show()
-
                     }
                 }
-
                 override fun onFailure(call: Call<ChangePasswordResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                 }
