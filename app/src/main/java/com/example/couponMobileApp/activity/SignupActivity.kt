@@ -29,6 +29,7 @@ import com.example.couponMobileApp.R
 import com.example.couponMobileApp.RetrofitClient
 import com.example.couponMobileApp.URIPathHelper
 import com.example.couponMobileApp.models.Response
+import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -178,6 +179,9 @@ class SignupActivity : AppCompatActivity()/* Gota.OnRequestPermissionsBack*/ {
             val cps = cpass.text.toString().trim()
           val uph = phn.text.toString().trim()
            val upin = pin.text.toString().trim()
+
+            //For hide keyboard on click
+            hideKeyboard(this)
 
             if(unm.isEmpty())
             {

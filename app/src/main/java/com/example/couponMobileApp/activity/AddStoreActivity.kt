@@ -15,7 +15,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
@@ -23,13 +25,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import com.example.couponMobileApp.ApiUtils
-import com.example.couponMobileApp.R
-import com.example.couponMobileApp.URIPathHelper
-import com.example.couponMobileApp.UserApi
+import com.example.couponMobileApp.*
 import com.example.couponMobileApp.models.FilterResponse
 import com.example.couponMobileApp.models.StoreResponse
 import com.example.couponMobileApp.models.StoreSuggestionResponse
+import com.example.couponMobileApp.utils.Utils
+import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -231,6 +232,9 @@ class AddStoreActivity : AppCompatActivity() {
 
         addBtn.setOnClickListener {
 
+            //for hide keyboard on button click
+            hideKeyboard(this)
+
             val sct = stCt.text.toString().trim()
             var fi = ""
 
@@ -426,4 +430,5 @@ class AddStoreActivity : AppCompatActivity() {
         })
         return customers
     }
+
 }

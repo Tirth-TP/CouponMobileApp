@@ -11,11 +11,13 @@ import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import com.example.couponMobileApp.ApiUtils
 import com.example.couponMobileApp.R
 import com.example.couponMobileApp.UserApi
 import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.models.ChangePasswordResponse
+import com.example.couponMobileApp.utils.Utils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -37,6 +39,11 @@ class ContactUsFragment : Fragment() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "Contact Us"
 
+        //For hide keyboard on touch outside
+        val touch = view?.findViewById<LinearLayout>(R.id.keyboard)
+        touch?.setOnClickListener {
+            Utils.hideKeyboard(requireActivity())
+        }
 
         val btnCn = requireView().findViewById<Button>(R.id.btn_cnt)
         val tnm = requireView().findViewById<EditText>(R.id.txtCNm)
@@ -54,6 +61,9 @@ class ContactUsFragment : Fragment() {
             val sb = tsb.text.toString()
             val mg = tmg.text.toString()
 
+            //for hide keyboard on button click
+            Utils.hideKeyboard(requireActivity())
+
             val SHARED_PREF_NAME = "my_shared_preff"
             val sharedPreference =
                 this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
@@ -64,7 +74,7 @@ class ContactUsFragment : Fragment() {
             map["subject"] = toPart(sb)
             map["description"] = toPart(mg)
 
-            mAPIService.changePas(token!!, "ContactUsFragment", map).enqueue(object :
+            mAPIService.changePas(token!!, "ContactUs", map).enqueue(object :
                 Callback<ChangePasswordResponse> {
                 override fun onResponse(
                     call: Call<ChangePasswordResponse>,
@@ -90,6 +100,7 @@ class ContactUsFragment : Fragment() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 startActivity(Intent(context, HomeActivity::class.java))
+
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(callback)

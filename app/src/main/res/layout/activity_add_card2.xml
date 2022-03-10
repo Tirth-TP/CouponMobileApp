@@ -221,12 +221,12 @@
                                 style="@style/Button_yellow_caps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:layout_marginBottom="@dimen/_5sdp"
-                                android:text="Add Coupon"
                                 android:layout_marginStart="@dimen/_20sdp"
                                 android:layout_marginLeft="@dimen/_20sdp"
-                                android:layout_marginEnd="@dimen/_20sdp" />
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:layout_marginEnd="@dimen/_20sdp"
+                                android:layout_marginBottom="@dimen/_5sdp"
+                                android:text="Add Coupon" />
                         </LinearLayout>
 
 

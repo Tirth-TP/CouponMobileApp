@@ -12,10 +12,8 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
@@ -34,6 +32,8 @@ import com.example.couponMobileApp.UserApi
 import com.example.couponMobileApp.activity.ChangePasswordActivity
 import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.models.UpdateResponse
+import com.example.couponMobileApp.utils.Utils
+import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -45,7 +45,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class MyProfileFragment : Fragment() {
@@ -74,11 +73,17 @@ class MyProfileFragment : Fragment() {
 
 
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "My Profile"
 
+    //For hide keyboard on touch outside
+        val touch = view?.findViewById<LinearLayout>(R.id.layoutRoot)
+        touch?.setOnClickListener {
+            hideKeyboard(requireActivity())
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasWritePermission = requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -164,17 +169,20 @@ class MyProfileFragment : Fragment() {
         val editBtn = requireView().findViewById(R.id.btn_edit) as Button
         editBtn.setOnClickListener {
 
+            //for hide keyboard on button click
+            hideKeyboard(requireActivity())
 
-            if(uri == null) {
-              uri2="content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F33/ORIGINAL/NONE/1858671968".toUri()
+            if (uri == null) {
+                uri2 =
+                    "content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F33/ORIGINAL/NONE/1858671968".toUri()
                 Log.d("imageabcd", uri2.toString())
-                file= File(URIPathHelper.getPath(requireContext(), uri2!!))
+                file = File(URIPathHelper.getPath(requireContext(), uri2!!))
 
                 Log.d("imageabcd", file.toString())
 
                 requestFile = RequestBody.create(
-                        requireContext().contentResolver.getType(uri2!!)!!.toMediaTypeOrNull(),
-                        file
+                    requireContext().contentResolver.getType(uri2!!)!!.toMediaTypeOrNull(),
+                    file
                 )
 
             } else {
@@ -183,13 +191,13 @@ class MyProfileFragment : Fragment() {
                 Log.d("imageabcd", file.toString())
 
                 requestFile = RequestBody.create(
-                        requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                        file
+                    requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
+                    file
                 )
                 Log.d("Imageprofileelse","hi " + uri)
 //                content://com.android.providers.media.documents/document/image%3A163122
             }
-                Log.d("Imageprofileelse","hi " + uri.toString())
+            Log.d("Imageprofileelse","hi " + uri.toString())
 //                content://com.android.providers.media.documents/document/image%3A163122
 
 
@@ -208,27 +216,27 @@ class MyProfileFragment : Fragment() {
             Log.d("Imageprofileelsse","hi " + uri)
 
 
-      val body = MultipartBody.Part.createFormData("user_img", file!!.name, requestFile)
+            val body = MultipartBody.Part.createFormData("user_img", file!!.name, requestFile)
             Log.d("contentresolver","" + requestFile)
             mAPIService.editProfile(token!!, body, "ChangeProfile", map).enqueue(object :
-                    Callback<UpdateResponse> {
+                Callback<UpdateResponse> {
                 override fun onResponse(
-                        call: Call<UpdateResponse>,
-                        response: Response<UpdateResponse>
+                    call: Call<UpdateResponse>,
+                    response: Response<UpdateResponse>
                 ) {
 
-                        var nurl = response.body()?.data!!.Image
-                        Log.d("newurl", nurl.toString())
-                        editor?.putString("name", n)
-                        editor?.putString("phone", p)
-                        editor?.putString("Image", nurl.toString())
-                        editor?.commit()
+                    var nurl = response.body()?.data!!.Image
+                    Log.d("newurl", nurl.toString())
+                    editor?.putString("name", n)
+                    editor?.putString("phone", p)
+                    editor?.putString("Image", nurl.toString())
+                    editor?.commit()
 
-                        Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
-                        Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
-                        startActivity(Intent(context, HomeActivity::class.java))
-                        getActivity()?.getFragmentManager()?.popBackStack()
-                        Log.d("imageabc", file!!.name)
+                    Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
+                    Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+                    startActivity(Intent(context, HomeActivity::class.java))
+                    getActivity()?.getFragmentManager()?.popBackStack()
+                    Log.d("imageabc", file!!.name)
 
                 }
 
@@ -251,7 +259,7 @@ class MyProfileFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-   fun toPart(data: String): RequestBody {
+    fun toPart(data: String): RequestBody {
         return RequestBody.create("text/plain".toMediaTypeOrNull(), data)
     }
 
@@ -328,15 +336,13 @@ class MyProfileFragment : Fragment() {
             {
                 Log.d("error", e.toString())
             }
-        }
-        else
-        {
+        } else {
             val SHARED_PREF_NAME = "image_shared_preff"
-            val sharedPreference = requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            val sharedPreference =
+                requireContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             val image = sharedPreference.getString("URI", "defaultName")
             uri = Uri.parse(image)
         }
     }
-
 
 }

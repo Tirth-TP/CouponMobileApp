@@ -12,7 +12,10 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +28,8 @@ import com.example.couponMobileApp.activity.SignupActivity
 import com.example.couponMobileApp.models.ChangePasswordResponse
 import com.example.couponMobileApp.models.ForgotPsResponse
 import com.example.couponMobileApp.models.LoginResponse
+import com.example.couponMobileApp.utils.Utils
+import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -252,6 +257,9 @@ class LoginActivity : AppCompatActivity() {
         var btn_Lg = findViewById<Button>(R.id.btnLg)
         btn_Lg.setOnClickListener {
 
+            //For hide keyboard on click
+            hideKeyboard(this)
+
             val SHARED_PREF_NAME2 = "my_shared_preff"
             val sharedPreference1 = getSharedPreferences(SHARED_PREF_NAME2, Context.MODE_PRIVATE)
             val dtoken = sharedPreference1.getString("device_token", "defaultToken")
@@ -311,6 +319,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("error", response.toString())
                     }
                 }
+
 
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Toast.makeText(this@LoginActivity, t.message, Toast.LENGTH_LONG).show()
