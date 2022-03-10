@@ -242,10 +242,7 @@ class HomeScreenFragment : Fragment() {
                             // cRv.adapter = adapter
                             //         checkNetwork()
                             dispLst.addAll(stList)
-                            var adapter = StoreAdapter(
-                                context!!,
-                                dispLst,
-                                object : OnStartDragListener {
+                            var adapter = StoreAdapter(context!!, dispLst, object : OnStartDragListener {
                                     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
                                         itemTouchHelper?.startDrag(viewHolder!!)
                                     }
