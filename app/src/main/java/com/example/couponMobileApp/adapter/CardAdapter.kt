@@ -51,9 +51,10 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.Ctit.text=arr[position].cardname
-        holder.u = Uri.parse(arr[position].card_img)
-        if(arr[position].is_Used == "true")
+        holder.Ctit.text=arr[holder.adapterPosition].cardname
+        holder.u = Uri.parse(arr[holder.adapterPosition].card_img)
+
+        if(arr[holder.adapterPosition].is_Used == "true")
         {
             holder.stcv.isEnabled = false
            // holder.stcv.setBackgroundColor(Color.LTGRAY)
@@ -69,7 +70,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             holder.hdBtn.visibility = View.INVISIBLE
 
         }
-        if(arr.get(position).isActive == "false")
+        if(arr.get(holder.adapterPosition).isActive == "false")
         {
             holder.stcv.isEnabled = false
            // holder.Simg.visibility = View.INVISIBLE
@@ -83,7 +84,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             holder.Ctit.layoutParams = layoutParams
             holder.hdBtn.visibility = View.INVISIBLE
         }
-        if(arr[position].status == "hide")
+        if(arr[holder.adapterPosition].status == "hide")
         {
             holder.Simg.setImageResource(R.drawable.ic_baseline_lock_24)
             holder.hdBtn.visibility = View.INVISIBLE
@@ -101,7 +102,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             val sharedPreference = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             val token = "Bearer " + sharedPreference.getString("token", "defaultName")
             val map: MutableMap<String, RequestBody> = HashMap()
-            map["card_id"] = toPart(arr[position].id.toString()) as RequestBody
+            map["card_id"] = toPart(arr[holder.adapterPosition].id.toString()) as RequestBody
 
             mAPIService.hideCard(token!!, "HideCard", map).enqueue(object :
                 Callback<HideCardResponse> {
@@ -119,13 +120,13 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
                         holder.stcv.setOnClickListener {
                             val i: Intent
                             i = Intent(ctx, LockActivity::class.java)
-                            i.putExtra("cardId", arr[position].id)
-                            i.putExtra("cardNm", arr[position].cardname)
-                            i.putExtra("cardNum", arr[position].cardno)
-                            i.putExtra("cardRwd", arr[position].rewardpercen)
-                            i.putExtra("cardDetl", arr[position].carddetail)
-                            i.putExtra("cardDt", arr[position].expdate)
-                            i.putExtra("cardImg", arr[position].card_img.toString())
+                            i.putExtra("cardId", arr[holder.adapterPosition].id)
+                            i.putExtra("cardNm", arr[holder.adapterPosition].cardname)
+                            i.putExtra("cardNum", arr[holder.adapterPosition].cardno)
+                            i.putExtra("cardRwd", arr[holder.adapterPosition].rewardpercen)
+                            i.putExtra("cardDetl", arr[holder.adapterPosition].carddetail)
+                            i.putExtra("cardDt", arr[holder.adapterPosition].expdate)
+                            i.putExtra("cardImg", arr[holder.adapterPosition].card_img.toString())
                             ctx.startActivity(i)
                         }
                     }
@@ -142,7 +143,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
         holder.stcv.setOnClickListener {
             // Toast.makeText(v.context,i.toString(),Toast.LENGTH_LONG).show()
             val i :Intent
-            if(arr[position].status=="hide")
+            if(arr[holder.adapterPosition].status=="hide")
             {
                 i = Intent(ctx, LockActivity::class.java)
             }
@@ -151,14 +152,14 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
                 i = Intent(ctx, CardDetailActivity::class.java)
             }
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("cardNm",arr[position].cardname)
-            i.putExtra("cardId",arr[position].id)
-            i.putExtra("cardNum",arr[position].cardno)
-            i.putExtra("cardRwd",arr[position].rewardpercen)
-            i.putExtra("cardDetl",arr[position].carddetail)
-            i.putExtra("cardDt",arr[position].expdate)
-            i.putExtra("cardImg",arr[position].card_img.toString())
-            i.putExtra("status",arr[position].status)
+            i.putExtra("cardNm",arr[holder.adapterPosition].cardname)
+            i.putExtra("cardId",arr[holder.adapterPosition].id)
+            i.putExtra("cardNum",arr[holder.adapterPosition].cardno)
+            i.putExtra("cardRwd",arr[holder.adapterPosition].rewardpercen)
+            i.putExtra("cardDetl",arr[holder.adapterPosition].carddetail)
+            i.putExtra("cardDt",arr[holder.adapterPosition].expdate)
+            i.putExtra("cardImg",arr[holder.adapterPosition].card_img.toString())
+            i.putExtra("status",arr[holder.adapterPosition].status)
             ctx.startActivity(i)
         }
 

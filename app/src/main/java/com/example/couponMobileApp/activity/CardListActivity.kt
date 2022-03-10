@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.couponMobileApp.*
 import com.example.couponMobileApp.adapter.CardAdapter
 import com.example.couponMobileApp.models.*
+import com.example.couponMobileApp.utils.Utils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -157,6 +158,10 @@ class CardListActivity : AppCompatActivity() {
             map["id"] = toPart(sid.toString()) as RequestBody
             map["contact"] = toPart(getCn.text.toString())
             map["location"] = toPart(getLc.text.toString())
+
+            //For Hide keyboard
+            Utils.hideKeyboard(this)
+
             mAPIService.storeUpdate(token!!, "StoreUpdate", map).enqueue(object :
                     Callback<StoreUpdateResponse> {
                 override fun onResponse(

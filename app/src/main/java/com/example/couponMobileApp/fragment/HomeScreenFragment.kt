@@ -29,8 +29,10 @@ import com.example.couponMobileApp.activity.AddStoreActivity
 import com.example.couponMobileApp.activity.FilterActivity
 import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.adapter.StoreAdapter
+import com.example.couponMobileApp.databinding.StoreDetailsBinding
 import com.example.couponMobileApp.models.StoreDetail
 import com.example.couponMobileApp.models.StoreDetailResponse
+import kotlinx.android.synthetic.main.fragment_about.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -43,6 +45,7 @@ import kotlin.collections.set
 
 
 class HomeScreenFragment : Fragment() {
+
     lateinit var spinAnim: Animation
     lateinit var btANim: Animation
     lateinit var adapter: StoreAdapter

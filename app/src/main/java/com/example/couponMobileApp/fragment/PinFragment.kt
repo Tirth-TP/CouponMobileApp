@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -24,6 +21,7 @@ import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.activity.ResetActivity
 import com.example.couponMobileApp.models.ChangePasswordResponse
 import com.example.couponMobileApp.models.ForgotPsResponse
+import com.example.couponMobileApp.utils.Utils
 import kotlinx.android.synthetic.main.fragment_pin_authentication.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -45,6 +43,11 @@ class PinFragment : Fragment() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "Change Pin"
 
+    //For hide keyboard on touch outside
+        val touch = view?.findViewById<LinearLayout>(R.id.layoutRoot)
+        touch?.setOnClickListener {
+            Utils.hideKeyboard(requireActivity())
+        }
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -68,6 +71,9 @@ class PinFragment : Fragment() {
             var op = top.text.toString()
             var np = tnp.text.toString()
             var cp = tcp.text.toString()
+
+            //for hide keyboard on button click
+            Utils.hideKeyboard(requireActivity())
 
             if (np.equals(cp)) {
 

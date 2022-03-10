@@ -5,20 +5,24 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.couponMobileApp.ApiUtils
+import com.example.couponMobileApp.HideKeyboard
 import com.example.couponMobileApp.fragment.MyProfileFragment
 import com.example.couponMobileApp.R
 import com.example.couponMobileApp.UserApi
 import com.example.couponMobileApp.models.ChangePasswordResponse
+import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 
-class ChangePasswordActivity : AppCompatActivity() {
+class ChangePasswordActivity : HideKeyboard() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
@@ -40,7 +44,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val nps = findViewById(R.id.chNew) as EditText
         val cps = findViewById(R.id.chCon) as EditText
         val btn_sv = findViewById(R.id.btn_yes) as Button
-        //val btnCl = findViewById(R.id.btn_cl) as Button
+//        val btnCl = findViewById(R.id.btn_cl) as Button
 
         var mAPIService: UserApi? = null
         mAPIService = ApiUtils.apiService
@@ -60,6 +64,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             val np = nps.text.toString().trim()
             val cp = cps.text.toString().trim()
 
+            hideKeyboard(this)
             if (np.equals(cp)) {
                 Log.d("hhhhhhh", np)
 

@@ -28,11 +28,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import com.example.couponMobileApp.ApiUtils
-import com.example.couponMobileApp.R
-import com.example.couponMobileApp.URIPathHelper
-import com.example.couponMobileApp.UserApi
+import com.example.couponMobileApp.*
 import com.example.couponMobileApp.models.CardResponse
+import com.example.couponMobileApp.utils.Utils
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.imagepickqr.view.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -230,6 +228,11 @@ class AddCardActivity : AppCompatActivity() {
             Log.d("STORE_ID",""+sid)
             val bmp: Bitmap
             val byteArray = intent.getByteArrayExtra("imagebitmap")
+
+
+            //For Hide keyboard
+            Utils.hideKeyboard(this)
+
             if (byteArray == null) {
                 icrd.setImageDrawable(resources.getDrawable(R.drawable.addst))
             } else {
