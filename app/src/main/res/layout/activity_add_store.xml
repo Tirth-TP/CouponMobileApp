@@ -52,6 +52,33 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginBottom="@dimen/_25sdp"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:id="@+id/storeImg"
+                                        android:layout_width="@dimen/_110sdp"
+                                        android:layout_height="@dimen/_110sdp"
+                                        android:src="@drawable/store"
+                                        app:tint="@color/dark_blue">
+
+                                    </ImageView>
+
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <com.google.android.material.textfield.TextInputLayout
@@ -136,40 +163,6 @@
                                 </com.google.android.material.textfield.TextInputLayout>
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_5sdp"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:layout_width="@dimen/_25sdp"
-                                        android:layout_height="@dimen/_25sdp">
-
-                                    </TextView>
-
-                                    <ImageView
-                                        android:id="@+id/storeImg"
-                                        android:layout_width="@dimen/_110sdp"
-                                        android:layout_height="@dimen/_110sdp"
-                                        android:layout_marginLeft="100dp"
-                                        android:layout_gravity="center"
-                                        android:background="@color/white"
-                                        android:src="@drawable/store"
-                                        app:tint="@color/dark_blue">
-
-                                    </ImageView>
-
-
-                                </LinearLayout>
-
-                            </LinearLayout>
-
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -211,7 +204,7 @@
                                 style="@style/Button_yellow_caps"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
+                                android:layout_marginTop="@dimen/_15sdp"
                                 android:layout_marginBottom="@dimen/_5sdp"
                                 android:text="ADD STORE"
                                 android:layout_marginStart="@dimen/_20sdp"
