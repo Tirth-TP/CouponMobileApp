@@ -216,6 +216,7 @@ class AddStoreActivity : AppCompatActivity() {
                 snm.threshold = 0
                 snm.setAdapter(adapter)
 
+
                 for (i in jArray) {
 //                    while(snm.text.toString()==i.stname)
 //                    {
@@ -253,7 +254,7 @@ class AddStoreActivity : AppCompatActivity() {
                  val sn = snm.text.toString().trim()
                 val sl = sloc.text.toString().trim()
                 val sp = spn.text.toString().trim()
-
+                snm.isSelected=true
                 val map: MutableMap<String, RequestBody> = HashMap()
                 map["stname"] = toPart(sn) as RequestBody
                 map["stlocation"] = toPart(sl)

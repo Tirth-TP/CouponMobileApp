@@ -74,9 +74,15 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/catamaran"
                         android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
                         android:maxLines="1"
+                        android:singleLine="true"
+                        android:focusableInTouchMode="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

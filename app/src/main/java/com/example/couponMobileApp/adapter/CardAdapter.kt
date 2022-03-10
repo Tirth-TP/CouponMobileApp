@@ -53,7 +53,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.Ctit.text=arr[holder.adapterPosition].cardname
         holder.u = Uri.parse(arr[holder.adapterPosition].card_img)
-
+        holder.Ctit.isSelected =true
         if(arr[holder.adapterPosition].is_Used == "true")
         {
             holder.stcv.isEnabled = false

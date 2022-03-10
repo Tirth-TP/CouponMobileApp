@@ -65,37 +65,32 @@ class StoreAdapter(
 //            params.bottomMargin = 0
 //            holder.itemView.layoutParams = params
 //        }
-
-
-
         //  holder.Simg.setImageResource(list[position].imgSrc)
-        holder.Stit.text = arr[position].stname
-
-        var u: Uri = Uri.parse(arr[position].store_img)
+        holder.Stit.text = arr[holder.adapterPosition].stname
+        holder.Stit.isSelected = true
+        var u: Uri = Uri.parse(arr[holder.adapterPosition].store_img)
         Log.d("img", u.toString())
 //            holder.Simg.setImageURI(u)
         holder.Simg.load(u.toString())
-        if (arr[position].is_favorite == "true") {
+        if (arr[holder.adapterPosition].is_favorite == "true") {
             holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
         }
-
-
 
 
         holder.stcv.setOnClickListener {
             // Toast.makeText(v.context,i.toString(),Toast.LENGTH_LONG).show()
             val i = Intent(ctx, CardListActivity::class.java)
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("storeId", arr[position].id)
-            i.putExtra("storeNm", arr[position].stname)
-            i.putExtra("storeCon", arr[position].stcontact)
-            i.putExtra("storeLoc", arr[position].stlocation)
+            i.putExtra("storeId", arr[holder.adapterPosition].id)
+            i.putExtra("storeNm", arr[holder.adapterPosition].stname)
+            i.putExtra("storeCon", arr[holder.adapterPosition].stcontact)
+            i.putExtra("storeLoc", arr[holder.adapterPosition].stlocation)
 
             SharedPrefManager.getInstance(ctx).saveStore(
-                arr[position].id,
-                arr[position].stname,
-                arr[position].stlocation,
-                arr[position].stcontact
+                arr[holder.adapterPosition].id,
+                arr[holder.adapterPosition].stname,
+                arr[holder.adapterPosition].stlocation,
+                arr[holder.adapterPosition].stcontact
             )
             ctx.startActivity(i)
         }
@@ -107,8 +102,8 @@ class StoreAdapter(
             val sharedPreference = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
             val token = "Bearer " + sharedPreference.getString("token", "defaultName")
             val map: MutableMap<String, RequestBody> = HashMap()
-            map["store_id"] = toPart(arr[position].id.toString()) as RequestBody
-            if(arr[position].is_favorite == "false")
+            map["store_id"] = toPart(arr[holder.adapterPosition].id.toString()) as RequestBody
+            if(arr[holder.adapterPosition].is_favorite == "false")
             {
                 mAPIService.addFav(token!!, "AddFavorite", map).enqueue(object :
                     Callback<FavoriteResponse> {
@@ -116,14 +111,14 @@ class StoreAdapter(
                         call: Call<FavoriteResponse>,
                         response: retrofit2.Response<FavoriteResponse>
                     ) {
-                        arr[position].is_favorite = "true"
+                        arr[holder.adapterPosition].is_favorite = "true"
                         holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
                         Log.d("resshh", response.toString())
                         //     Log.d("iddd",cid.toString())
                         Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
 
                         if(response.body()?.success == true) {
-                            arr[position].is_favorite = "true"
+                            arr[holder.adapterPosition].is_favorite = "true"
                             holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
                             Log.d("resshh", response.toString())
                             //     Log.d("iddd",cid.toString())
@@ -148,13 +143,13 @@ class StoreAdapter(
                         call: Call<FavoriteResponse>,
                         response: retrofit2.Response<FavoriteResponse>
                     ) {
-                        arr[position].is_favorite = "false"
+                        arr[holder.adapterPosition].is_favorite = "false"
                         holder.favBtn.setColorFilter(Color.parseColor("#342ea9"));
                         Log.d("resshh", response.toString())
                         //     Log.d("iddd",cid.toString())
                         Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
                         if(response.body()?.success == true) {
-                            arr[position].is_favorite = "false"
+                            arr[holder.adapterPosition].is_favorite = "false"
                             holder.favBtn.setColorFilter(Color.parseColor("#342ea9"));
                             Log.d("resshh", response.toString())
                             //     Log.d("iddd",cid.toString())
