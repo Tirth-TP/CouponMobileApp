@@ -78,7 +78,6 @@
                         android:focusable="true"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:scrollHorizontally="true"
-                        android:maxLines="1"
                         android:singleLine="true"
                         android:focusableInTouchMode="true"
                         android:textColor="@android:color/black"

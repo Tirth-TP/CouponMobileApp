@@ -44,6 +44,15 @@
                     tools:ignore="VectorDrawableCompat"
                     app:tint="@color/teal_200" />
 
+                <ImageView
+                    android:id="@+id/delete"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@drawable/ic_dustbin"
+                    android:layout_marginStart="@dimen/_100sdp"
+                    tools:ignore="VectorDrawableCompat"/>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
