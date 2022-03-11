@@ -3,9 +3,7 @@ package com.example.couponMobileApp.activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -42,7 +40,7 @@ import kotlin.system.exitProcess
 class HomeActivity : AppCompatActivity() {
     lateinit var img: ImageView
     var tvItem: TextView? = null
-    lateinit var dr: DrawerLayout
+    lateinit var drawerLayout: DrawerLayout
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
             movetoFragment(
                 MyProfileFragment()
             )
-            dr.closeDrawer(GravityCompat.START)
+            drawerLayout.closeDrawer(GravityCompat.START)
         }
 
         var u: Uri = Uri.parse(pt)
@@ -84,11 +82,11 @@ class HomeActivity : AppCompatActivity() {
 
         intent.putExtra("Username", un)
         val tb = findViewById<androidx.appcompat.widget.Toolbar>(R.id.topAppBar)
-        dr = findViewById<DrawerLayout>(R.id.drawer)
+        drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
         setSupportActionBar(tb)
         //creating hamburger icon
-        var toggler = ActionBarDrawerToggle(this, dr, tb, 0, 0)
-        dr.addDrawerListener(toggler)
+        var toggler = ActionBarDrawerToggle(this, drawerLayout, tb, 0, 0)
+        drawerLayout.addDrawerListener(toggler)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
            // .requestIdToken(getString(R.string.default_web_client_id))
@@ -168,7 +166,7 @@ class HomeActivity : AppCompatActivity() {
 //                    false
                 }
             }
-            dr.closeDrawer(GravityCompat.START)
+            drawerLayout.closeDrawer(GravityCompat.START)
             false
         }
     }
@@ -317,13 +315,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val dr = findViewById<DrawerLayout>(R.id.drawer)
-        if (dr.isDrawerOpen(GravityCompat.START)) {
-            dr.closeDrawer(GravityCompat.START)
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+            finish()
         }
-        exitProcess(1)
     }
 
     override fun onResume() {
