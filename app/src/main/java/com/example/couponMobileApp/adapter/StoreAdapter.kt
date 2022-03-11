@@ -65,6 +65,8 @@ class StoreAdapter(
 //            params.bottomMargin = 0
 //            holder.itemView.layoutParams = params
 //        }
+
+
         //  holder.Simg.setImageResource(list[position].imgSrc)
         holder.Stit.text = arr[holder.adapterPosition].stname
         holder.Stit.isSelected = true
@@ -75,6 +77,8 @@ class StoreAdapter(
         if (arr[holder.adapterPosition].is_favorite == "true") {
             holder.favBtn.setColorFilter(Color.parseColor("#F86459"));
         }
+
+
 
 
         holder.stcv.setOnClickListener {

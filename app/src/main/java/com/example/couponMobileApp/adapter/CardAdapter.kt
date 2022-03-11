@@ -1,11 +1,14 @@
 package com.example.couponMobileApp.adapter
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.util.Log.v
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +16,16 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import coil.api.load
 import com.example.couponMobileApp.*
 import com.example.couponMobileApp.activity.CardDetailActivity
+import com.example.couponMobileApp.activity.CardListActivity
+import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.activity.LockActivity
 import com.example.couponMobileApp.models.CardDetail
+import com.example.couponMobileApp.models.DeleteResponse
 import com.example.couponMobileApp.models.HideCardResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
@@ -36,6 +43,7 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
         var Ctit = v.findViewById<TextView>(R.id.storeImtit)
         var stcv = v.findViewById<CardView>(R.id.storeCv)
         var hdBtn = v.findViewById<ImageView>(R.id.hide)
+        var delete = v.findViewById<ImageView>(R.id.delete)
         var u: Uri? = null
 
     }
@@ -51,9 +59,14 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        var mAPIService: UserApi? = null
+        var token: String? = null
+
         holder.Ctit.text=arr[holder.adapterPosition].cardname
         holder.u = Uri.parse(arr[holder.adapterPosition].card_img)
         holder.Ctit.isSelected =true
+        holder.delete.visibility = View.INVISIBLE
         if(arr[holder.adapterPosition].is_Used == "true")
         {
             holder.stcv.isEnabled = false
@@ -68,12 +81,14 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             holder.Simg.setColorFilter(Color.parseColor("#66000000"))
             holder.Ctit.layoutParams = layoutParams
             holder.hdBtn.visibility = View.INVISIBLE
+            holder.delete.visibility = View.VISIBLE
 
         }
         if(arr.get(holder.adapterPosition).isActive == "false")
         {
             holder.stcv.isEnabled = false
            // holder.Simg.visibility = View.INVISIBLE
+
             holder.Ctit.setText("Coupon Expired")
             holder.Ctit.setTextColor(Color.RED)
             holder.Ctit.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10F)
@@ -83,63 +98,80 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             holder.Simg.setColorFilter(Color.parseColor("#66000000"))
             holder.Ctit.layoutParams = layoutParams
             holder.hdBtn.visibility = View.INVISIBLE
+            holder.delete.visibility = View.VISIBLE
         }
         if(arr[holder.adapterPosition].status == "hide")
         {
             holder.Simg.setImageResource(R.drawable.ic_baseline_lock_24)
             holder.hdBtn.visibility = View.INVISIBLE
+            holder.delete.visibility = View.INVISIBLE
         }
         else {
 
             Log.d("img", holder.u.toString())
 //            holder.Simg.setImageURI(u)
             holder.Simg.load(holder.u.toString())
+
         }
         holder.hdBtn.setOnClickListener {
-            var mAPIService: UserApi? = null
-            mAPIService = ApiUtils.apiService
-            val SHARED_PREF_NAME = "my_shared_preff"
-            val sharedPreference = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-            val token = "Bearer " + sharedPreference.getString("token", "defaultName")
-            val map: MutableMap<String, RequestBody> = HashMap()
-            map["card_id"] = toPart(arr[holder.adapterPosition].id.toString()) as RequestBody
 
-            mAPIService.hideCard(token!!, "HideCard", map).enqueue(object :
-                Callback<HideCardResponse> {
-                override fun onResponse(
-                    call: Call<HideCardResponse>,
-                    response: retrofit2.Response<HideCardResponse>
-                ) {
-                    Log.d("resshh",response.toString())
-                    //     Log.d("iddd",cid.toString())
-                    if(response.body()?.success == true) {
-                        Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
 
-                        holder.Simg.setImageResource(R.drawable.ic_baseline_lock_24)
-                        holder.hdBtn.visibility = View.INVISIBLE
-                        holder.stcv.setOnClickListener {
-                            val i: Intent
-                            i = Intent(ctx, LockActivity::class.java)
-                            i.putExtra("cardId", arr[holder.adapterPosition].id)
-                            i.putExtra("cardNm", arr[holder.adapterPosition].cardname)
-                            i.putExtra("cardNum", arr[holder.adapterPosition].cardno)
-                            i.putExtra("cardRwd", arr[holder.adapterPosition].rewardpercen)
-                            i.putExtra("cardDetl", arr[holder.adapterPosition].carddetail)
-                            i.putExtra("cardDt", arr[holder.adapterPosition].expdate)
-                            i.putExtra("cardImg", arr[holder.adapterPosition].card_img.toString())
-                            ctx.startActivity(i)
+            // Alert Dialog box for delete store
+            val builder  = AlertDialog.Builder(ctx)
+                .setIcon(R.drawable.ic_baseline_lock_24)
+                .setTitle("Lock Coupon ?")
+                .setMessage("Confirm you decision !")
+                .setPositiveButton("Confirm") { dialogInterface, which ->
+                    var mAPIService: UserApi? = null
+                    mAPIService = ApiUtils.apiService
+                    val SHARED_PREF_NAME = "my_shared_preff"
+                    val sharedPreference = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+                    val token = "Bearer " + sharedPreference.getString("token", "defaultName")
+                    val map: MutableMap<String, RequestBody> = HashMap()
+                    map["card_id"] = toPart(arr[holder.adapterPosition].id.toString()) as RequestBody
+
+                    mAPIService.hideCard(token!!, "HideCard", map).enqueue(object :
+                        Callback<HideCardResponse> {
+                        override fun onResponse(
+                            call: Call<HideCardResponse>,
+                            response: retrofit2.Response<HideCardResponse>
+                        ) {
+                            Log.d("resshh",response.toString())
+                            //     Log.d("iddd",cid.toString())
+                            if(response.body()?.success == true) {
+                                Toast.makeText(ctx, response.body()?.message, Toast.LENGTH_LONG).show()
+
+                                holder.Simg.setImageResource(R.drawable.ic_baseline_lock_24)
+                                holder.hdBtn.visibility = View.INVISIBLE
+                                holder.stcv.setOnClickListener {
+                                    val i: Intent
+                                    i = Intent(ctx, LockActivity::class.java)
+                                    i.putExtra("cardId", arr[holder.adapterPosition].id)
+                                    i.putExtra("cardNm", arr[holder.adapterPosition].cardname)
+                                    i.putExtra("cardNum", arr[holder.adapterPosition].cardno)
+                                    i.putExtra("cardRwd", arr[holder.adapterPosition].rewardpercen)
+                                    i.putExtra("cardDetl", arr[holder.adapterPosition].carddetail)
+                                    i.putExtra("cardDt", arr[holder.adapterPosition].expdate)
+                                    i.putExtra("cardImg", arr[holder.adapterPosition].card_img.toString())
+                                    ctx.startActivity(i)
+                                }
+                            }
+                            else
+                            {
+                                Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
+                            }
                         }
-                    }
-                    else
-                    {
-                        Toast.makeText(ctx,"Something went wrong!",Toast.LENGTH_LONG).show()
-                    }
+                        override fun onFailure(call: Call<HideCardResponse>, t: Throwable) {
+                            Toast.makeText(ctx, t.message, Toast.LENGTH_LONG).show()
+                        }
+                    })
                 }
-                override fun onFailure(call: Call<HideCardResponse>, t: Throwable) {
-                    Toast.makeText(ctx, t.message, Toast.LENGTH_LONG).show()
+                .setNegativeButton("Cancle"){dialogInterface, which ->
                 }
-            })
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.show()
         }
+
         holder.stcv.setOnClickListener {
             // Toast.makeText(v.context,i.toString(),Toast.LENGTH_LONG).show()
             val i :Intent
@@ -162,6 +194,49 @@ class CardAdapter(var ctx: Context, var arr:ArrayList<CardDetail>,var lisener: O
             i.putExtra("status",arr[holder.adapterPosition].status)
             ctx.startActivity(i)
         }
+
+//        holder.delete.setOnClickListener {
+//
+//
+////            var cid = Activity.intent.getIntExtra("cardId", 0)
+////            Log.d("cid", cid.toString())
+//            val map: MutableMap<String, RequestBody> = HashMap()
+////            map["id"] = toPart(cid.toString()) as RequestBody
+//            mAPIService!!.delCard(token!!, "CardDelete", map).enqueue(object :
+//                Callback<DeleteResponse> {
+//                override fun onResponse(
+//
+//                    call: Call<DeleteResponse>,
+//                    response: retrofit2.Response<DeleteResponse>
+//                ) {
+//                    Toast.makeText(
+//                        ctx,
+//                        response.body()?.message,
+//                        Toast.LENGTH_LONG
+//                    ).show()
+//
+//                    if (response.body()?.status == true) {
+//                        Toast.makeText(
+//                            ctx,
+//                            response.body()?.message,
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//
+//                    } else {
+//                        Toast.makeText(
+//                            ctx,
+//                            "Something went wrong!",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+//                }
+//
+//                override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+//                    Toast.makeText(ctx, t.message, Toast.LENGTH_LONG)
+//                        .show()
+//                }
+//            })
+//        }
 
     }
 

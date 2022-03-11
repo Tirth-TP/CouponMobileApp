@@ -28,6 +28,7 @@ class SerAdapter (var ctx:Context,var lst:ArrayList<CardSer>,var lisener: OnStar
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.cn.isSelected = true
             holder.cn.text = lst[position].cnm
             holder.item.setOnLongClickListener {
                 lisener.onStartDrag(holder)

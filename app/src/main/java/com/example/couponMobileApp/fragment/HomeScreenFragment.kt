@@ -29,7 +29,6 @@ import com.example.couponMobileApp.activity.AddStoreActivity
 import com.example.couponMobileApp.activity.FilterActivity
 import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.adapter.StoreAdapter
-import com.example.couponMobileApp.databinding.StoreDetailsBinding
 import com.example.couponMobileApp.models.StoreDetail
 import com.example.couponMobileApp.models.StoreDetailResponse
 import kotlinx.android.synthetic.main.fragment_about.*
