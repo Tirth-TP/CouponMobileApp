@@ -3,6 +3,7 @@ package com.example.couponMobileApp.fragment
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -35,9 +36,13 @@ import com.example.couponMobileApp.models.UpdateResponse
 import com.example.couponMobileApp.utils.Utils
 import com.example.couponMobileApp.utils.Utils.hideKeyboard
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okio.BufferedSink
+import okio.source
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,42 +57,43 @@ class MyProfileFragment : Fragment() {
     var currentPath: String? = null
     val TAKE_PICTURE = 1
     val SELECT_PICTURE = 2
-    var uri: Uri?=null
-    var uimage:Uri?=null
-    var u: Uri?=null
-    var uri2: Uri?=null
-    lateinit var file:File
-    lateinit var requestFile:RequestBody
+    var uri: Uri? = null
+    var uimage: Uri? = null
+    var u: Uri? = null
+    var uri2: Uri? = null
+    lateinit var file: File
+    lateinit var requestFile: RequestBody
     private val REQUEST_PERMISSION = 0
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var materialAlertDialogBuilder: MaterialAlertDialogBuilder
-    private lateinit var customAlertDialogView : View
+    private lateinit var customAlertDialogView: View
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
 
         return inflater.inflate(layout.fragment_my_profile, container, false)
     }
-
-
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         (context as AppCompatActivity).supportActionBar!!.title = "My Profile"
 
-    //For hide keyboard on touch outside
+        //For hide keyboard on touch outside
         val touch = view?.findViewById<LinearLayout>(R.id.layoutRoot)
         touch?.setOnClickListener {
             hideKeyboard(requireActivity())
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val hasWritePermission = requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            val hasReadPermission = requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+            val hasWritePermission =
+                requireContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val hasReadPermission =
+                requireContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
             val permissions: MutableList<String> = ArrayList()
             if (hasWritePermission != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -101,20 +107,26 @@ class MyProfileFragment : Fragment() {
             }
             if (!permissions.isEmpty()) {
 //              requestPermissions(permissions.toArray(new String[permissions.size()]), REQUEST_CODE_SOME_FEATURES_PERMISSIONS);
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE),
-                        REQUEST_PERMISSION)
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE
+                    ),
+                    REQUEST_PERMISSION
+                )
             }
         }
 
         val phn = requireView().findViewById(R.id.getMb) as EditText
         val name = requireView().findViewById(R.id.getNm) as EditText
-        val email = requireView().findViewById(R.id.getEm)as EditText
+        val email = requireView().findViewById(R.id.getEm) as EditText
         val txtChange = requireView().findViewById(R.id.txtChangePs) as TextView
         val img_pro = requireView().findViewById(R.id.imgPro) as ImageView
 
         img_pro.setOnClickListener {
 
-            var alertDialog: AlertDialog? =null
+            var alertDialog: AlertDialog? = null
             val builder = AlertDialog.Builder(context)
 
             val inflater = this.layoutInflater
@@ -131,10 +143,10 @@ class MyProfileFragment : Fragment() {
             }
             ga.setOnClickListener {
                 cl.performClick()
-                 dispatchGallery()
+                dispatchGallery()
             }
             cl.setOnClickListener {
-                if(alertDialog!=null) {
+                if (alertDialog != null) {
                     alertDialog!!.dismiss()
                 }
             }
@@ -147,15 +159,17 @@ class MyProfileFragment : Fragment() {
         mAPIService = ApiUtils.apiService
 
         val SHARED_PREF_NAME = "my_shared_preff"
-        val sharedPreferences = context?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val sharedPreferences =
+            context?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
 
-        val sharedPreference = this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-        val token ="Bearer " + (sharedPreference?.getString("token", "defaultName"))
+        val sharedPreference =
+            this.activity?.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val token = "Bearer " + (sharedPreference?.getString("token", "defaultName"))
         val nm = sharedPreference?.getString("name", "defaultName")
         val em = sharedPreference?.getString("email", "defaultName")
         val ph = sharedPreference?.getString("phone", "defaultName")
-        val pt =  sharedPreference?.getString("Image", "defaultName")
+        val pt = sharedPreference?.getString("Image", "defaultName")
         val pn = sharedPreference?.getString("pin", null)
 
         name.setText(nm)
@@ -186,18 +200,17 @@ class MyProfileFragment : Fragment() {
                 )
 
             } else {
-                file= File(URIPathHelper.getPath(requireContext(), uri!!))
+                file = File(URIPathHelper.getPath(requireContext(),uri!!))
 
                 Log.d("imageabcd", file.toString())
 
-                requestFile = RequestBody.create(
-                    requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(),
-                    file
-                )
-                Log.d("Imageprofileelse","hi " + uri)
+//                requestFile = RequestBody.create(requireContext().contentResolver.getType(uri!!)!!.toMediaTypeOrNull(), file)
+                requestFile = InputStreamRequestBody(requireContext().contentResolver, uri!!)
+
+                Log.d("Imageprofileelse", "hi " + uri)
 //                content://com.android.providers.media.documents/document/image%3A163122
             }
-            Log.d("Imageprofileelse","hi " + uri.toString())
+            Log.d("Imageprofileelse", "hi " + uri.toString())
 //                content://com.android.providers.media.documents/document/image%3A163122
 
 
@@ -213,13 +226,14 @@ class MyProfileFragment : Fragment() {
             //map["email"] = toPart(em!!)
             map["phone"] = toPart(p!!)
             Log.d("newurllll_2", "image:- " + uimage)
-            Log.d("Imageprofileelsse","hi " + uri)
+            Log.d("Imageprofileelsse", "hi " + uri)
 
 
             val body = MultipartBody.Part.createFormData("user_img", file!!.name, requestFile)
-            Log.d("contentresolver","" + requestFile)
+            Log.d("contentresolver", "" + requestFile)
             mAPIService.editProfile(token!!, body, "ChangeProfile", map).enqueue(object :
                 Callback<UpdateResponse> {
+
                 override fun onResponse(
                     call: Call<UpdateResponse>,
                     response: Response<UpdateResponse>
@@ -235,11 +249,11 @@ class MyProfileFragment : Fragment() {
                     Log.d("sharedprefimg", sharedPreference?.getString("Image", "Def").toString())
                     Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
                     startActivity(Intent(context, HomeActivity::class.java))
-                    getActivity()?.getFragmentManager()?.popBackStack()
+                    activity?.supportFragmentManager?.popBackStack()
+                   // getActivity()?.getFragmentManager()?.popBackStack()
                     Log.d("imageabc", file!!.name)
 
                 }
-
                 override fun onFailure(call: Call<UpdateResponse>, t: Throwable) {
                     Toast.makeText(context, t.message, Toast.LENGTH_LONG).show()
                 }
@@ -265,22 +279,17 @@ class MyProfileFragment : Fragment() {
 
     fun dispatchCamera() {
         val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if(i.resolveActivity(requireContext().packageManager) != null)
-        {
+        if (i.resolveActivity(requireContext().packageManager) != null) {
             var photoFile: File? = null
             try {
                 photoFile = createImage()
-            }
-            catch (e: IOException)
-            {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
-            if(photoFile != null)
-            {
+            if (photoFile != null) {
                 var photoUrl = FileProvider.getUriForFile(
-                        requireContext(),
-                        "com.example.stocardapp.fileprovider",
-                        photoFile
+                    requireContext(), "com.example.couponMobileApp.fileprovider",
+                    photoFile
                 )
                 i.putExtra(MediaStore.EXTRA_OUTPUT, photoUrl)
                 startActivityForResult(i, TAKE_PICTURE)
@@ -288,17 +297,16 @@ class MyProfileFragment : Fragment() {
         }
     }
 
-    fun dispatchGallery()
-    {
+    fun dispatchGallery() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent, "Select Image"), SELECT_PICTURE)
     }
-    fun createImage(): File
-    {
+
+    fun createImage(): File {
         val timeStamp = SimpleDateFormat("yyyyMMddd_HHmmss").format(Date())
-        val imageName = "JPEG_"+timeStamp+"_"
+        val imageName = "JPEG_" + timeStamp + "_"
         val stoargeDir = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var image = File.createTempFile(imageName, ".jpg", stoargeDir)
         currentPath = image.absolutePath
@@ -309,31 +317,23 @@ class MyProfileFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val stImg = requireView().findViewById<ImageView>(R.id.imgPro)
-        if(requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK)
-        {
+        if (requestCode == TAKE_PICTURE && resultCode == Activity.RESULT_OK) {
             try {
                 var file = File(currentPath)
                 uri = Uri.fromFile(file)
                 Log.d("Imaggggee", "image:- " + uri)
                 stImg.imageTintMode = null
                 stImg.setImageURI(uri)
-            }
-            catch (e: IOException)
-            {
+            } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
-
-       else if(requestCode == SELECT_PICTURE && resultCode == Activity.RESULT_OK)
-        {
+        } else if (requestCode == SELECT_PICTURE && resultCode == Activity.RESULT_OK) {
             try {
                 uri = data?.data
                 Log.d("Imaggggee", "image:- " + uri)
                 stImg.imageTintMode = null
                 stImg.setImageURI(uri)
-            }
-            catch (e: IOException)
-            {
+            } catch (e: IOException) {
                 Log.d("error", e.toString())
             }
         } else {
@@ -345,4 +345,20 @@ class MyProfileFragment : Fragment() {
         }
     }
 
+}
+
+class InputStreamRequestBody(
+    private val contentResolver: ContentResolver,
+    private val uri: Uri
+) : RequestBody() {
+    override fun contentType(): MediaType? {
+        val contentType = contentResolver.getType(uri)
+        return contentType?.toMediaTypeOrNull()
+    }
+
+    override fun writeTo(sink: BufferedSink) {
+        val input = contentResolver.openInputStream(uri)
+        input?.use { sink.writeAll(it.source()) }
+            ?: throw IOException("Could not open URI")
+    }
 }

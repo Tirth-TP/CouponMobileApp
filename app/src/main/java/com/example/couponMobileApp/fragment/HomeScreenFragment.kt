@@ -31,7 +31,6 @@ import com.example.couponMobileApp.activity.HomeActivity
 import com.example.couponMobileApp.adapter.StoreAdapter
 import com.example.couponMobileApp.models.StoreDetail
 import com.example.couponMobileApp.models.StoreDetailResponse
-import kotlinx.android.synthetic.main.fragment_about.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
