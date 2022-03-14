@@ -34,8 +34,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
-import kotlin.system.exitProcess
-
 
 class HomeActivity : AppCompatActivity() {
     lateinit var img: ImageView

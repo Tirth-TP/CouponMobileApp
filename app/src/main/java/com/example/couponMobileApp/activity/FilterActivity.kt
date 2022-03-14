@@ -39,6 +39,7 @@ class FilterActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.header_black)
 
+
         val txtTit = findViewById<TextView>(R.id.txtTitle)
         txtTit.setText("Apply Filters")
         val imgback = findViewById<ImageView>(R.id.imgBack)
@@ -103,6 +104,8 @@ class FilterActivity : AppCompatActivity() {
             var i = Intent(this, HomeActivity::class.java)
             i.putExtra("filter","all")
             i.putExtra("isfilter","filtered")
+
+
             startActivity(i)
         }
     }
